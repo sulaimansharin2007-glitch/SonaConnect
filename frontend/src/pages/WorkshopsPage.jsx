@@ -42,7 +42,7 @@ export default function WorkshopsPage() {
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500/30 to-cyan-500/20 rounded-xl flex items-center justify-center border border-blue-500/30">
               <BookOpen size={20} className="text-blue-400" />
             </div>
-            <h1 className="text-3xl font-black text-white">Workshops & Speaker Forums</h1>
+            <h1 className="text-3xl font-black text-white">Workshops & Speakers Forum</h1>
           </div>
           <p className="text-white/50 ml-[52px]">Learn from industry experts, attend seminars and hands-on workshops</p>
         </motion.div>
@@ -53,7 +53,7 @@ export default function WorkshopsPage() {
             { value: 'all', label: 'All', count: events.length },
             { value: 'workshop', label: '🔧 Workshops', count: events.filter((e) => e.category === 'workshop').length },
             { value: 'seminar', label: '🎤 Seminars', count: events.filter((e) => e.category === 'seminar').length },
-            { value: 'speaker_forum', label: '🎙 Speaker Forums', count: events.filter((e) => e.category === 'speaker_forum').length },
+            { value: 'speakers_forum', label: '🎙 Speakers Forum', count: events.filter((e) => e.category === 'speakers_forum').length },
           ].map(({ value, label, count }) => (
             <button
               key={value}

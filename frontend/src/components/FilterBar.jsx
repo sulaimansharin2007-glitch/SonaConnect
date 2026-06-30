@@ -8,7 +8,7 @@ const categories = [
   { value: 'seminar', label: 'Seminars' },
   { value: 'cultural', label: 'Cultural' },
   { value: 'sports', label: 'Sports' },
-  { value: 'speaker_forum', label: 'Speaker Forums' },
+  { value: 'speakers_forum', label: 'Speakers Forum' },
   { value: 'competition', label: 'Competitions' },
 ];
 

@@ -10,7 +10,7 @@ const features = [
   { icon: Calendar, title: 'Smart Event Management', desc: 'Centralized hub for all college events with real-time updates, countdown timers, and auto-expiry.', color: 'from-blue-500/20 to-cyan-500/10 border-blue-500/20' },
   { icon: Trophy, title: 'Hackathon Hub', desc: 'Discover internal & external hackathons, coding contests and internship drives all in one place.', color: 'from-yellow-500/20 to-orange-500/10 border-yellow-500/20' },
   { icon: Users, title: '16+ Active Clubs', desc: 'From Music to Robotics — join any of our 16 official college clubs and track their events.', color: 'from-purple-500/20 to-violet-500/10 border-purple-500/20' },
-  { icon: BookOpen, title: 'Workshops & Speaker Forums', desc: 'Register for industry expert sessions, guest lectures and hands-on workshops with one click.', color: 'from-green-500/20 to-emerald-500/10 border-green-500/20' },
+  { icon: BookOpen, title: 'Workshops & Speakers Forum', desc: 'Register for industry expert sessions, guest lectures and hands-on workshops with one click.', color: 'from-green-500/20 to-emerald-500/10 border-green-500/20' },
   { icon: Bell, title: 'Real-Time Notifications', desc: 'Never miss an event. Get instant alerts for new events, registration confirmations and deadlines.', color: 'from-pink-500/20 to-rose-500/10 border-pink-500/20' },
   { icon: Shield, title: 'QR Entry Passes', desc: 'Receive a unique QR code after registration. Seamless digital check-in at event venues.', color: 'from-teal-500/20 to-cyan-500/10 border-teal-500/20' },
 ];
@@ -82,11 +82,11 @@ export default function LandingPage() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/register" className="btn-primary px-8 py-3.5 text-base flex items-center gap-2 shadow-glow">
-                Get Started Free <ArrowRight size={18} />
-              </Link>
-              <Link to="/events" className="btn-secondary px-8 py-3.5 text-base flex items-center gap-2">
+              <Link to="/events" className="btn-primary px-8 py-3.5 text-base flex items-center gap-2 shadow-glow">
                 Browse Events <Calendar size={18} />
+              </Link>
+              <Link to="/login" className="btn-secondary px-8 py-3.5 text-base flex items-center gap-2">
+                Sign In <ArrowRight size={18} />
               </Link>
             </div>
 
