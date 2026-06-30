@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0A0A0F;
+    color: #ffffff;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #12121A;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #6C63FF;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #5a51e0;
+  }
+}
+
+@layer components {
+  /* Glass morphism card */
+  .glass {
+    background: rgba(26, 26, 46, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(108, 99, 255, 0.15);
+  }
+
+  .glass-dark {
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Primary button */
+  .btn-primary {
+    @apply px-6 py-2.5 bg-gradient-to-r from-primary-500 to-pink-accent rounded-xl font-semibold text-white text-sm transition-all duration-300 hover:shadow-glow hover:scale-105 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-2.5 glass border border-primary-500/30 rounded-xl font-semibold text-white text-sm transition-all duration-300 hover:border-primary-500/60 hover:bg-primary-500/10 active:scale-95;
+  }
+
+  .btn-danger {
+    @apply px-6 py-2.5 bg-danger/20 border border-danger/40 rounded-xl font-semibold text-danger text-sm transition-all duration-300 hover:bg-danger hover:text-white active:scale-95;
+  }
+
+  /* Card */
+  .card {
+    @apply glass rounded-2xl shadow-card transition-all duration-300 hover:shadow-card-hover hover:border-primary-500/30;
+  }
+
+  /* Input */
+  .input {
+    @apply w-full bg-dark-200 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/40 text-sm focus:outline-none focus:border-primary-500/60 focus:bg-dark-300 transition-all duration-200;
+  }
+
+  /* Badge */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary-500/20 text-primary-300 border border-primary-500/30;
+  }
+
+  .badge-success {
+    @apply badge bg-accent/20 text-accent border border-accent/30;
+  }
+
+  .badge-danger {
+    @apply badge bg-danger/20 text-danger border border-danger/30;
+  }
+
+  .badge-warning {
+    @apply badge bg-yellow-500/20 text-yellow-300 border border-yellow-500/30;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-400 to-pink-accent bg-clip-text text-transparent;
+  }
+
+  /* Section container */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Sidebar item */
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 font-medium text-sm transition-all duration-200 hover:text-white hover:bg-primary-500/10 cursor-pointer;
+  }
+
+  .sidebar-item.active {
+    @apply text-white bg-primary-500/20 border border-primary-500/30;
+  }
+
+  /* Glowing divider */
+  .divider-glow {
+    @apply h-px bg-gradient-to-r from-transparent via-primary-500/50 to-transparent;
+  }
+
+  /* Stats card */
+  .stat-card {
+    @apply card p-5 flex flex-col gap-2;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(135deg, #6C63FF, #FF6584);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-mesh {
+    background-image: 
+      radial-gradient(at 40% 20%, rgba(108, 99, 255, 0.15) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(255, 101, 132, 0.1) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(0, 212, 170, 0.05) 0px, transparent 50%);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
