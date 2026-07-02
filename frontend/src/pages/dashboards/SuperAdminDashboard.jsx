@@ -330,7 +330,7 @@ export default function SuperAdminDashboard() {
                   <div className="flex-1 min-w-0">
                     <h4 className="text-white font-semibold truncate">{ev.title}</h4>
                     <p className="text-white/40 text-xs mt-0.5">
-                      {ev.category?.replace('_', ' ')} · {ev.date ? format(new Date(ev.date), 'dd MMM yyyy') : 'Date TBA'} · by {ev.createdBy?.name || 'Unknown'}
+                      {ev.category?.replace('_', ' ')} · {ev.date ? format(new Date(ev.date), 'dd MMM yyyy') : (ev.createdAt ? format(new Date(ev.createdAt), 'dd MMM yyyy') : 'Date TBA')} · by {ev.createdBy?.name || 'Unknown'}
                     </p>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">

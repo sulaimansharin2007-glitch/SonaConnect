@@ -216,7 +216,7 @@ export default function FacultyDashboard() {
                     <tr key={ev._id} className="border-b border-white/5 hover:bg-white/[0.02]">
                       <td className="px-5 py-3 text-white font-medium max-w-48 truncate">{ev.title}</td>
                       <td className="px-5 py-3"><span className="badge-primary capitalize text-[10px]">{ev.category?.replace('_', ' ')}</span></td>
-                      <td className="px-5 py-3 text-white/60">{ev.date ? format(new Date(ev.date), 'dd MMM yyyy') : '—'}</td>
+                      <td className="px-5 py-3 text-white/60">{ev.date ? format(new Date(ev.date), 'dd MMM yyyy') : (ev.createdAt ? format(new Date(ev.createdAt), 'dd MMM yyyy') : '—')}</td>
                       <td className="px-5 py-3">
                         <div className="flex items-center justify-end gap-2">
                           <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg text-white/40 hover:text-blue-400 hover:bg-blue-500/10" title="Edit Event">

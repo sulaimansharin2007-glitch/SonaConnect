@@ -189,7 +189,7 @@ export default function ClubAdminDashboard() {
                     <td className="px-5 py-3">
                       <span className="badge-primary capitalize text-[10px]">{ev.category?.replace('_', ' ')}</span>
                     </td>
-                    <td className="px-5 py-3 text-white/60">{ev.date ? format(new Date(ev.date), 'dd MMM yyyy') : '—'}</td>
+                    <td className="px-5 py-3 text-white/60">{ev.date ? format(new Date(ev.date), 'dd MMM yyyy') : (ev.createdAt ? format(new Date(ev.createdAt), 'dd MMM yyyy') : '—')}</td>
                     <td className="px-5 py-3">
                       <span className={`badge text-[10px] ${ev.status === 'upcoming' ? 'badge-success' : 'badge-warning'}`}>
                         {ev.status}
