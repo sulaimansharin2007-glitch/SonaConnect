@@ -81,12 +81,9 @@ export default function LandingPage() {
               register for hackathons and never miss what's happening on campus.
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex items-center justify-center">
               <Link to="/events" className="btn-primary px-8 py-3.5 text-base flex items-center gap-2 shadow-glow">
                 Browse Events <Calendar size={18} />
-              </Link>
-              <Link to="/login" className="btn-secondary px-8 py-3.5 text-base flex items-center gap-2">
-                Sign In <ArrowRight size={18} />
               </Link>
             </div>
 
