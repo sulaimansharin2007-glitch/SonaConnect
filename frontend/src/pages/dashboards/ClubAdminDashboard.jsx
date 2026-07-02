@@ -24,7 +24,7 @@ export default function ClubAdminDashboard() {
   const [form, setForm] = useState({
     title: '', description: '', category: 'other', date: '', time: '', venue: '',
     organizer: '', inchargeStaff: '', registrationLink: '', deadline: '', participationType: '',
-    prizes: '', eligibility: '', clubName: '', club: '',
+    prizes: '', eligibility: '', posterUrl: '', clubName: '', club: '',
   });
   const [announcementForm, setAnnouncementForm] = useState({ title: '', message: '', clubId: '' });
   const [submitting, setSubmitting] = useState(false);
@@ -50,7 +50,7 @@ export default function ClubAdminDashboard() {
     setForm({
       title: '', description: '', category: 'other', date: '', time: '', venue: '',
       organizer: '', inchargeStaff: '', registrationLink: '', deadline: '', participationType: '',
-      prizes: '', eligibility: '', clubName: '', club: '',
+      prizes: '', eligibility: '', posterUrl: '', clubName: '', club: '',
     });
     setShowModal(true);
   };
@@ -64,7 +64,7 @@ export default function ClubAdminDashboard() {
       inchargeStaff: event.inchargeStaff || '', registrationLink: event.registrationLink || '',
       deadline: event.deadline ? format(new Date(event.deadline), 'yyyy-MM-dd') : '',
       participationType: event.participationType || '', prizes: event.prizes || '',
-      eligibility: event.eligibility || '', clubName: event.clubName || '',
+      eligibility: event.eligibility || '', posterUrl: event.posterUrl || '', clubName: event.clubName || '',
       club: event.club?._id || event.club || '',
     });
     setShowModal(true);
@@ -233,6 +233,40 @@ export default function ClubAdminDashboard() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
+                {/* Image Upload */}
+                <div className="flex flex-col items-center justify-center border-2 border-dashed border-white/20 rounded-2xl p-6 bg-white/5 hover:bg-white/10 transition-colors relative overflow-hidden group">
+                  {form.posterUrl ? (
+                    <>
+                      <img src={form.posterUrl} alt="Preview" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-30 transition-opacity" />
+                      <div className="relative z-10 text-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Image size={24} className="mx-auto text-white mb-2" />
+                        <span className="text-sm text-white font-medium">Change Image</span>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="text-center">
+                      <div className="w-12 h-12 rounded-full bg-primary-500/20 flex items-center justify-center mx-auto mb-3">
+                        <Image size={24} className="text-primary-400" />
+                      </div>
+                      <p className="text-sm font-medium text-white mb-1">Upload Event Poster</p>
+                      <p className="text-xs text-white/50">PNG, JPG up to 5MB</p>
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        if (file.size > 5 * 1024 * 1024) return toast.error('Image must be under 5MB');
+                        const reader = new FileReader();
+                        reader.onloadend = () => setForm({ ...form, posterUrl: reader.result });
+                        reader.readAsDataURL(file);
+                      }
+                    }}
+                  />
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="sm:col-span-2">
                     <label className="text-sm text-white/60 mb-1 block">Title</label>
