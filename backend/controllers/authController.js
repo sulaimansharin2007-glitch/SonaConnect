@@ -244,21 +244,15 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-// @desc    Reset Password
+// @desc    Reset Password directly (No OTP)
 // @route   POST /api/auth/reset-password
 const resetPassword = async (req, res) => {
   try {
-    const { email, otp, newPassword } = req.body;
+    const { email, newPassword } = req.body;
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: 'User not found' });
 
-    if (user.resetPasswordOtp !== otp || user.resetPasswordExpiry < new Date()) {
-      return res.status(400).json({ message: 'Invalid or expired OTP' });
-    }
-
     user.password = newPassword;
-    user.resetPasswordOtp = undefined;
-    user.resetPasswordExpiry = undefined;
     await user.save();
 
     res.json({ message: 'Password updated successfully. You can now login.' });
