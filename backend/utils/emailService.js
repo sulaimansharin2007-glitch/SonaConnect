@@ -13,7 +13,7 @@ const sendEmail = async (options) => {
     if (process.env.SMTP_HOST && process.env.SMTP_USER) {
       transporter = nodemailer.createTransport({
         host: process.env.SMTP_HOST,
-        port: process.env.SMTP_PORT || 465,
+        port: 465,
         secure: true,
         auth: {
           user: process.env.SMTP_USER,
