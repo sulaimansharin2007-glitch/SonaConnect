@@ -47,7 +47,7 @@ export default function Navbar() {
     }
   }, [user]);
 
-  const unreadCount = notifications.filter((n) => !n.isRead).length;
+  const unreadCount = notifications.length;
 
   const handleLogout = () => {
     logout();
@@ -56,7 +56,7 @@ export default function Navbar() {
 
   const handleMarkAllRead = async () => {
     await markAllAsRead();
-    setNotifications((prev) => prev.map((n) => ({ ...n, isRead: true })));
+    setNotifications([]);
   };
 
   return (

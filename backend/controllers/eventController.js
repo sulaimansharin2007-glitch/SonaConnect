@@ -65,7 +65,9 @@ const createEvent = async (req, res) => {
     // Create global notification
     await Notification.create({
       title: `New Event: ${event.title}`,
-      message: `A new ${event.category} event has been added on ${new Date(event.date).toLocaleDateString()}`,
+      message: event.date
+        ? `A new ${event.category} event has been added on ${new Date(event.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}`
+        : `A new ${event.category} event has been added. Check it out!`,
       type: 'event',
       isGlobal: true,
       link: `/events/${event._id}`,

@@ -20,30 +20,25 @@ const getNotifications = async (req, res) => {
   }
 };
 
-// @desc    Mark notification as read
+// @desc    Mark (delete) notification as read
 // @route   PUT /api/notifications/:id/read
 const markAsRead = async (req, res) => {
   try {
-    const notification = await Notification.findByIdAndUpdate(
-      req.params.id,
-      { isRead: true },
-      { new: true }
-    );
-    res.json(notification);
+    await Notification.findByIdAndDelete(req.params.id);
+    res.json({ message: 'Notification removed' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// @desc    Mark all as read
+// @desc    Mark all as read (delete all)
 // @route   PUT /api/notifications/read-all
 const markAllAsRead = async (req, res) => {
   try {
-    await Notification.updateMany(
-      { $or: [{ user: req.user._id }, { isGlobal: true }], isRead: false },
-      { isRead: true }
-    );
-    res.json({ message: 'All notifications marked as read' });
+    await Notification.deleteMany({
+      $or: [{ user: req.user._id }, { isGlobal: true }],
+    });
+    res.json({ message: 'All notifications cleared' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
