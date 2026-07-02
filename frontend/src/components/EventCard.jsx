@@ -85,7 +85,7 @@ export default function EventCard({ event, index = 0 }) {
         <div className="mt-3 space-y-1.5">
           <div className="flex items-center gap-2 text-white/50 text-xs">
             <Calendar size={12} className="text-primary-400 flex-shrink-0" />
-            <span>{format(new Date(event.date), 'EEE, dd MMM yyyy')} · {event.time}</span>
+            <span>{event.date ? format(new Date(event.date), 'EEE, dd MMM yyyy') : 'Date TBA'} {event.time ? `· ${event.time}` : ''}</span>
           </div>
           <div className="flex items-center gap-2 text-white/50 text-xs">
             <MapPin size={12} className="text-pink-accent flex-shrink-0" />

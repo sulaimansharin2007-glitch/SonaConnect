@@ -199,7 +199,7 @@ export default function EventDetailPage() {
                     <Clock size={18} className={`mt-0.5 flex-shrink-0 ${deadlinePassed ? 'text-danger' : 'text-orange-400'}`} />
                     <div>
                       <div className={`text-sm font-semibold ${deadlinePassed ? 'text-danger' : 'text-white'}`}>
-                        {deadlinePassed ? 'Deadline Passed' : format(new Date(event.deadline), 'dd MMM yyyy')}
+                        {deadlinePassed ? 'Deadline Passed' : (event.deadline ? format(new Date(event.deadline), 'dd MMM yyyy') : 'No Deadline')}
                       </div>
                       <div className="text-white/50 text-xs mt-0.5">Registration Deadline</div>
                     </div>
