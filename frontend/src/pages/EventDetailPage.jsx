@@ -176,7 +176,7 @@ export default function EventDetailPage() {
                 <div className="flex items-start gap-3">
                   <Calendar size={18} className="text-primary-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <div className="text-white text-sm font-semibold">{format(new Date(event.date), 'EEEE, dd MMMM yyyy')}</div>
+                    <div className="text-white text-sm font-semibold">{event.date ? format(new Date(event.date), 'EEEE, dd MMMM yyyy') : (event.createdAt ? format(new Date(event.createdAt), 'EEEE, dd MMMM yyyy') : 'Date TBA')}</div>
                     <div className="text-white/50 text-xs mt-0.5">{event.time}</div>
                   </div>
                 </div>

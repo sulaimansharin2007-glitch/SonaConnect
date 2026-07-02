@@ -83,7 +83,7 @@ export default function MyRegistrations() {
                     <h3 className="text-white font-bold truncate hover:text-primary-300 transition-colors">{reg.event?.title}</h3>
                     <div className="flex flex-wrap items-center gap-3 mt-1">
                       <span className="flex items-center gap-1 text-white/40 text-xs">
-                        <Calendar size={11} /> {reg.event?.date ? format(new Date(reg.event.date), 'dd MMM yyyy') : 'Date TBA'}
+                        <Calendar size={11} /> {reg.event?.date ? format(new Date(reg.event.date), 'dd MMM yyyy') : (reg.event?.createdAt ? format(new Date(reg.event.createdAt), 'dd MMM yyyy') : 'Date TBA')}
                       </span>
                       <span className="flex items-center gap-1 text-white/40 text-xs">
                         <Clock size={11} /> {reg.event?.time || '—'}
@@ -157,7 +157,7 @@ export default function MyRegistrations() {
               <div className="space-y-2 text-left glass rounded-xl p-4 mb-6">
                 <div className="flex justify-between text-sm">
                   <span className="text-white/50">Date</span>
-                  <span className="text-white font-medium">{showQR.event?.date ? format(new Date(showQR.event.date), 'dd MMM yyyy') : 'Date TBA'}</span>
+                  <span className="text-white font-medium">{showQR.event?.date ? format(new Date(showQR.event.date), 'dd MMM yyyy') : (showQR.event?.createdAt ? format(new Date(showQR.event.createdAt), 'dd MMM yyyy') : 'Date TBA')}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-white/50">Venue</span>
