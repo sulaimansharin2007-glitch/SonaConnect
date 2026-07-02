@@ -23,6 +23,7 @@ app.use('/api/clubs', require('./routes/clubRoutes'));
 app.use('/api/events', require('./routes/eventRoutes'));
 app.use('/api/registrations', require('./routes/registrationRoutes'));
 app.use('/api/notifications', require('./routes/notificationRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
 
 // Error middleware
 app.use(notFound);

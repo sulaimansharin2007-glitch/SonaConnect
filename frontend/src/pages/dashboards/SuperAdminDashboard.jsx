@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Shield, Users, Calendar, CheckCircle, XCircle, Loader2, Image,
-  Trash2, Eye, UserCheck, BarChart3, Plus, Edit3, X
+  Trash2, Eye, UserCheck, BarChart3, Plus, Edit3, X, UserX, Crown, GraduationCap, BookOpen
 } from 'lucide-react';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import Navbar from '../../components/Navbar';
 import { useAuth } from '../../context/AuthContext';
-import { getAllEvents, getClubs, approveEvent, deleteEvent, getEventStats, createEvent, updateEvent, updateClub } from '../../api';
+import { getAllEvents, getClubs, approveEvent, deleteEvent, getEventStats, createEvent, updateEvent, updateClub, getAllUsers, deleteUser, updateUserRole } from '../../api';
 
 const categories = ['workshop', 'seminar', 'speakers_forum', 'hackathon', 'other'];
 const categoryLabels = { workshop: 'Workshop', seminar: 'Seminar', speakers_forum: 'Speakers Forum', hackathon: 'Hackathon', other: 'Other' };
@@ -20,6 +20,8 @@ export default function SuperAdminDashboard() {
   const [stats, setStats] = useState({});
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState('events');
+  const [users, setUsers] = useState([]);
+  const [userSearch, setUserSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [editingEvent, setEditingEvent] = useState(null);
   const [submitting, setSubmitting] = useState(false);
@@ -74,14 +76,16 @@ export default function SuperAdminDashboard() {
 
   const fetchData = async () => {
     try {
-      const [evRes, clubRes, statRes] = await Promise.all([
+      const [evRes, clubRes, statRes, userRes] = await Promise.all([
         getAllEvents(),
         getClubs(),
         getEventStats(),
+        getAllUsers(),
       ]);
       setEvents(evRes.data);
       setClubs(clubRes.data);
       setStats(statRes.data);
+      setUsers(userRes.data);
       return evRes.data;
     } catch (err) {
       console.error(err);
@@ -248,6 +252,7 @@ export default function SuperAdminDashboard() {
             { key: 'events', label: `All Events (${events.length})` },
             { key: 'pending', label: `Pending (${pendingEvents.length})` },
             { key: 'clubs', label: `Clubs (${clubs.length})` },
+            { key: 'users', label: `Users (${users.length})` },
           ].map((t) => (
             <button key={t.key} onClick={() => setTab(t.key)}
               className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${
@@ -375,6 +380,130 @@ export default function SuperAdminDashboard() {
               </motion.div>
             ))}
           </div>
+        )}
+
+        {/* Users Tab */}
+        {tab === 'users' && (
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-4">
+            {/* Search */}
+            <div className="flex items-center gap-3 mb-4">
+              <input
+                type="text"
+                placeholder="Search by name, email or role..."
+                value={userSearch}
+                onChange={(e) => setUserSearch(e.target.value)}
+                className="input flex-1"
+              />
+              <span className="text-white/40 text-sm whitespace-nowrap">{users.length} total users</span>
+            </div>
+
+            {/* Role counts */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+              {[
+                { label: 'Students', count: users.filter(u => u.role === 'student').length, icon: '🎓', color: 'from-blue-500/20 to-blue-500/5 border-blue-500/20' },
+                { label: 'Faculty', count: users.filter(u => u.role === 'faculty').length, icon: '👨‍🏫', color: 'from-green-500/20 to-green-500/5 border-green-500/20' },
+                { label: 'Club Admins', count: users.filter(u => u.role === 'club_admin').length, icon: '🏅', color: 'from-purple-500/20 to-purple-500/5 border-purple-500/20' },
+                { label: 'Super Admins', count: users.filter(u => u.role === 'super_admin').length, icon: '🛡️', color: 'from-yellow-500/20 to-yellow-500/5 border-yellow-500/20' },
+              ].map(s => (
+                <div key={s.label} className={`card p-4 bg-gradient-to-br ${s.color}`}>
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl">{s.icon}</span>
+                    <span className="text-2xl font-black text-white">{s.count}</span>
+                  </div>
+                  <span className="text-white/50 text-xs mt-1 block">{s.label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Users Table */}
+            <div className="card overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-white/10">
+                      <th className="text-left px-5 py-3 text-white/50 font-medium">Name</th>
+                      <th className="text-left px-5 py-3 text-white/50 font-medium">Email</th>
+                      <th className="text-left px-5 py-3 text-white/50 font-medium">Dept.</th>
+                      <th className="text-left px-5 py-3 text-white/50 font-medium">Role</th>
+                      <th className="text-left px-5 py-3 text-white/50 font-medium">Joined</th>
+                      <th className="text-right px-5 py-3 text-white/50 font-medium">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users
+                      .filter(u => {
+                        const q = userSearch.toLowerCase();
+                        return !q || u.name?.toLowerCase().includes(q) || u.email?.toLowerCase().includes(q) || u.role?.toLowerCase().includes(q);
+                      })
+                      .map((u) => (
+                        <tr key={u._id} className="border-b border-white/5 hover:bg-white/[0.02]">
+                          <td className="px-5 py-3">
+                            <div className="flex items-center gap-2">
+                              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary-500 to-pink-500 flex items-center justify-center text-xs font-bold text-white">
+                                {u.name?.charAt(0).toUpperCase()}
+                              </div>
+                              <span className="text-white font-medium max-w-32 truncate">{u.name}</span>
+                            </div>
+                          </td>
+                          <td className="px-5 py-3 text-white/60 max-w-40 truncate">{u.email}</td>
+                          <td className="px-5 py-3 text-white/50 text-xs">{u.department || '—'}</td>
+                          <td className="px-5 py-3">
+                            <select
+                              value={u.role}
+                              disabled={u.role === 'super_admin'}
+                              onChange={async (e) => {
+                                try {
+                                  await updateUserRole(u._id, e.target.value);
+                                  toast.success(`Role updated to ${e.target.value}`);
+                                  fetchData();
+                                } catch {
+                                  toast.error('Failed to update role');
+                                }
+                              }}
+                              className="bg-white/10 text-white text-xs rounded-lg px-2 py-1 border border-white/20 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                              <option value="student">🎓 Student</option>
+                              <option value="faculty">👨‍🏫 Faculty</option>
+                              <option value="club_admin">🏅 Club Admin</option>
+                              <option value="super_admin">🛡️ Super Admin</option>
+                            </select>
+                          </td>
+                          <td className="px-5 py-3 text-white/40 text-xs">{u.createdAt ? format(new Date(u.createdAt), 'dd MMM yyyy') : '—'}</td>
+                          <td className="px-5 py-3">
+                            <div className="flex items-center justify-end">
+                              {u.role !== 'super_admin' && (
+                                <button
+                                  onClick={async () => {
+                                    if (!confirm(`Delete ${u.name}? This cannot be undone.`)) return;
+                                    try {
+                                      await deleteUser(u._id);
+                                      toast.success('User deleted');
+                                      fetchData();
+                                    } catch {
+                                      toast.error('Failed to delete user');
+                                    }
+                                  }}
+                                  className="p-1.5 rounded-lg text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                                  title="Delete User"
+                                >
+                                  <Trash2 size={14} />
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+                {users.length === 0 && (
+                  <div className="px-5 py-12 text-center text-white/40">
+                    <div className="text-4xl mb-2">👥</div>
+                    No users found.
+                  </div>
+                )}
+              </div>
+            </div>
+          </motion.div>
         )}
       </div>
 
