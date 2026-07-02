@@ -1,12 +1,19 @@
 const Notification = require('../models/Notification');
+const Event = require('../models/Event');
 
 // @desc    Get notifications for current user
 // @route   GET /api/notifications
 const getNotifications = async (req, res) => {
   try {
+    // Find all completed events to exclude their notifications
+    const completedEvents = await Event.find({ status: 'completed' }, '_id');
+    const completedLinks = completedEvents.map(e => `/events/${e._id}`);
+
     const notifications = await Notification.find({
       $or: [{ user: req.user._id }, { isGlobal: true }],
+      link: { $nin: completedLinks }
     }).sort({ createdAt: -1 }).limit(50);
+    
     res.json(notifications);
   } catch (error) {
     res.status(500).json({ message: error.message });
