@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Shield, Users, Calendar, CheckCircle, XCircle, Loader2, Image,
-  Trash2, Eye, UserCheck, BarChart3, Plus, Edit3, X, UserX, Crown, GraduationCap, BookOpen
+  Trash2, Eye, UserCheck, BarChart3, Plus, Edit3, X
 } from 'lucide-react';
 import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import Navbar from '../../components/Navbar';
 import { useAuth } from '../../context/AuthContext';
-import { getAllEvents, getClubs, approveEvent, deleteEvent, getEventStats, createEvent, updateEvent, updateClub, getAllUsers, deleteUser, updateUserRole } from '../../api';
+import { getAllEvents, getClubs, approveEvent, deleteEvent, getEventStats, createEvent, updateEvent, updateClub, getAllUsers, deleteUser } from '../../api';
 
 const categories = ['workshop', 'seminar', 'speakers_forum', 'hackathon', 'other'];
 const categoryLabels = { workshop: 'Workshop', seminar: 'Seminar', speakers_forum: 'Speakers Forum', hackathon: 'Hackathon', other: 'Other' };
@@ -425,6 +425,7 @@ export default function SuperAdminDashboard() {
                       <th className="text-left px-5 py-3 text-white/50 font-medium">Email</th>
                       <th className="text-left px-5 py-3 text-white/50 font-medium">Dept.</th>
                       <th className="text-left px-5 py-3 text-white/50 font-medium">Role</th>
+
                       <th className="text-left px-5 py-3 text-white/50 font-medium">Joined</th>
                       <th className="text-right px-5 py-3 text-white/50 font-medium">Actions</th>
                     </tr>
@@ -448,25 +449,9 @@ export default function SuperAdminDashboard() {
                           <td className="px-5 py-3 text-white/60 max-w-40 truncate">{u.email}</td>
                           <td className="px-5 py-3 text-white/50 text-xs">{u.department || '—'}</td>
                           <td className="px-5 py-3">
-                            <select
-                              value={u.role}
-                              disabled={u.role === 'super_admin'}
-                              onChange={async (e) => {
-                                try {
-                                  await updateUserRole(u._id, e.target.value);
-                                  toast.success(`Role updated to ${e.target.value}`);
-                                  fetchData();
-                                } catch {
-                                  toast.error('Failed to update role');
-                                }
-                              }}
-                              className="bg-white/10 text-white text-xs rounded-lg px-2 py-1 border border-white/20 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                            >
-                              <option value="student">🎓 Student</option>
-                              <option value="faculty">👨‍🏫 Faculty</option>
-                              <option value="club_admin">🏅 Club Admin</option>
-                              <option value="super_admin">🛡️ Super Admin</option>
-                            </select>
+                            <span className="text-xs px-2 py-1 rounded-lg bg-white/10 text-white/70 capitalize border border-white/15">
+                              {u.role === 'student' ? '🎓' : u.role === 'faculty' ? '👨‍🏫' : u.role === 'club_admin' ? '🏅' : '🛡️'} {u.role?.replace('_', ' ')}
+                            </span>
                           </td>
                           <td className="px-5 py-3 text-white/40 text-xs">{u.createdAt ? format(new Date(u.createdAt), 'dd MMM yyyy') : '—'}</td>
                           <td className="px-5 py-3">
