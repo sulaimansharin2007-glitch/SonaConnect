@@ -17,6 +17,10 @@ const registerUser = async (req, res) => {
         return res.status(400).json({ message: 'Invalid Faculty Access Code. Please contact administration.' });
       }
     }
+    
+    if (role === 'student' && !email.endsWith('@sonatech.ac.in')) {
+      return res.status(400).json({ message: 'Students must use their @sonatech.ac.in email address' });
+    }
 
     const userExists = await User.findOne({ email });
     if (userExists) {

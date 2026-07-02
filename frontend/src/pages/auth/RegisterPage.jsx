@@ -66,6 +66,9 @@ export default function RegisterPage() {
     if (form.role === 'faculty' && !form.accessCode) {
       return toast.error('Please enter the Faculty Access Code');
     }
+    if (form.role === 'student' && !form.email.endsWith('@sonatech.ac.in')) {
+      return toast.error('Students must use their @sonatech.ac.in email address');
+    }
 
     setLoading(true);
     try {
