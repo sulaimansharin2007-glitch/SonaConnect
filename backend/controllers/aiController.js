@@ -73,15 +73,26 @@ const extractPosterData = async (req, res) => {
 
     let jsonString = response.text;
     
-    // Robust JSON extraction: Find the first '{' and last '}'
-    const startIndex = jsonString.indexOf('{');
-    const endIndex = jsonString.lastIndexOf('}');
-    
-    if (startIndex !== -1 && endIndex !== -1) {
-      jsonString = jsonString.substring(startIndex, endIndex + 1);
+    // Sometimes Gemini wraps response in markdown even with application/json
+    const markdownMatch = jsonString.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+    if (markdownMatch && markdownMatch[1]) {
+      jsonString = markdownMatch[1];
+    } else {
+      // Fallback: try to find the outermost JSON object
+      const start = jsonString.indexOf('{');
+      const end = jsonString.lastIndexOf('}');
+      if (start !== -1 && end !== -1) {
+        jsonString = jsonString.substring(start, end + 1);
+      }
     }
     
-    const parsedData = JSON.parse(jsonString);
+    let parsedData = {};
+    try {
+      parsedData = JSON.parse(jsonString);
+    } catch (parseError) {
+      console.error('JSON Parse Error. Raw string:', jsonString);
+      throw new Error('AI returned invalid data format. Please try again.');
+    }
 
     res.json(parsedData);
   } catch (error) {
