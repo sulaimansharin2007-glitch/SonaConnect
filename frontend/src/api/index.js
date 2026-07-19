@@ -41,6 +41,7 @@ export const createEvent = (data) => API.post('/events', data);
 export const updateEvent = (id, data) => API.put(`/events/${id}`, data);
 export const deleteEvent = (id) => API.delete(`/events/${id}`);
 export const approveEvent = (id) => API.put(`/events/${id}/approve`);
+export const extractPosterData = (base64Image) => API.post('/ai/extract-poster', { base64Image });
 export const getEventStats = () => API.get('/events/stats');
 
 // Registrations

@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 import toast from 'react-hot-toast';
 import Navbar from '../../components/Navbar';
 import { useAuth } from '../../context/AuthContext';
-import { getAllEvents, getClubs, approveEvent, deleteEvent, getEventStats, createEvent, updateEvent, updateClub, getAllUsers, deleteUser } from '../../api';
+import { getAllEvents, getClubs, approveEvent, deleteEvent, getEventStats, createEvent, updateEvent, updateClub, getAllUsers, deleteUser, extractPosterData } from '../../api';
 
 const categories = ['workshop', 'seminar', 'speakers_forum', 'hackathon', 'other'];
 const categoryLabels = { workshop: 'Workshop', seminar: 'Seminar', speakers_forum: 'Speakers Forum', hackathon: 'Hackathon', other: 'Other' };
@@ -25,6 +25,7 @@ export default function SuperAdminDashboard() {
   const [showModal, setShowModal] = useState(false);
   const [editingEvent, setEditingEvent] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [extractingAI, setExtractingAI] = useState(false);
   const [showClubModal, setShowClubModal] = useState(false);
   const [editingClub, setEditingClub] = useState(null);
   const [clubForm, setClubForm] = useState({
@@ -143,6 +144,32 @@ export default function SuperAdminDashboard() {
       toast.error(err.response?.data?.message || 'Failed');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleAIExtract = async () => {
+    if (!form.posterUrl) return toast.error('Please upload a poster first');
+    setExtractingAI(true);
+    const toastId = toast.loading('Extracting details using AI...');
+    try {
+      const { data } = await extractPosterData(form.posterUrl);
+      setForm((prev) => ({
+        ...prev,
+        title: data.title || prev.title,
+        description: data.description || prev.description,
+        date: data.date || prev.date,
+        time: data.time || prev.time,
+        venue: data.venue || prev.venue,
+        prizes: data.prizes || prev.prizes,
+        eligibility: data.eligibility || prev.eligibility,
+        participationType: data.participationType || prev.participationType,
+      }));
+      toast.success('Fields auto-filled successfully!', { id: toastId });
+    } catch (err) {
+      console.error(err);
+      toast.error('AI Extraction failed. Please fill manually.', { id: toastId });
+    } finally {
+      setExtractingAI(false);
     }
   };
 
@@ -542,6 +569,19 @@ export default function SuperAdminDashboard() {
                     }}
                   />
                 </div>
+                {form.posterUrl && (
+                  <div className="flex justify-end mt-2">
+                    <button
+                      type="button"
+                      onClick={handleAIExtract}
+                      disabled={extractingAI}
+                      className="btn-primary py-2 px-4 text-xs font-semibold bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-600 hover:to-indigo-600 flex items-center gap-2"
+                    >
+                      {extractingAI ? <Loader2 size={14} className="animate-spin" /> : '✨'}
+                      {extractingAI ? 'Extracting...' : 'Auto-fill using AI'}
+                    </button>
+                  </div>
+                )}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="sm:col-span-2"><label className="text-sm text-white/60 mb-1 block">Title</label>
                     <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="input" /></div>

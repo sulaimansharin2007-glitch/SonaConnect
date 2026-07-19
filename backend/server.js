@@ -24,6 +24,7 @@ app.use('/api/events', require('./routes/eventRoutes'));
 app.use('/api/registrations', require('./routes/registrationRoutes'));
 app.use('/api/notifications', require('./routes/notificationRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/ai', require('./routes/aiRoutes'));
 
 // Error middleware
 app.use(notFound);
