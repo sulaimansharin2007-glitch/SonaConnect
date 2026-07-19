@@ -17,6 +17,7 @@ export default function EventDetailPage() {
   const { user } = useAuth();
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showPosterModal, setShowPosterModal] = useState(false);
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -84,18 +85,30 @@ export default function EventDetailPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`relative h-64 sm:h-80 rounded-3xl overflow-hidden bg-gradient-to-br ${categoryColors[event.category] || categoryColors.other}`}
+              className={`relative rounded-3xl overflow-hidden bg-gradient-to-br ${categoryColors[event.category] || categoryColors.other} group flex items-center justify-center`}
             >
               {event.posterUrl ? (
-                <img src={event.posterUrl} alt={event.title} className="w-full h-full object-cover" />
+                <div 
+                  className="relative w-full cursor-pointer overflow-hidden max-h-[500px] sm:max-h-[600px] flex items-center justify-center"
+                  onClick={() => setShowPosterModal(true)}
+                >
+                  <img src={event.posterUrl} alt={event.title} className="w-full h-full object-contain" />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm">
+                    <span className="text-white font-medium flex items-center gap-2">
+                      <ExternalLink size={20} /> View Full Poster
+                    </span>
+                  </div>
+                </div>
               ) : (
-                <div className="flex items-center justify-center h-full">
+                <div className="flex items-center justify-center h-64 sm:h-80 w-full">
                   <div className="text-8xl opacity-20">
                     {event.category === 'hackathon' ? '💻' : event.category === 'workshop' ? '🔧' : event.category === 'cultural' ? '🎭' : event.category === 'sports' ? '🏆' : '📅'}
                   </div>
                 </div>
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent" />
+              
+              {/* Gradient overlay for badges only if not a full poster */}
+              {!event.posterUrl && <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-transparent to-transparent pointer-events-none" />}
 
               {/* Status badge */}
               <div className="absolute top-4 right-4">
@@ -241,6 +254,36 @@ export default function EventDetailPage() {
         </div>
       </div>
 
+      {/* Full Poster Modal */}
+      <AnimatePresence>
+        {showPosterModal && event.posterUrl && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowPosterModal(false)}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8 cursor-zoom-out backdrop-blur-sm"
+          >
+            <motion.img
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              src={event.posterUrl}
+              alt={event.title}
+              className="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking the image itself
+            />
+            
+            <button 
+              onClick={() => setShowPosterModal(false)}
+              className="absolute top-4 right-4 sm:top-8 sm:right-8 w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-colors backdrop-blur-md"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
