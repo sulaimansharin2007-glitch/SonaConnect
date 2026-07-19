@@ -72,8 +72,15 @@ const extractPosterData = async (req, res) => {
     });
 
     let jsonString = response.text;
-    // Clean up potential markdown blocks if API ignores responseMimeType
-    jsonString = jsonString.replace(/```json\n?/g, '').replace(/```\n?/g, '');
+    
+    // Robust JSON extraction: Find the first '{' and last '}'
+    const startIndex = jsonString.indexOf('{');
+    const endIndex = jsonString.lastIndexOf('}');
+    
+    if (startIndex !== -1 && endIndex !== -1) {
+      jsonString = jsonString.substring(startIndex, endIndex + 1);
+    }
+    
     const parsedData = JSON.parse(jsonString);
 
     res.json(parsedData);
