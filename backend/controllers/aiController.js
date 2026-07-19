@@ -25,7 +25,11 @@ const extractPosterData = async (req, res) => {
     }
 
     // The frontend sends base64 string which might have "data:image/jpeg;base64," prefix.
-    // We need to strip the prefix for the Gemini API.
+    let mimeType = 'image/jpeg';
+    const matches = base64Image.match(/^data:(image\/\w+);base64,/);
+    if (matches && matches[1]) {
+      mimeType = matches[1];
+    }
     const base64Data = base64Image.replace(/^data:image\/\w+;base64,/, '');
 
     const prompt = `
@@ -55,7 +59,7 @@ const extractPosterData = async (req, res) => {
             { text: prompt },
             {
               inlineData: {
-                mimeType: 'image/jpeg',
+                mimeType: mimeType,
                 data: base64Data
               }
             }
@@ -67,7 +71,9 @@ const extractPosterData = async (req, res) => {
       }
     });
 
-    const jsonString = response.text;
+    let jsonString = response.text;
+    // Clean up potential markdown blocks if API ignores responseMimeType
+    jsonString = jsonString.replace(/```json\n?/g, '').replace(/```\n?/g, '');
     const parsedData = JSON.parse(jsonString);
 
     res.json(parsedData);
