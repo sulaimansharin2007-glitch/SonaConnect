@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema(
     },
     department: { type: String, default: '' },
     rollNumber: { type: String, default: '' },
+    phoneNumber: { type: String, default: '' },
     profilePic: { type: String, default: '' },
     clubManaged: { type: mongoose.Schema.Types.ObjectId, ref: 'Club', default: null },
     isVerified: { type: Boolean, default: false },
