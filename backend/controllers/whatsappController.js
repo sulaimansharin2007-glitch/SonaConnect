@@ -57,6 +57,7 @@ const verifyWebhook = (req, res) => {
 // @route   POST /api/whatsapp/webhook
 const handleWebhook = async (req, res) => {
   const body = req.body;
+  console.log('📨 WhatsApp Webhook received:', JSON.stringify(body).substring(0, 300));
 
   if (body.object) {
     if (
@@ -68,20 +69,24 @@ const handleWebhook = async (req, res) => {
     ) {
       const message = body.entry[0].changes[0].value.messages[0];
       const senderPhone = message.from; // Contains phone number e.g., 919876543210
+      console.log('📱 Message from:', senderPhone, '| Type:', message.type);
       
       // 1. Authorize Sender
       const user = await User.findOne({ phoneNumber: senderPhone });
       const hardcodedAdmin = process.env.ADMIN_WHATSAPP_NUMBER;
+      console.log('🔐 Admin env:', hardcodedAdmin, '| Sender:', senderPhone, '| Match:', senderPhone === hardcodedAdmin);
       
       const isAuthorized = user || (hardcodedAdmin && senderPhone === hardcodedAdmin);
 
       if (!isAuthorized) {
+        console.log('❌ Unauthorized sender:', senderPhone);
         await sendWhatsAppMessage(senderPhone, "❌ Unauthorized. You are not allowed to post to SonaConnect.");
         return res.sendStatus(200);
       }
 
       // Check if they are club admin or faculty
       if (user && user.role !== 'club_admin' && user.role !== 'faculty' && user.role !== 'super_admin') {
+        console.log('❌ User lacks permission:', user.role);
         await sendWhatsAppMessage(senderPhone, "❌ You do not have permission to create events.");
         return res.sendStatus(200);
       }
@@ -89,6 +94,7 @@ const handleWebhook = async (req, res) => {
       // 2. Process Image
       if (message.type === 'image') {
         const imageId = message.image.id;
+        console.log('🖼️ Processing image ID:', imageId);
         
         await sendWhatsAppMessage(senderPhone, "⏳ Poster received! AI is extracting details, please wait...");
         
@@ -99,6 +105,7 @@ const handleWebhook = async (req, res) => {
           });
           
           const imageUrl = mediaRes.data.url;
+          console.log('🔗 Got image URL from Meta');
           
           // Download Image Bytes
           const imageRes = await axios.get(imageUrl, {
@@ -108,6 +115,7 @@ const handleWebhook = async (req, res) => {
           
           const base64Data = Buffer.from(imageRes.data, 'binary').toString('base64');
           const mimeType = imageRes.headers['content-type'] || 'image/jpeg';
+          console.log('📦 Image downloaded, mimeType:', mimeType);
           
           // 3. Extract Details with Gemini
           const prompt = `
@@ -128,8 +136,9 @@ const handleWebhook = async (req, res) => {
             For the date, try to format it as YYYY-MM-DD.
           `;
           
+          console.log('🤖 Sending to Gemini AI...');
           const aiResponse = await ai.models.generateContent({
-            model: 'gemini-flash-latest',
+            model: 'gemini-2.0-flash',
             contents: [
               {
                 role: 'user',
