@@ -59,6 +59,9 @@ const handleWebhook = async (req, res) => {
   const body = req.body;
   console.log('📨 WhatsApp Webhook received:', JSON.stringify(body).substring(0, 300));
 
+  // 1. Immediately send 200 OK to Meta so they stop retrying!
+  res.sendStatus(200);
+
   if (body.object) {
     if (
       body.entry &&
@@ -68,30 +71,25 @@ const handleWebhook = async (req, res) => {
       body.entry[0].changes[0].value.messages[0]
     ) {
       const message = body.entry[0].changes[0].value.messages[0];
-      const senderPhone = message.from; // Contains phone number e.g., 919876543210
+      const senderPhone = message.from; 
       console.log('📱 Message from:', senderPhone, '| Type:', message.type);
       
-      // 1. Authorize Sender
       const user = await User.findOne({ phoneNumber: senderPhone });
       const hardcodedAdmin = process.env.ADMIN_WHATSAPP_NUMBER;
-      console.log('🔐 Admin env:', hardcodedAdmin, '| Sender:', senderPhone, '| Match:', senderPhone === hardcodedAdmin);
-      
       const isAuthorized = user || (hardcodedAdmin && senderPhone === hardcodedAdmin);
 
       if (!isAuthorized) {
         console.log('❌ Unauthorized sender:', senderPhone);
         await sendWhatsAppMessage(senderPhone, "❌ Unauthorized. You are not allowed to post to SonaConnect.");
-        return res.sendStatus(200);
+        return;
       }
 
-      // Check if they are club admin or faculty
       if (user && user.role !== 'club_admin' && user.role !== 'faculty' && user.role !== 'super_admin') {
         console.log('❌ User lacks permission:', user.role);
         await sendWhatsAppMessage(senderPhone, "❌ You do not have permission to create events.");
-        return res.sendStatus(200);
+        return;
       }
 
-      // 2. Process Image
       if (message.type === 'image') {
         const imageId = message.image.id;
         console.log('🖼️ Processing image ID:', imageId);
@@ -99,7 +97,6 @@ const handleWebhook = async (req, res) => {
         await sendWhatsAppMessage(senderPhone, "⏳ Poster received! AI is extracting details, please wait...");
         
         try {
-          // Get Image URL from Meta
           const mediaRes = await axios.get(`https://graph.facebook.com/v19.0/${imageId}`, {
             headers: { Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}` }
           });
@@ -107,7 +104,6 @@ const handleWebhook = async (req, res) => {
           const imageUrl = mediaRes.data.url;
           console.log('🔗 Got image URL from Meta');
           
-          // Download Image Bytes
           const imageRes = await axios.get(imageUrl, {
             headers: { Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}` },
             responseType: 'arraybuffer'
@@ -117,7 +113,6 @@ const handleWebhook = async (req, res) => {
           const mimeType = imageRes.headers['content-type'] || 'image/jpeg';
           console.log('📦 Image downloaded, mimeType:', mimeType);
           
-          // 3. Extract Details with Gemini
           const prompt = `
             You are an AI assistant that extracts event details from posters.
             Analyze this event poster and extract the following information. 
@@ -165,21 +160,16 @@ const handleWebhook = async (req, res) => {
           
           const parsedData = JSON.parse(jsonString);
           
-          // Note: The poster image would ideally be uploaded to Cloudinary here.
-          // For simplicity, we create the event with a placeholder URL, or we could pass the base64 
-          // but base64 is too large for MongoDB string field usually.
-          
-          // 4. Save to Database
           const newEvent = await Event.create({
             title: parsedData.title || "Untitled Event",
             description: parsedData.description || "No description provided.",
             date: parsedData.date || new Date().toISOString().split('T')[0],
             time: parsedData.time || "TBD",
             venue: parsedData.venue || "TBD",
-            category: "other", // Default category
+            category: "other",
             organizer: user ? user._id : null,
             club: user && user.clubManaged ? user.clubManaged : null,
-            posterUrl: "", // We skip posterUrl here because saving base64 to DB is bad practice
+            posterUrl: "", 
             prizes: parsedData.prizes || "",
             eligibility: parsedData.eligibility || "All Students",
             participationType: parsedData.participationType || "solo",
@@ -196,9 +186,6 @@ const handleWebhook = async (req, res) => {
         await sendWhatsAppMessage(senderPhone, "Hi! Please send an event *poster image* directly to me, and I will publish it to SonaConnect using AI.");
       }
     }
-    res.sendStatus(200);
-  } else {
-    res.sendStatus(404);
   }
 };
 
