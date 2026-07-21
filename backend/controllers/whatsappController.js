@@ -131,23 +131,22 @@ const handleWebhook = async (req, res) => {
             For the date, try to format it as YYYY-MM-DD.
           `;
           
-          console.log('🤖 Sending to Gemini AI (REST API)...');
-          
-          const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
-          
-          const geminiRes = await axios.post(geminiUrl, {
-            contents: [{
-              parts: [
-                { text: prompt },
-                { inline_data: { mime_type: mimeType, data: base64Data } }
-              ]
-            }],
-            generationConfig: { responseMimeType: "application/json" }
-          }, {
-            headers: { 'Content-Type': 'application/json' }
+          console.log('🤖 Sending to Gemini AI...');
+          const aiResponse = await ai.models.generateContent({
+            model: 'gemini-2.0-flash',
+            contents: [
+              {
+                role: 'user',
+                parts: [
+                  { text: prompt },
+                  { inlineData: { mimeType, data: base64Data } }
+                ]
+              }
+            ],
+            config: { responseMimeType: "application/json" }
           });
           
-          let jsonString = geminiRes.data.candidates[0].content.parts[0].text;
+          let jsonString = aiResponse.text;
           const markdownMatch = jsonString.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
           if (markdownMatch && markdownMatch[1]) {
             jsonString = markdownMatch[1];
