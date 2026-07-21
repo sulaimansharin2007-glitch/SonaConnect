@@ -131,22 +131,23 @@ const handleWebhook = async (req, res) => {
             For the date, try to format it as YYYY-MM-DD.
           `;
           
-          console.log('🤖 Sending to Gemini AI...');
-          const aiResponse = await ai.models.generateContent({
-            model: 'gemini-2.0-flash',
-            contents: [
-              {
-                role: 'user',
-                parts: [
-                  { text: prompt },
-                  { inlineData: { mimeType, data: base64Data } }
-                ]
-              }
-            ],
-            config: { responseMimeType: "application/json" }
+          console.log('🤖 Sending to Gemini AI (REST API)...');
+          
+          const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
+          
+          const geminiRes = await axios.post(geminiUrl, {
+            contents: [{
+              parts: [
+                { text: prompt },
+                { inline_data: { mime_type: mimeType, data: base64Data } }
+              ]
+            }],
+            generationConfig: { responseMimeType: "application/json" }
+          }, {
+            headers: { 'Content-Type': 'application/json' }
           });
           
-          let jsonString = aiResponse.text;
+          let jsonString = geminiRes.data.candidates[0].content.parts[0].text;
           const markdownMatch = jsonString.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
           if (markdownMatch && markdownMatch[1]) {
             jsonString = markdownMatch[1];
@@ -180,7 +181,8 @@ const handleWebhook = async (req, res) => {
           
         } catch (err) {
           console.error("WhatsApp AI Error:", err);
-          await sendWhatsAppMessage(senderPhone, "❌ Failed to extract details from the poster. Please post manually on the website.");
+          const errorDetail = err?.response?.data ? JSON.stringify(err.response.data) : err.message;
+          await sendWhatsAppMessage(senderPhone, `❌ Failed to extract details. ERROR: ${errorDetail}`);
         }
       } else {
         await sendWhatsAppMessage(senderPhone, "Hi! Please send an event *poster image* directly to me, and I will publish it to SonaConnect using AI.");
