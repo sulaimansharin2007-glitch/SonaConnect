@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const sendWhatsAppMessage = async (to, text) => {
-  if (!process.process || !process.env.WHATSAPP_TOKEN || !process.env.WHATSAPP_PHONE_ID) {
+  if (!process.env.WHATSAPP_TOKEN || !process.env.WHATSAPP_PHONE_ID) {
     console.log('⚠️ WHATSAPP_TOKEN or WHATSAPP_PHONE_ID missing in env');
     return { success: false, error: 'WHATSAPP_TOKEN or WHATSAPP_PHONE_ID not set in server environment.' };
   }
