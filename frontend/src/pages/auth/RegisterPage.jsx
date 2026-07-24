@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, Mail, Lock, User, BookOpen, Zap, ArrowRight, Phone, CheckCircle2 } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User, BookOpen, Zap, ArrowRight, Phone } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { register, sendPhoneOtp, verifyPhoneOtp } from '../../api';
+import { register } from '../../api';
 import { useAuth } from '../../context/AuthContext';
 
 const departments = [
@@ -51,48 +51,10 @@ export default function RegisterPage() {
     phoneNumber: '',
     accessCode: ''
   });
-  const [phoneOtp, setPhoneOtp] = useState('');
-  const [phoneOtpSent, setPhoneOtpSent] = useState(false);
-  const [phoneVerified, setPhoneVerified] = useState(false);
-  const [sendingPhoneOtp, setSendingPhoneOtp] = useState(false);
-  const [verifyingPhoneOtp, setVerifyingPhoneOtp] = useState(false);
-
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const { loginUser } = useAuth();
   const navigate = useNavigate();
-
-  const handleSendPhoneOtp = async () => {
-    if (!form.phoneNumber || form.phoneNumber.length < 10) {
-      return toast.error('Please enter a valid WhatsApp phone number with country code (e.g. 919876543210)');
-    }
-    setSendingPhoneOtp(true);
-    try {
-      await sendPhoneOtp({ phoneNumber: form.phoneNumber });
-      setPhoneOtpSent(true);
-      toast.success('🔑 4-digit OTP sent to your WhatsApp!');
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to send WhatsApp OTP');
-    } finally {
-      setSendingPhoneOtp(false);
-    }
-  };
-
-  const handleVerifyPhoneOtp = async () => {
-    if (!phoneOtp || phoneOtp.length !== 4) {
-      return toast.error('Please enter the 4-digit WhatsApp OTP');
-    }
-    setVerifyingPhoneOtp(true);
-    try {
-      await verifyPhoneOtp({ phoneNumber: form.phoneNumber, otp: phoneOtp });
-      setPhoneVerified(true);
-      toast.success('✅ WhatsApp Phone Number Verified!');
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Invalid WhatsApp OTP');
-    } finally {
-      setVerifyingPhoneOtp(false);
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -108,8 +70,8 @@ export default function RegisterPage() {
     if (form.role === 'student' && !form.email.endsWith('@sonatech.ac.in')) {
       return toast.error('Students must use their @sonatech.ac.in email address');
     }
-    if ((form.role === 'faculty' || form.role === 'club_admin') && !phoneVerified) {
-      return toast.error('Please verify your WhatsApp phone number via OTP before creating account');
+    if ((form.role === 'faculty' || form.role === 'club_admin') && !form.phoneNumber) {
+      return toast.error('Please enter your WhatsApp phone number');
     }
 
     setLoading(true);
@@ -224,49 +186,18 @@ export default function RegisterPage() {
               </div>
             )}
 
-            {/* WhatsApp Phone Number (Faculty & Club Admins with WhatsApp OTP Verification) */}
+            {/* WhatsApp Phone Number (Faculty & Club Admins only) */}
             {(form.role === 'faculty' || form.role === 'club_admin') && (
-              <div className="space-y-3 bg-white/5 p-4 rounded-xl border border-white/10">
-                <div>
-                  <label className="text-sm font-medium text-white/90 mb-1.5 flex items-center justify-between">
-                    <span>WhatsApp Number <span className="text-red-400">*</span></span>
-                    {phoneVerified && (
-                      <span className="text-xs text-emerald-400 font-bold flex items-center gap-1">
-                        <CheckCircle2 size={13} /> Verified
-                      </span>
-                    )}
-                  </label>
-                  <div className="flex gap-2">
-                    <div className="relative flex-1">
-                      <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
-                      <input type="text" placeholder="e.g. 919876543210" value={form.phoneNumber}
-                        disabled={phoneVerified}
-                        onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
-                        className="input pl-10" required />
-                    </div>
-                    {!phoneVerified && (
-                      <button type="button" onClick={handleSendPhoneOtp} disabled={sendingPhoneOtp}
-                        className="btn-secondary text-xs px-4 py-2 flex items-center gap-1 whitespace-nowrap">
-                        {sendingPhoneOtp ? 'Sending...' : phoneOtpSent ? 'Resend OTP' : 'Send OTP'}
-                      </button>
-                    )}
-                  </div>
+              <div>
+                <label className="text-sm text-white/60 mb-1.5 block">
+                  WhatsApp Number <span className="text-red-400">*</span> <span className="text-white/30">(used to send event posters to bot)</span>
+                </label>
+                <div className="relative">
+                  <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+                  <input type="text" placeholder="e.g. 919876543210 (with country code)" value={form.phoneNumber}
+                    onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
+                    className="input pl-10" required />
                 </div>
-
-                {phoneOtpSent && !phoneVerified && (
-                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="pt-2 border-t border-white/10">
-                    <label className="text-xs text-white/70 mb-1 block">Enter 4-Digit WhatsApp OTP</label>
-                    <div className="flex gap-2">
-                      <input type="text" maxLength={4} placeholder="1234" value={phoneOtp}
-                        onChange={(e) => setPhoneOtp(e.target.value)}
-                        className="input text-center text-lg font-bold tracking-widest" />
-                      <button type="button" onClick={handleVerifyPhoneOtp} disabled={verifyingPhoneOtp}
-                        className="btn-primary text-xs px-5 whitespace-nowrap">
-                        {verifyingPhoneOtp ? 'Verifying...' : 'Verify OTP'}
-                      </button>
-                    </div>
-                  </motion.div>
-                )}
               </div>
             )}
 
