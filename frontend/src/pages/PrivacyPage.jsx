@@ -87,7 +87,7 @@ export default function PrivacyPage() {
               If you have any questions about this Privacy Policy, please contact the SonaConnect development team at Sona College of Technology, Salem, Tamil Nadu, India.
             </p>
             <p className="mt-2">
-              Email: <a href="mailto:sonaconnect@sonatech.ac.in" className="text-primary-400 hover:underline">sonaconnect@sonatech.ac.in</a>
+              Email: <a href="mailto:sonaconnect.web@gmail.com" className="text-primary-400 hover:underline">sonaconnect.web@gmail.com</a>
             </p>
           </section>
 
