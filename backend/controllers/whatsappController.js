@@ -54,6 +54,7 @@ const handleWebhook = async (req, res) => {
       body.entry[0].changes[0].value.messages[0]
     ) {
       const message = body.entry[0].changes[0].value.messages[0];
+      const senderPhone = message.from || '';
       const cleanSenderPhone = senderPhone.replace(/[^0-9]/g, '');
       const last10 = cleanSenderPhone.slice(-10);
       
