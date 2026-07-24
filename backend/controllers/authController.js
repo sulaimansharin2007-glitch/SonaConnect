@@ -1,8 +1,10 @@
 const User = require('../models/User');
 const generateToken = require('../utils/generateToken');
 const sendEmail = require('../utils/emailService');
+const sendWhatsAppMessage = require('../utils/whatsappService');
 
-// Generate 6 digit OTP
+// Generate 4 digit OTP for WhatsApp phone verification
+const generate4DigitOTP = () => Math.floor(1000 + Math.random() * 9000).toString();
 const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString();
 
 // @desc    Register user
@@ -114,11 +116,75 @@ const verifySignupOtp = async (req, res) => {
   }
 };
 
+// @desc    Send 4-digit OTP to WhatsApp number for Phone verification
+// @route   POST /api/auth/send-phone-otp
+const sendPhoneOtp = async (req, res) => {
+  try {
+    const { phoneNumber } = req.body;
+    if (!phoneNumber) {
+      return res.status(400).json({ message: 'Please provide a valid WhatsApp phone number' });
+    }
+
+    const cleanPhone = phoneNumber.replace(/[^0-9]/g, '');
+    const existingPhoneUser = await User.findOne({ phoneNumber: cleanPhone, isVerified: true });
+    if (existingPhoneUser) {
+      return res.status(400).json({ message: 'An account with this WhatsApp phone number already exists.' });
+    }
+
+    const otp = generate4DigitOTP();
+    const expiry = new Date(Date.now() + 10 * 60 * 1000);
+
+    // Save temporary OTP in DB tied to this phone number
+    await User.findOneAndUpdate(
+      { phoneNumber: cleanPhone },
+      { 
+        otp, 
+        otpExpiry: expiry,
+        name: 'Pending Phone Verification',
+        email: `${cleanPhone}@pending.whatsapp`,
+        password: 'PendingPhonePassword123!'
+      },
+      { upsert: true, setDefaultsOnInsert: true, new: true }
+    );
+
+    const messageText = `🔑 Your SonaConnect WhatsApp Verification OTP is: *${otp}*\n\nThis code expires in 10 minutes. Do not share it with anyone.`;
+    const sent = await sendWhatsAppMessage(cleanPhone, messageText);
+
+    if (!sent) {
+      return res.status(500).json({ message: 'Failed to send WhatsApp OTP. Please ensure your number is valid and has WhatsApp.' });
+    }
+
+    res.json({ message: `WhatsApp OTP sent successfully to ${cleanPhone}` });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc    Verify 4-digit WhatsApp Phone OTP
+// @route   POST /api/auth/verify-phone-otp
+const verifyPhoneOtp = async (req, res) => {
+  try {
+    const { phoneNumber, otp } = req.body;
+    const cleanPhone = phoneNumber ? phoneNumber.replace(/[^0-9]/g, '') : '';
+    
+    const user = await User.findOne({ phoneNumber: cleanPhone });
+    if (!user) return res.status(404).json({ message: 'No OTP request found for this phone number' });
+    
+    if (user.otp !== otp || user.otpExpiry < new Date()) {
+      return res.status(400).json({ message: 'Invalid or expired OTP' });
+    }
+
+    res.json({ message: 'WhatsApp Phone Number verified successfully!', phoneVerified: true });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // @desc    Step 3: complete profile after email verification
 // @route   POST /api/auth/complete-profile
 const completeProfile = async (req, res) => {
   try {
-    const { email, name, password, role, department, rollNumber, accessCode } = req.body;
+    const { email, name, password, role, department, rollNumber, phoneNumber, accessCode } = req.body;
 
     if (role === 'faculty') {
       const requiredCode = process.env.FACULTY_ACCESS_CODE || 'Sona_Fac_2618';
@@ -136,6 +202,9 @@ const completeProfile = async (req, res) => {
     user.role = role || 'student';
     user.department = department || '';
     user.rollNumber = rollNumber || '';
+    if (phoneNumber) {
+      user.phoneNumber = phoneNumber.replace(/[^0-9]/g, '');
+    }
     user.isVerified = true;
     await user.save();
 
@@ -145,6 +214,7 @@ const completeProfile = async (req, res) => {
       email: user.email,
       role: user.role,
       department: user.department,
+      phoneNumber: user.phoneNumber,
       token: generateToken(user._id, user.role),
     });
   } catch (error) {
@@ -274,4 +344,4 @@ const getMe = async (req, res) => {
   res.json(user);
 };
 
-module.exports = { registerUser, verifyOTP, sendSignupOtp, verifySignupOtp, completeProfile, loginUser, forgotPassword, resetPassword, getMe };
+module.exports = { registerUser, verifyOTP, sendSignupOtp, verifySignupOtp, completeProfile, sendPhoneOtp, verifyPhoneOtp, loginUser, forgotPassword, resetPassword, getMe };

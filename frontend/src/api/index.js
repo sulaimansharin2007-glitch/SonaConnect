@@ -17,6 +17,8 @@ export const register = (data) => API.post('/auth/register', data);
 export const verifyOTP = (data) => API.post('/auth/verify-otp', data);
 export const sendSignupOtp = (data) => API.post('/auth/send-signup-otp', data);
 export const verifySignupOtp = (data) => API.post('/auth/verify-signup-otp', data);
+export const sendPhoneOtp = (data) => API.post('/auth/send-phone-otp', data);
+export const verifyPhoneOtp = (data) => API.post('/auth/verify-phone-otp', data);
 export const completeProfile = (data) => API.post('/auth/complete-profile', data);
 export const login = (data) => API.post('/auth/login', data);
 export const forgotPassword = (data) => API.post('/auth/forgot-password', data);
