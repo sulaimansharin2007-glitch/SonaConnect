@@ -160,6 +160,12 @@ const handleWebhook = async (req, res) => {
           
           const parsedData = JSON.parse(jsonString);
           
+          let rawType = (parsedData.participationType || "solo").toLowerCase().trim();
+          let cleanParticipationType = 'solo';
+          if (rawType.includes('team')) {
+            cleanParticipationType = 'team';
+          }
+
           const newEvent = await Event.create({
             title: parsedData.title || "Untitled Event",
             description: parsedData.description || "No description provided.",
@@ -172,7 +178,7 @@ const handleWebhook = async (req, res) => {
             posterUrl: "", 
             prizes: parsedData.prizes || "",
             eligibility: parsedData.eligibility || "All Students",
-            participationType: parsedData.participationType || "solo",
+            participationType: cleanParticipationType,
             status: "upcoming",
             isApproved: true
           });
