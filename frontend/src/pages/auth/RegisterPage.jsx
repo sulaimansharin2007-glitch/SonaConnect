@@ -108,6 +108,9 @@ export default function RegisterPage() {
     if (form.role === 'student' && !form.email.endsWith('@sonatech.ac.in')) {
       return toast.error('Students must use their @sonatech.ac.in email address');
     }
+    if ((form.role === 'faculty' || form.role === 'club_admin') && !phoneVerified) {
+      return toast.error('Please verify your WhatsApp phone number via OTP before creating account');
+    }
 
     setLoading(true);
     try {
@@ -219,16 +222,49 @@ export default function RegisterPage() {
               </div>
             )}
 
-            {/* WhatsApp Phone Number (Faculty & Club Admins only) */}
+            {/* WhatsApp Phone Number (Faculty & Club Admins with WhatsApp OTP Verification) */}
             {(form.role === 'faculty' || form.role === 'club_admin') && (
-              <div>
-                <label className="text-sm text-white/60 mb-1.5 block">WhatsApp Number <span className="text-red-400">*</span> <span className="text-white/30">(for WhatsApp Bot posting)</span></label>
-                <div className="relative">
-                  <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
-                  <input type="text" placeholder="e.g. 919876543210 (with country code)" value={form.phoneNumber}
-                    onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
-                    className="input pl-10" required />
+              <div className="space-y-3 bg-white/5 p-4 rounded-xl border border-white/10">
+                <div>
+                  <label className="text-sm font-medium text-white/90 mb-1.5 flex items-center justify-between">
+                    <span>WhatsApp Number <span className="text-red-400">*</span></span>
+                    {phoneVerified && (
+                      <span className="text-xs text-emerald-400 font-bold flex items-center gap-1">
+                        <CheckCircle2 size={13} /> Verified
+                      </span>
+                    )}
+                  </label>
+                  <div className="flex gap-2">
+                    <div className="relative flex-1">
+                      <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+                      <input type="text" placeholder="e.g. 919876543210" value={form.phoneNumber}
+                        disabled={phoneVerified}
+                        onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
+                        className="input pl-10" required />
+                    </div>
+                    {!phoneVerified && (
+                      <button type="button" onClick={handleSendPhoneOtp} disabled={sendingPhoneOtp}
+                        className="btn-secondary text-xs px-4 py-2 flex items-center gap-1 whitespace-nowrap">
+                        {sendingPhoneOtp ? 'Sending...' : phoneOtpSent ? 'Resend OTP' : 'Send OTP'}
+                      </button>
+                    )}
+                  </div>
                 </div>
+
+                {phoneOtpSent && !phoneVerified && (
+                  <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="pt-2 border-t border-white/10">
+                    <label className="text-xs text-white/70 mb-1 block">Enter 4-Digit WhatsApp OTP</label>
+                    <div className="flex gap-2">
+                      <input type="text" maxLength={4} placeholder="1234" value={phoneOtp}
+                        onChange={(e) => setPhoneOtp(e.target.value)}
+                        className="input text-center text-lg font-bold tracking-widest" />
+                      <button type="button" onClick={handleVerifyPhoneOtp} disabled={verifyingPhoneOtp}
+                        className="btn-primary text-xs px-5 whitespace-nowrap">
+                        {verifyingPhoneOtp ? 'Verifying...' : 'Verify OTP'}
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
               </div>
             )}
 
