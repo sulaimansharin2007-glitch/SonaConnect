@@ -90,14 +90,20 @@ const handleWebhook = async (req, res) => {
         
         try {
           const mediaRes = await axios.get(`https://graph.facebook.com/v19.0/${imageId}`, {
-            headers: { Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}` }
+            headers: { 
+              Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
+              'User-Agent': 'curl/7.64.1'
+            }
           });
           
           const imageUrl = mediaRes.data.url;
-          console.log('🔗 Got image URL from Meta');
+          console.log('🔗 Got image URL from Meta:', imageUrl);
           
           const imageRes = await axios.get(imageUrl, {
-            headers: { Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}` },
+            headers: { 
+              Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
+              'User-Agent': 'curl/7.64.1'
+            },
             responseType: 'arraybuffer'
           });
           
