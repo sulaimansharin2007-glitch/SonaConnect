@@ -167,13 +167,14 @@ const handleWebhook = async (req, res) => {
             time: parsedData.time || "TBD",
             venue: parsedData.venue || "TBD",
             category: "other",
-            organizer: user ? user._id : null,
+            organizer: user ? (user.name || user.email) : "WhatsApp Bot",
             club: user && user.clubManaged ? user.clubManaged : null,
             posterUrl: "", 
             prizes: parsedData.prizes || "",
             eligibility: parsedData.eligibility || "All Students",
             participationType: parsedData.participationType || "solo",
-            status: "upcoming"
+            status: "upcoming",
+            isApproved: true
           });
           
           await sendWhatsAppMessage(senderPhone, `🎉 Success! Event "${newEvent.title}" has been published automatically.`);
