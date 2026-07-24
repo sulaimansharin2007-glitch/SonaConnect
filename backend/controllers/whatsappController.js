@@ -1,16 +1,16 @@
 const axios = require('axios');
 const User = require('../models/User');
 const Event = require('../models/Event');
-const { GoogleGenAI } = require('@google/genai');
+const Groq = require('groq-sdk');
 
-// Initialize Gemini
-let ai;
+// Initialize Groq AI
+let groq;
 try {
-  if (process.env.GEMINI_API_KEY) {
-    ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  if (process.env.GROQ_API_KEY) {
+    groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
   }
 } catch (err) {
-  console.log('Gemini API skipped for WhatsApp');
+  console.log('Groq API skipped for WhatsApp');
 }
 
 // Helper to send WhatsApp messages back
@@ -131,22 +131,24 @@ const handleWebhook = async (req, res) => {
             For the date, try to format it as YYYY-MM-DD.
           `;
           
-          console.log('🤖 Sending to Gemini AI...');
-          const aiResponse = await ai.models.generateContent({
-            model: 'gemini-2.0-flash',
-            contents: [
+          console.log('🤖 Sending to Groq Vision AI...');
+          const dataUrl = `data:${mimeType};base64,${base64Data}`;
+          
+          const chatCompletion = await groq.chat.completions.create({
+            messages: [
               {
                 role: 'user',
-                parts: [
-                  { text: prompt },
-                  { inlineData: { mimeType, data: base64Data } }
+                content: [
+                  { type: 'text', text: prompt },
+                  { type: 'image_url', image_url: { url: dataUrl } }
                 ]
               }
             ],
-            config: { responseMimeType: "application/json" }
+            model: 'qwen/qwen3.6-27b',
+            response_format: { type: 'json_object' }
           });
           
-          let jsonString = aiResponse.text;
+          let jsonString = chatCompletion.choices[0]?.message?.content || '{}';
           const markdownMatch = jsonString.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
           if (markdownMatch && markdownMatch[1]) {
             jsonString = markdownMatch[1];
