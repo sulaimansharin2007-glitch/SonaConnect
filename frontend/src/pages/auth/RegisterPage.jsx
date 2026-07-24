@@ -48,6 +48,7 @@ export default function RegisterPage() {
     role: 'student',
     department: '',
     rollNumber: '',
+    phoneNumber: '',
     accessCode: ''
   });
   const [showPass, setShowPass] = useState(false);
@@ -179,6 +180,14 @@ export default function RegisterPage() {
                   className="input" />
               </div>
             )}
+
+            {/* WhatsApp Phone Number */}
+            <div>
+              <label className="text-sm text-white/60 mb-1.5 block">WhatsApp Number <span className="text-white/30">(for posting via bot)</span></label>
+              <input type="text" placeholder="e.g. 919876543210 (with country code)" value={form.phoneNumber}
+                onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
+                className="input" />
+            </div>
 
             {/* Access Code (faculty only) */}
             {form.role === 'faculty' && (
