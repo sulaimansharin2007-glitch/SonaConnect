@@ -13,24 +13,7 @@ try {
   console.log('Groq API skipped for WhatsApp');
 }
 
-// Helper to send WhatsApp messages back
-const sendWhatsAppMessage = async (to, text) => {
-  if (!process.env.WHATSAPP_TOKEN || !process.env.WHATSAPP_PHONE_ID) return;
-  try {
-    await axios.post(
-      `https://graph.facebook.com/v19.0/${process.env.WHATSAPP_PHONE_ID}/messages`,
-      {
-        messaging_product: 'whatsapp',
-        to: to,
-        type: 'text',
-        text: { body: text },
-      },
-      { headers: { Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}` } }
-    );
-  } catch (err) {
-    console.error('Error sending WhatsApp reply:', err?.response?.data || err.message);
-  }
-};
+const sendWhatsAppMessage = require('../utils/whatsappService');
 
 // @desc    Verify webhook for Meta
 // @route   GET /api/whatsapp/webhook
