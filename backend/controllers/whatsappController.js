@@ -134,7 +134,9 @@ const handleWebhook = async (req, res) => {
           console.log('🤖 Sending to Groq Vision AI...');
           const dataUrl = `data:${mimeType};base64,${base64Data}`;
           
-          const chatCompletion = await groq.chat.completions.create({
+          const groqClient = groq || new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+          const chatCompletion = await groqClient.chat.completions.create({
             messages: [
               {
                 role: 'user',
