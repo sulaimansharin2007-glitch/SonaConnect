@@ -148,10 +148,10 @@ const sendPhoneOtp = async (req, res) => {
     );
 
     const messageText = `🔑 Your SonaConnect WhatsApp Verification OTP is: *${otp}*\n\nThis code expires in 10 minutes. Do not share it with anyone.`;
-    const sent = await sendWhatsAppMessage(cleanPhone, messageText);
+    const result = await sendWhatsAppMessage(cleanPhone, messageText);
 
-    if (!sent) {
-      return res.status(500).json({ message: 'Failed to send WhatsApp OTP. Please ensure your number is valid and has WhatsApp.' });
+    if (!result.success) {
+      return res.status(400).json({ message: `Failed to send WhatsApp OTP: ${result.error}` });
     }
 
     res.json({ message: `WhatsApp OTP sent successfully to ${cleanPhone}` });

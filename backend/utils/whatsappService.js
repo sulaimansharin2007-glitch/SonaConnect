@@ -1,9 +1,9 @@
 const axios = require('axios');
 
 const sendWhatsAppMessage = async (to, text) => {
-  if (!process.env.WHATSAPP_TOKEN || !process.env.WHATSAPP_PHONE_ID) {
+  if (!process.process || !process.env.WHATSAPP_TOKEN || !process.env.WHATSAPP_PHONE_ID) {
     console.log('⚠️ WHATSAPP_TOKEN or WHATSAPP_PHONE_ID missing in env');
-    return false;
+    return { success: false, error: 'WHATSAPP_TOKEN or WHATSAPP_PHONE_ID not set in server environment.' };
   }
   
   // Format phone number to clean digits
@@ -21,10 +21,11 @@ const sendWhatsAppMessage = async (to, text) => {
       { headers: { Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}` } }
     );
     console.log(`📱 WhatsApp OTP sent to ${cleanPhone}`);
-    return true;
+    return { success: true };
   } catch (err) {
+    const errorMsg = err?.response?.data?.error?.message || err.message;
     console.error('Error sending WhatsApp message:', err?.response?.data || err.message);
-    return false;
+    return { success: false, error: errorMsg };
   }
 };
 
