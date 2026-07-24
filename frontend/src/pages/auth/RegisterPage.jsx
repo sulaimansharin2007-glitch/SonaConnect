@@ -99,7 +99,7 @@ export default function RegisterPage() {
     if (form.password.length < 6) {
       return toast.error('Password must be at least 6 characters');
     }
-    if (!form.department) {
+    if (form.role !== 'faculty' && !form.department) {
       return toast.error('Please select your department');
     }
     if (form.role === 'faculty' && !form.accessCode) {
@@ -199,18 +199,20 @@ export default function RegisterPage() {
               </div>
             </div>
 
-            {/* Department */}
-            <div>
-              <label className="text-sm text-white/60 mb-1.5 block">Department</label>
-              <div className="relative">
-                <BookOpen size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
-                <select value={form.department} onChange={(e) => setForm({ ...form, department: e.target.value })}
-                  className="input pl-10 cursor-pointer" required>
-                  <option value="">Select department</option>
-                  {departments.map((d) => <option key={d} value={d}>{d}</option>)}
-                </select>
+            {/* Department (Students & Admins) */}
+            {form.role !== 'faculty' && (
+              <div>
+                <label className="text-sm text-white/60 mb-1.5 block">Department</label>
+                <div className="relative">
+                  <BookOpen size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+                  <select value={form.department} onChange={(e) => setForm({ ...form, department: e.target.value })}
+                    className="input pl-10 cursor-pointer" required>
+                    <option value="">Select department</option>
+                    {departments.map((d) => <option key={d} value={d}>{d}</option>)}
+                  </select>
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Roll Number (student only) */}
             {form.role === 'student' && (
