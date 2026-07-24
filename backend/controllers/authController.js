@@ -11,7 +11,7 @@ const generateOTP = () => Math.floor(100000 + Math.random() * 900000).toString()
 // @route   POST /api/auth/register
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, role, department, rollNumber, accessCode } = req.body;
+    const { name, email, password, role, department, rollNumber, phoneNumber, accessCode } = req.body;
     
     if (role === 'faculty') {
       const requiredCode = process.env.FACULTY_ACCESS_CODE || 'Sona_Fac_2618';
@@ -29,8 +29,11 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
 
+    const cleanPhone = phoneNumber ? phoneNumber.replace(/[^0-9]/g, '') : '';
+
     const user = await User.create({ 
       name, email, password, role, department, rollNumber, 
+      phoneNumber: cleanPhone,
       isVerified: true
     });
 

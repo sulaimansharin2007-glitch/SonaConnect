@@ -54,13 +54,20 @@ const handleWebhook = async (req, res) => {
       body.entry[0].changes[0].value.messages[0]
     ) {
       const message = body.entry[0].changes[0].value.messages[0];
-      const senderPhone = message.from; 
-      console.log('📱 Message from:', senderPhone, '| Type:', message.type);
+      const cleanSenderPhone = senderPhone.replace(/[^0-9]/g, '');
+      const last10 = cleanSenderPhone.slice(-10);
       
-      const user = await User.findOne({ phoneNumber: senderPhone });
+      // Match either full clean number or last 10 digits
+      const user = await User.findOne({ 
+        $or: [
+          { phoneNumber: cleanSenderPhone },
+          { phoneNumber: last10 },
+          { phoneNumber: { $regex: last10 + '$' } }
+        ]
+      });
       const hardcodedAdmin = process.env.ADMIN_WHATSAPP_NUMBER;
       
-      const isAuthorized = user || (hardcodedAdmin && senderPhone === hardcodedAdmin);
+      const isAuthorized = user || (hardcodedAdmin && (senderPhone === hardcodedAdmin || cleanSenderPhone.includes(hardcodedAdmin)));
 
       if (!isAuthorized) {
         console.log('❌ Unauthorized sender:', senderPhone);
