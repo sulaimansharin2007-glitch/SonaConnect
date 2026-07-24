@@ -192,7 +192,14 @@ export default function Navbar() {
                             onClick={() => setProfileOpen(false)}
                             className="sidebar-item text-white/70 hover:text-white"
                           >
-                            <Settings size={16} /> Dashboard
+                            <Calendar size={16} /> Dashboard
+                          </Link>
+                          <Link
+                            to="/settings"
+                            onClick={() => setProfileOpen(false)}
+                            className="sidebar-item text-white/70 hover:text-white"
+                          >
+                            <Settings size={16} /> Settings
                           </Link>
                           {user.role === 'student' && (
                             <Link to="/my-events" onClick={() => setProfileOpen(false)} className="sidebar-item text-white/70 hover:text-white">

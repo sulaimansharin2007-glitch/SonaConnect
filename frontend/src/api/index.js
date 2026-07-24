@@ -58,9 +58,10 @@ export const markAsRead = (id) => API.put(`/notifications/${id}/read`);
 export const markAllAsRead = () => API.put('/notifications/read-all');
 export const createNotification = (data) => API.post('/notifications', data);
 
-// Users (Admin)
+// Users
 export const getAllUsers = () => API.get('/users');
 export const deleteUser = (id) => API.delete(`/users/${id}`);
+export const deleteMyAccount = () => API.delete('/users/me');
 export const updateUserRole = (id, role) => API.put(`/users/${id}/role`, { role });
 
 export default API;
