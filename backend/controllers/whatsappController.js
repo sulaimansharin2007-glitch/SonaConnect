@@ -76,9 +76,14 @@ const handleWebhook = async (req, res) => {
       
       const user = await User.findOne({ phoneNumber: senderPhone });
       const hardcodedAdmin = process.env.ADMIN_WHATSAPP_NUMBER;
-      console.log('📱 Sender:', senderPhone, '| Found DB User:', user ? user.email : 'None', '| Hardcoded Admin:', hardcodedAdmin);
+      
+      const isAuthorized = user || (hardcodedAdmin && senderPhone === hardcodedAdmin);
 
-      const isAuthorized = true; // Allow message processing and handle authorization gracefully
+      if (!isAuthorized) {
+        console.log('❌ Unauthorized sender:', senderPhone);
+        await sendWhatsAppMessage(senderPhone, "❌ Unauthorized. Your phone number is not registered as an authorized poster on SonaConnect.");
+        return;
+      }
 
       if (user && user.role !== 'club_admin' && user.role !== 'faculty' && user.role !== 'super_admin') {
         console.log('❌ User lacks permission:', user.role);
