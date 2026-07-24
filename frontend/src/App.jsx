@@ -19,6 +19,7 @@ import ClubAdminDashboard from './pages/dashboards/ClubAdminDashboard';
 import FacultyDashboard from './pages/dashboards/FacultyDashboard';
 import SuperAdminDashboard from './pages/dashboards/SuperAdminDashboard';
 import NotificationsPage from './pages/NotificationsPage';
+import PrivacyPage from './pages/PrivacyPage';
 
 const ProtectedRoute = ({ children, roles }) => {
   const { user, loading } = useAuth();
@@ -52,6 +53,7 @@ const AppRoutes = () => {
       <Route path="/club/dashboard" element={<ProtectedRoute roles={['club_admin']}><ClubAdminDashboard /></ProtectedRoute>} />
       <Route path="/faculty/dashboard" element={<ProtectedRoute roles={['faculty']}><FacultyDashboard /></ProtectedRoute>} />
       <Route path="/admin/dashboard" element={<ProtectedRoute roles={['super_admin']}><SuperAdminDashboard /></ProtectedRoute>} />
+      <Route path="/privacy" element={<PrivacyPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
