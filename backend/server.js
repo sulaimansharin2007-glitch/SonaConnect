@@ -154,7 +154,7 @@ app.get('/api/test-trigger-reminders', async (req, res) => {
       await Notification.create({
         title: `🔔 Event Today: ${event.title}`,
         message: `"${event.title}" is happening TODAY at ${event.time || 'scheduled time'} in ${event.venue || 'campus venue'}. Check it out now!`,
-        type: 'event_update',
+        type: 'event',
         isGlobal: true,
         link: `/events/${event._id}`
       });
