@@ -46,7 +46,7 @@
   }
 
   .glass-hover {
-    @apply glass transition-all duration-300 hover:border-gold-DEFAULT/40 hover:bg-white/[0.03] hover:-translate-y-1 hover:shadow-card-hover;
+    @apply glass transition-all duration-300 hover:border-gold/40 hover:bg-white/[0.03] hover:-translate-y-1;
   }
 
   .glass-dark {
@@ -67,7 +67,7 @@
 
   /* ── Buttons ── */
   .btn-primary {
-    @apply relative overflow-hidden px-6 py-2.5 rounded-xl font-semibold text-sm text-dark-DEFAULT transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2;
+    @apply relative overflow-hidden px-6 py-2.5 rounded-xl font-semibold text-sm text-dark transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2;
     background: linear-gradient(135deg, #E8C45A 0%, #C9A84C 50%, #A8862C 100%);
     box-shadow: 0 0 0 1px rgba(201,168,76,0.3), 0 4px 20px rgba(201,168,76,0.25);
   }
@@ -87,7 +87,7 @@
   .btn-primary:hover::after { left: 150%; }
 
   .btn-secondary {
-    @apply px-6 py-2.5 glass border border-gold-DEFAULT/25 rounded-xl font-semibold text-gold-light text-sm transition-all duration-300 hover:border-gold-DEFAULT/55 hover:bg-gold-DEFAULT/10 active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2;
+    @apply px-6 py-2.5 glass border border-gold/25 rounded-xl font-semibold text-gold-light text-sm transition-all duration-300 hover:border-gold/55 hover:bg-gold/10 active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2;
   }
 
   .btn-danger {
@@ -96,12 +96,12 @@
 
   /* ── Cards ── */
   .card {
-    @apply glass rounded-2xl transition-all duration-300 hover:border-gold-DEFAULT/30 hover:-translate-y-1;
+    @apply glass rounded-2xl transition-all duration-300 hover:border-gold/30 hover:-translate-y-1;
   }
 
   /* ── Inputs ── */
   .input {
-    @apply w-full bg-dark-200/80 border border-gold-DEFAULT/15 rounded-xl px-4 py-3 text-amber-100 placeholder-amber-100/30 text-sm focus:outline-none focus:border-gold-DEFAULT/60 focus:bg-dark-300/80 focus:ring-2 focus:ring-gold-DEFAULT/15 transition-all duration-200;
+    @apply w-full bg-dark-200/80 border border-gold/15 rounded-xl px-4 py-3 text-amber-100 placeholder-amber-100/30 text-sm focus:outline-none focus:border-gold/60 focus:bg-dark-300/80 focus:ring-2 focus:ring-gold/15 transition-all duration-200;
   }
 
   /* ── Badges ── */
@@ -109,7 +109,7 @@
     @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase;
   }
   .badge-primary {
-    @apply badge bg-gold-DEFAULT/15 text-gold-light border border-gold-DEFAULT/30;
+    @apply badge bg-gold/15 text-gold-light border border-gold/30;
   }
   .badge-success {
     @apply badge bg-emerald-500/15 text-emerald-400 border border-emerald-500/30;
@@ -151,15 +151,15 @@
 
   /* ── Sidebar ── */
   .sidebar-item {
-    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-amber-200/60 font-medium text-sm transition-all duration-200 hover:text-amber-100 hover:bg-gold-DEFAULT/10 cursor-pointer;
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-amber-200/60 font-medium text-sm transition-all duration-200 hover:text-amber-100 hover:bg-gold/10 cursor-pointer;
   }
   .sidebar-item.active {
-    @apply text-amber-100 bg-gold-DEFAULT/20 border border-gold-DEFAULT/30 font-semibold;
+    @apply text-amber-100 bg-gold/20 border border-gold/30 font-semibold;
   }
 
   /* ── Stat card ── */
   .stat-card {
-    @apply glass p-5 rounded-2xl flex flex-col gap-2 border border-gold-DEFAULT/15 hover:border-gold-DEFAULT/35 transition-all;
+    @apply glass p-5 rounded-2xl flex flex-col gap-2 border border-gold/15 hover:border-gold/35 transition-all;
   }
 
   /* ── Royal crest ornament ── */
