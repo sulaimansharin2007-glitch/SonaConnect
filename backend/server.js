@@ -126,6 +126,56 @@ app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/ai', require('./routes/aiRoutes'));
 app.use('/api/whatsapp', require('./routes/whatsappRoutes'));
 
+// Test trigger for instant today's event reminders
+app.get('/api/test-trigger-reminders', async (req, res) => {
+  try {
+    const Event = require('./models/Event');
+    const User = require('./models/User');
+    const Notification = require('./models/Notification');
+    const sendWhatsAppMessage = require('./utils/whatsappService');
+
+    const today = new Date().toISOString().split('T')[0];
+    let todaysEvents = await Event.find({ date: today });
+
+    // Fallback: If no event has today's date, grab the most recent approved event to test!
+    if (!todaysEvents || todaysEvents.length === 0) {
+      todaysEvents = await Event.find({ isApproved: true }).sort({ createdAt: -1 }).limit(1);
+    }
+
+    if (!todaysEvents || todaysEvents.length === 0) {
+      return res.json({ message: 'No events found in database to test.' });
+    }
+
+    const allUsers = await User.find({ isActive: true });
+    let logs = [];
+
+    for (const event of todaysEvents) {
+      // 1. Create global notification
+      await Notification.create({
+        title: `🔔 Event Today: ${event.title}`,
+        message: `"${event.title}" is happening TODAY at ${event.time || 'scheduled time'} in ${event.venue || 'campus venue'}. Check it out now!`,
+        type: 'event_update',
+        isGlobal: true,
+        link: `/events/${event._id}`
+      });
+
+      // 2. Send WhatsApp Notification to all users
+      for (const user of allUsers) {
+        if (user.phoneNumber) {
+          const message = `🔔 *SonaConnect Daily Digest*\n\nHi ${user.name}!\nThere is an exciting event happening TODAY at Sona College!\n\n📌 *Event:* ${event.title}\n🕒 *Time:* ${event.time || 'TBD'}\n📍 *Venue:* ${event.venue || 'Campus Venue'}\n\nDon't miss out! Visit SonaConnect to view details and join now: https://sonaconnect.onrender.com/events/${event._id} 🎉`;
+          
+          const result = await sendWhatsAppMessage(user.phoneNumber, message);
+          logs.push({ user: user.name, phone: user.phoneNumber, result });
+        }
+      }
+    }
+
+    res.json({ success: true, message: "Triggered today's event reminders!", event: todaysEvents[0].title, logs });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Error middleware
 app.use(notFound);
 app.use(errorHandler);
