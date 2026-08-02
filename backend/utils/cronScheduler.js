@@ -25,32 +25,29 @@ const initDailyEventReminders = () => {
 
       console.log(`📌 Found ${todaysEvents.length} events scheduled for today.`);
 
+      const User = require('../models/User');
+      const allUsers = await User.find({ isActive: true });
+
       for (const event of todaysEvents) {
-        // Find all registered students for this event
-        const registrations = await Registration.find({ event: event._id }).populate('student');
+        // 1. Create a global notification on SonaConnect website for all students/users
+        await Notification.create({
+          title: `🔔 Event Today: ${event.title}`,
+          message: `"${event.title}" is happening TODAY at ${event.time || 'scheduled time'} in ${event.venue || 'campus venue'}. Check it out now!`,
+          type: 'event_update',
+          isGlobal: true,
+          link: `/events/${event._id}`
+        });
 
-        for (const reg of registrations) {
-          const student = reg.student;
-          if (!student) continue;
-
-          // 1. Create In-App Notification
-          await Notification.create({
-            recipient: student._id,
-            title: `🔔 Event Today: ${event.title}`,
-            message: `Reminder: "${event.title}" is happening today at ${event.time || 'scheduled time'} in ${event.venue || 'campus venue'}. Don't forget your QR pass!`,
-            type: 'event_update',
-            link: `/events/${event._id}`
-          });
-
-          // 2. Send WhatsApp Notification if phone number exists
-          if (student.phoneNumber) {
-            const message = `🔔 *SonaConnect Event Reminder*\n\nHi ${student.name}!\nYour registered event *${event.title}* is happening TODAY!\n\n🕒 *Time:* ${event.time || 'TBD'}\n📍 *Venue:* ${event.venue || 'Campus Venue'}\n\nPlease keep your QR code pass ready on SonaConnect. See you there! 🎉`;
+        // 2. Send WhatsApp Notification to ALL users who have a phone number on SonaConnect
+        for (const user of allUsers) {
+          if (user.phoneNumber) {
+            const message = `🔔 *SonaConnect Daily Digest*\n\nHi ${user.name}!\nThere is an exciting event happening TODAY at Sona College!\n\n📌 *Event:* ${event.title}\n🕒 *Time:* ${event.time || 'TBD'}\n📍 *Venue:* ${event.venue || 'Campus Venue'}\n\nDon't miss out! Visit SonaConnect to view details and join now: https://sonaconnect.onrender.com/events/${event._id} 🎉`;
             
-            await sendWhatsAppMessage(student.phoneNumber, message);
+            await sendWhatsAppMessage(user.phoneNumber, message).catch(e => console.error(e));
           }
         }
       }
-      console.log('✅ Daily Event Reminders sent successfully!');
+      console.log('✅ Broadcasted Today\'s Event notifications to all users successfully!');
     } catch (err) {
       console.error('❌ Error in daily event reminder cron job:', err);
     }
