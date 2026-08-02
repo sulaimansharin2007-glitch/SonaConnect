@@ -2,193 +2,246 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   Zap, Calendar, Users, Trophy, BookOpen, Bell, Shield,
-  ArrowRight, Star, ChevronRight, Sparkles, Globe, Clock
+  ArrowRight, Star, ChevronRight, Sparkles, Globe, Clock, CheckCircle2,
+  Compass, Terminal, QrCode, MessageSquare, ArrowUpRight
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
 
-const features = [
-  { icon: Calendar, title: 'Smart Event Management', desc: 'Centralized hub for all college events with real-time updates, countdown timers, and auto-expiry.', color: 'from-blue-500/20 to-cyan-500/10 border-blue-500/20' },
-  { icon: Trophy, title: 'Hackathon Hub', desc: 'Discover internal & external hackathons, coding contests and internship drives all in one place.', color: 'from-yellow-500/20 to-orange-500/10 border-yellow-500/20' },
-  { icon: Users, title: '16+ Active Clubs', desc: 'From Music to Robotics — join any of our 16 official college clubs and track their events.', color: 'from-purple-500/20 to-violet-500/10 border-purple-500/20' },
-  { icon: BookOpen, title: 'Workshops & Speakers Forum', desc: 'Register for industry expert sessions, guest lectures and hands-on workshops with one click.', color: 'from-green-500/20 to-emerald-500/10 border-green-500/20' },
-  { icon: Bell, title: 'Real-Time Notifications', desc: 'Never miss an event. Get instant alerts for new events, registration confirmations and deadlines.', color: 'from-pink-500/20 to-rose-500/10 border-pink-500/20' },
-  { icon: Shield, title: 'QR Entry Passes', desc: 'Receive a unique QR code after registration. Seamless digital check-in at event venues.', color: 'from-teal-500/20 to-cyan-500/10 border-teal-500/20' },
-];
-
-const clubs = [
-  { name: 'Programming Club', emoji: '💻', category: 'Technical' },
-  { name: 'Music Club', emoji: '🎵', category: 'Cultural' },
-  { name: 'Sports Club', emoji: '⚽', category: 'Sports' },
-  { name: 'Dexturs Club', emoji: '🤖', category: 'Robotics' },
-  { name: 'Modern Theatre', emoji: '🎭', category: 'Arts' },
-  { name: 'Tamil Mandram', emoji: '📜', category: 'Cultural' },
-  { name: 'Sona Radio', emoji: '📻', category: 'Media' },
-  { name: 'Blood Donors', emoji: '🩸', category: 'Social' },
+const bentoItems = [
+  {
+    title: 'Smart Event Management',
+    desc: 'Centralized hub for all Sona College events with real-time updates, countdown timers, and automated attendance.',
+    icon: Calendar,
+    size: 'col-span-1 sm:col-span-2 lg:col-span-2 row-span-1',
+    badge: 'Live Operations',
+    gradient: 'from-primary-500/20 via-primary-500/5 to-transparent border-primary-500/30',
+  },
+  {
+    title: '16+ Campus Clubs',
+    desc: 'From Robotics to Music — join official college clubs in one click.',
+    icon: Users,
+    size: 'col-span-1 sm:col-span-1 lg:col-span-1 row-span-1',
+    badge: 'Active Hub',
+    gradient: 'from-pink-accent/20 via-pink-accent/5 to-transparent border-pink-accent/30',
+  },
+  {
+    title: 'Instant QR Entry Passes',
+    desc: 'Generate unique digital QR passes upon registration for frictionless event check-ins.',
+    icon: QrCode,
+    size: 'col-span-1 sm:col-span-1 lg:col-span-1 row-span-1',
+    badge: 'Pass Generation',
+    gradient: 'from-accent/20 via-accent/5 to-transparent border-accent/30',
+  },
+  {
+    title: 'Hackathons & Internships',
+    desc: 'Discover internal & external hackathons, coding contests, and career placement drives all in one unified stream.',
+    icon: Trophy,
+    size: 'col-span-1 sm:col-span-2 lg:col-span-2 row-span-1',
+    badge: 'Opportunities',
+    gradient: 'from-yellow-500/20 via-yellow-500/5 to-transparent border-yellow-500/30',
+  },
 ];
 
 const stats = [
   { value: '16+', label: 'Active Clubs', icon: Users },
   { value: '100+', label: 'Events Yearly', icon: Calendar },
-  { value: '5000+', label: 'Students', icon: Sparkles },
-  { value: '24/7', label: 'Platform Access', icon: Globe },
+  { value: '5000+', label: 'Students Connected', icon: Sparkles },
+  { value: '24/7', label: 'WhatsApp Bot Access', icon: Globe },
 ];
 
 const roles = [
-  { title: 'Students', icon: '🎓', desc: 'Discover events, join clubs, register for hackathons and download QR passes.' },
-  { title: 'Club Admins', icon: '🏛️', desc: 'Manage your club page, post events, upload posters and track registrations.' },
-  { title: 'Faculty', icon: '👨‍🏫', desc: 'Add workshops, speaker forums, seminars and monitor student participation.' },
-  { title: 'Super Admin', icon: '⚙️', desc: 'Full platform control — manage users, approve events and monitor analytics.' },
+  { title: 'Students', icon: '🎓', tag: 'Discover & Join', desc: 'Discover events, join active clubs, register for hackathons and download instant QR entry passes.' },
+  { title: 'Faculty', icon: '👨‍🏫', tag: 'Publish via WhatsApp', desc: 'Post workshops, speaker forums & seminars directly via WhatsApp poster uploads.' },
+  { title: 'Club Admins', icon: '🏛️', tag: 'Manage & Monitor', desc: 'Manage your club page, schedule events, upload posters and track live student attendance.' },
+  { title: 'Super Admin', icon: '⚙️', tag: 'System Control', desc: 'Full platform governance — manage user roles, approve events and inspect analytics.' },
 ];
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-dark bg-mesh">
+    <div className="min-h-screen bg-dark bg-mesh text-white selection:bg-primary-500 selection:text-white">
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-        {/* Background orbs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl animate-pulse-slow" />
-          <div className="absolute top-1/3 right-1/4 w-80 h-80 bg-pink-accent/8 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
-          <div className="absolute bottom-1/4 left-1/2 w-64 h-64 bg-accent/5 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '4s' }} />
-          {/* Grid pattern */}
-          <div className="absolute inset-0 opacity-[0.03]"
-            style={{ backgroundImage: 'linear-gradient(rgba(108,99,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(108,99,255,1) 1px, transparent 1px)', backgroundSize: '60px 60px' }}
-          />
+      {/* ── HERO SECTION: Asymmetric Spotlight Layout ── */}
+      <section className="relative pt-32 pb-20 overflow-hidden">
+        {/* Background Ambient Glows */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute -top-24 left-1/4 w-[500px] h-[500px] bg-primary-500/15 rounded-full blur-[120px] animate-pulse-slow" />
+          <div className="absolute top-1/2 right-10 w-[400px] h-[400px] bg-pink-accent/10 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '2s' }} />
         </div>
 
-        <div className="container-custom text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full border border-primary-500/30 mb-8">
-              <Sparkles size={14} className="text-primary-400" />
-              <span className="text-sm text-white/70">Intelligent Campus Activity Platform</span>
-              <ChevronRight size={14} className="text-white/40" />
-            </div>
+        <div className="container-custom relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Column: Headline & Action */}
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
+              className="lg:col-span-7 text-left"
+            >
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 glass rounded-full border border-primary-500/30 mb-6">
+                <Sparkles size={14} className="text-primary-400" />
+                <span className="text-xs font-medium text-white/80">Sona College's Official Activity Platform</span>
+                <ChevronRight size={14} className="text-white/40" />
+              </div>
 
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] mb-6">
-              <span className="text-white">Your Campus,</span>
-              <br />
-              <span className="gradient-text">Reimagined.</span>
-            </h1>
+              <h1 className="text-4xl sm:text-6xl xl:text-7xl font-black leading-[1.08] tracking-tight mb-6">
+                Connect. <br />
+                Experience. <br />
+                <span className="gradient-text">Lead Campus Life.</span>
+              </h1>
 
-            <p className="text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
-              SonaConnect is the all-in-one platform for Sona College — discover events, join clubs,
-              register for hackathons and never miss what's happening on campus.
-            </p>
+              <p className="text-white/60 text-base sm:text-lg max-w-xl leading-relaxed mb-8">
+                The centralized digital ecosystem for Sona College. Discover live events, join clubs,
+                register for hackathons, and receive automated WhatsApp notifications.
+              </p>
 
-            <div className="flex items-center justify-center">
-              <Link to="/events" className="btn-primary px-8 py-3.5 text-base flex items-center gap-2 shadow-glow">
-                Browse Events <Calendar size={18} />
-              </Link>
-            </div>
+              <div className="flex flex-wrap items-center gap-4">
+                <Link to="/events" className="btn-primary px-8 py-3.5 text-base flex items-center gap-2 shadow-glow">
+                  Explore Campus Events <Calendar size={18} />
+                </Link>
+                <Link to="/clubs" className="btn-secondary px-8 py-3.5 text-base flex items-center gap-2">
+                  View Clubs <ArrowUpRight size={18} />
+                </Link>
+              </div>
 
-            {/* Social proof */}
-            <div className="mt-12 flex items-center justify-center gap-6 flex-wrap">
-              {stats.map(({ value, label, icon: Icon }) => (
-                <motion.div
-                  key={label}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4, delay: 0.3 }}
-                  className="flex items-center gap-3 glass px-5 py-3 rounded-xl border border-white/10"
-                >
-                  <Icon size={18} className="text-primary-400" />
-                  <div className="text-left">
-                    <div className="text-xl font-black gradient-text">{value}</div>
-                    <div className="text-xs text-white/50">{label}</div>
+              {/* Quick Feature Badges */}
+              <div className="mt-10 pt-8 border-t border-white/10 flex flex-wrap items-center gap-6 text-xs text-white/50">
+                <span className="flex items-center gap-2"><CheckCircle2 size={14} className="text-accent" /> Automated WhatsApp Alerts</span>
+                <span className="flex items-center gap-2"><CheckCircle2 size={14} className="text-accent" /> Instant QR Passes</span>
+                <span className="flex items-center gap-2"><CheckCircle2 size={14} className="text-accent" /> AI Poster Extraction</span>
+              </div>
+            </motion.div>
+
+            {/* Right Column: Dynamic Spotlight Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="lg:col-span-5 relative"
+            >
+              <div className="relative glass rounded-3xl p-6 border border-white/15 shadow-2xl overflow-hidden">
+                <div className="absolute top-0 right-0 px-4 py-1.5 bg-gradient-to-l from-primary-500 to-pink-accent text-[11px] font-extrabold uppercase tracking-wider text-white rounded-bl-2xl">
+                  Featured Spotlight
+                </div>
+
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary-500/20 flex items-center justify-center text-primary-400">
+                    <Trophy size={20} />
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+                  <div>
+                    <h4 className="font-bold text-white text-base">Sona Innovation Hackathon 2026</h4>
+                    <p className="text-white/40 text-xs">Organized by Programming Club</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center justify-between p-3 glass rounded-xl text-xs">
+                    <span className="text-white/50 flex items-center gap-1.5"><Calendar size={14} /> Date</span>
+                    <span className="font-semibold text-white">Today • 10:00 AM</span>
+                  </div>
+                  <div className="flex items-center justify-between p-3 glass rounded-xl text-xs">
+                    <span className="text-white/50 flex items-center gap-1.5"><Globe size={14} /> Venue</span>
+                    <span className="font-semibold text-white">Innovation Square, SCT</span>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-dark-200/80 rounded-2xl border border-white/5 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-mono text-xs font-bold">
+                      QR
+                    </div>
+                    <div>
+                      <div className="text-xs font-semibold text-white">Digital Pass Ready</div>
+                      <div className="text-[10px] text-white/40">WhatsApp Sync Enabled</div>
+                    </div>
+                  </div>
+                  <Link to="/events" className="text-xs font-semibold text-primary-400 hover:text-primary-300 flex items-center gap-1">
+                    Get Pass <ArrowRight size={12} />
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+
+          </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-24">
+      {/* ── STATS BAR ── */}
+      <section className="py-8 border-y border-white/10 bg-dark-100/50">
+        <div className="container-custom">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {stats.map(({ value, label, icon: Icon }) => (
+              <div key={label} className="flex items-center justify-center gap-4 p-4 glass rounded-2xl border border-white/5">
+                <div className="w-10 h-10 glass rounded-xl flex items-center justify-center text-primary-400">
+                  <Icon size={20} />
+                </div>
+                <div>
+                  <div className="text-2xl font-black gradient-text">{value}</div>
+                  <div className="text-xs text-white/50 font-medium">{label}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── BENTO GRID FEATURES ── */}
+      <section className="py-24 relative">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 glass rounded-full border border-primary-500/30 mb-4">
-                <Star size={12} className="text-primary-400" />
-                <span className="text-xs text-white/60">Platform Features</span>
-              </div>
-              <h2 className="text-4xl font-black text-white mb-4">Everything You Need,<br /><span className="gradient-text">All In One Place</span></h2>
-              <p className="text-white/50 max-w-xl mx-auto">Built for students, clubs, faculty and administrators to manage campus life seamlessly.</p>
-            </motion.div>
+            <h2 className="text-3xl sm:text-5xl font-black mb-4">
+              Engineered For <span className="gradient-text">Campus Excellence</span>
+            </h2>
+            <p className="text-white/50 max-w-lg mx-auto text-sm sm:text-base">
+              A modern, intelligent architecture designed to streamline event discovery and club governance.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((f, i) => (
+            {bentoItems.map((item, i) => (
               <motion.div
-                key={f.title}
+                key={item.title}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
                 whileHover={{ y: -4 }}
-                className={`card bg-gradient-to-br ${f.color} p-6`}
+                className={`glass p-8 rounded-3xl border ${item.gradient} ${item.size} flex flex-col justify-between group transition-all duration-300`}
               >
-                <div className="w-12 h-12 glass rounded-2xl flex items-center justify-center mb-4 shadow-glow">
-                  <f.icon size={22} className="text-primary-400" />
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-12 h-12 glass rounded-2xl flex items-center justify-center shadow-glow">
+                      <item.icon size={22} className="text-primary-400" />
+                    </div>
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 glass rounded-full border border-white/10 text-white/70">
+                      {item.badge}
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-primary-300 transition-colors">{item.title}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed mb-6">{item.desc}</p>
                 </div>
-                <h3 className="font-bold text-white text-lg mb-2">{f.title}</h3>
-                <p className="text-white/50 text-sm leading-relaxed">{f.desc}</p>
+
+                <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-primary-400">
+                  <span>Explore Module</span>
+                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Clubs Section */}
-      <section className="py-24 bg-dark-100">
+      {/* ── ROLE MATRIX SECTION ── */}
+      <section className="py-24 bg-dark-100/60 relative border-t border-white/5">
         <div className="container-custom">
           <div className="text-center mb-16">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <h2 className="text-4xl font-black text-white mb-4">Explore Our <span className="gradient-text">16 Clubs</span></h2>
-              <p className="text-white/50 max-w-xl mx-auto">From arts to technology — find your tribe and join the action.</p>
-            </motion.div>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-            {clubs.map((club, i) => (
-              <motion.div
-                key={club.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
-                whileHover={{ y: -4, scale: 1.02 }}
-                className="glass rounded-2xl p-4 text-center border border-white/10 hover:border-primary-500/30 transition-all duration-300 cursor-pointer"
-              >
-                <div className="text-3xl mb-2">{club.emoji}</div>
-                <div className="text-white text-sm font-semibold leading-tight">{club.name}</div>
-                <div className="text-white/40 text-xs mt-1">{club.category}</div>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link to="/clubs" className="btn-primary inline-flex items-center gap-2">
-              View All Clubs <ArrowRight size={16} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* User Roles Section */}
-      <section className="py-24">
-        <div className="container-custom">
-          <div className="text-center mb-16">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <h2 className="text-4xl font-black text-white mb-4">Built For <span className="gradient-text">Everyone</span></h2>
-              <p className="text-white/50 max-w-xl mx-auto">Role-based access so students, faculty and admins each get exactly what they need.</p>
-            </motion.div>
+            <h2 className="text-3xl sm:text-5xl font-black mb-4">
+              Tailored For <span className="gradient-text">Every Role</span>
+            </h2>
+            <p className="text-white/50 max-w-lg mx-auto text-sm sm:text-base">
+              Custom-built experiences for students, faculty members, club leaders, and system admins.
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -199,70 +252,64 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -4 }}
-                className="card p-6 text-center"
+                className="glass p-6 rounded-3xl border border-white/10 hover:border-primary-500/40 transition-all group flex flex-col justify-between"
               >
-                <div className="text-4xl mb-4">{role.icon}</div>
-                <h3 className="font-bold text-white text-lg mb-2">{role.title}</h3>
-                <p className="text-white/50 text-sm leading-relaxed">{role.desc}</p>
+                <div>
+                  <div className="text-4xl mb-4">{role.icon}</div>
+                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary-400 bg-primary-500/10 px-2.5 py-1 rounded-md mb-3 inline-block">
+                    {role.tag}
+                  </span>
+                  <h3 className="text-lg font-bold text-white mb-2">{role.title}</h3>
+                  <p className="text-white/50 text-xs leading-relaxed mb-6">{role.desc}</p>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* ── CTA SECTION ── */}
       <section className="py-24">
         <div className="container-custom">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative glass rounded-3xl p-12 text-center overflow-hidden border border-primary-500/20"
-          >
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-transparent to-pink-accent/10 pointer-events-none" />
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary-500/20 blur-3xl pointer-events-none" />
+          <div className="relative glass rounded-3xl p-12 text-center overflow-hidden border border-primary-500/30">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 via-pink-accent/10 to-transparent pointer-events-none" />
             <div className="relative z-10">
-              <div className="text-5xl mb-4">🚀</div>
-              <h2 className="text-4xl font-black text-white mb-4">Ready to Get Started?</h2>
-              <p className="text-white/60 text-lg max-w-lg mx-auto mb-8">
-                Join thousands of Sona College students already using SonaConnect to stay connected with campus life.
+              <h2 className="text-3xl sm:text-5xl font-black text-white mb-4">Elevate Your Campus Journey Today</h2>
+              <p className="text-white/60 text-base max-w-xl mx-auto mb-8">
+                Join Sona College's dedicated campus event platform and stay updated with every event.
               </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <div className="flex flex-wrap items-center justify-center gap-4">
                 <Link to="/register" className="btn-primary px-10 py-4 text-base shadow-glow flex items-center gap-2">
-                  Create Account <ArrowRight size={18} />
-                </Link>
-                <Link to="/login" className="btn-secondary px-10 py-4 text-base">
-                  Sign In
+                  Create Free Account <ArrowRight size={18} />
                 </Link>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-white/10 py-10">
+      {/* ── FOOTER ── */}
+      <footer className="border-t border-white/10 py-10 bg-dark-100">
         <div className="container-custom">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <Zap size={14} className="text-white" />
+              <div className="w-8 h-8 bg-gradient-primary rounded-xl flex items-center justify-center">
+                <Zap size={16} className="text-white" />
               </div>
-              <span className="font-bold gradient-text">SonaConnect</span>
+              <span className="font-bold text-lg gradient-text">SonaConnect</span>
             </div>
             <div className="text-center">
-              <p className="text-white/30 text-sm mb-1">© {new Date().getFullYear()} SonaConnect — Sona College of Technology.</p>
-              <p className="text-white/20 text-xs font-mono">Created by Sharin Banu S, Artificial Intelligence and Data Science, 2024-2028</p>
+              <p className="text-white/40 text-sm mb-1">© {new Date().getFullYear()} SonaConnect — Sona College of Technology</p>
+              <p className="text-white/25 text-xs font-mono">Created by Sharin Banu S, Artificial Intelligence and Data Science, 2024-2028</p>
             </div>
-            <div className="flex items-center gap-4 text-white/40 text-sm">
-              <a href="#" className="hover:text-white transition-colors">Privacy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms</a>
-              <a href="#" className="hover:text-white transition-colors">Contact</a>
+            <div className="flex items-center gap-6 text-xs text-white/40">
+              <a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
             </div>
           </div>
         </div>
       </footer>
+
     </div>
   );
 }
