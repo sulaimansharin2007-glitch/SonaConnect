@@ -197,23 +197,7 @@ export default function FacultyDashboard() {
           <Plus size={16} /> Add Workshop / Hackathon
         </motion.button>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-          {[
-            { label: 'All Events', value: myEvents.length, icon: Calendar, gradient: 'from-primary-500/20 to-primary-500/5 border-primary-500/20' },
-            { label: 'Workshops', value: workshops.length, icon: BookOpen, gradient: 'from-blue-500/20 to-blue-500/5 border-blue-500/20' },
-            { label: 'Hackathons', value: hackathons.length, icon: Users, gradient: 'from-yellow-500/20 to-yellow-500/5 border-yellow-500/20' },
-          ].map((s, i) => (
-            <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
-              className={`stat-card bg-gradient-to-br ${s.gradient}`}>
-              <div className="flex items-center justify-between">
-                <s.icon size={22} className="text-white/70" />
-                <span className="text-3xl font-black text-white">{s.value}</span>
-              </div>
-              <span className="text-white/50 text-sm">{s.label}</span>
-            </motion.div>
-          ))}
-        </div>
+
 
         {/* Events Table */}
         <div className="card overflow-hidden">
