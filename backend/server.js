@@ -2,12 +2,16 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const connectDB = require('./config/db');
+const initDailyEventReminders = require('./utils/cronScheduler');
 const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 
 const app = express();
 
 // Connect to MongoDB
 connectDB();
+
+// Initialize Daily Event Reminders Cron Job
+initDailyEventReminders();
 
 // Middleware
 app.use(cors({ origin: '*', credentials: true }));

@@ -36,6 +36,14 @@ const registerForEvent = async (req, res) => {
     // Increment event registration count
     await Event.findByIdAndUpdate(eventId, { $inc: { registrationCount: 1 } });
 
+    // Send immediate WhatsApp confirmation if user has a phone number
+    if (req.user.phoneNumber) {
+      const sendWhatsAppMessage = require('../utils/whatsappService');
+      const dateStr = event.date ? new Date(event.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : 'TBD';
+      const msg = `✅ *Registration Confirmed!*\n\nHi ${req.user.name},\nYou have successfully registered for *${event.title}*!\n\n📅 *Date:* ${dateStr}\n🕒 *Time:* ${event.time || 'TBD'}\n📍 *Venue:* ${event.venue || 'TBD'}\n\nYou will receive a reminder notification on WhatsApp on the day of the event! 🚀`;
+      sendWhatsAppMessage(req.user.phoneNumber, msg).catch(err => console.error('WhatsApp reg msg error:', err));
+    }
+
     const populated = await registration.populate([
       { path: 'event', select: 'title date venue posterUrl' },
       { path: 'student', select: 'name email' },
