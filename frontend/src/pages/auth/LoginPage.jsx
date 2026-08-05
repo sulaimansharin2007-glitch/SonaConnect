@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Eye, EyeOff, Mail, Lock, Zap, ArrowRight } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { login } from '../../api';
 import { useAuth } from '../../context/AuthContext';
@@ -53,7 +53,7 @@ export default function LoginPage() {
         >
           <Link to="/" className="inline-flex items-center gap-2 group">
             <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-              <Zap size={20} className="text-white" />
+              <span className="text-white font-black text-lg">S</span>
             </div>
             <span className="text-2xl font-black gradient-text">SonaConnect</span>
           </Link>

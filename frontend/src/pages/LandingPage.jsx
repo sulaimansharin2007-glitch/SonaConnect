@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
-  Zap, Calendar, Users, Trophy, BookOpen, Bell, Shield,
+  Calendar, Users, Trophy, BookOpen, Bell, Shield,
   ArrowRight, Star, ChevronRight, Sparkles, Globe, Clock
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -247,7 +247,7 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <Zap size={14} className="text-white" />
+                <span className="text-white font-black text-xs">S</span>
               </div>
               <span className="font-bold gradient-text">SonaConnect</span>
             </div>

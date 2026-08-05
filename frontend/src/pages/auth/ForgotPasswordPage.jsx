@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Mail, Lock, Zap, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, ArrowRight, ArrowLeft } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { forgotPassword, resetPassword } from '../../api';
 
@@ -54,7 +54,7 @@ export default function ForgotPasswordPage() {
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 group">
             <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-              <Zap size={20} className="text-white" />
+              <span className="text-white font-black text-lg">S</span>
             </div>
             <span className="text-2xl font-black gradient-text">SonaConnect</span>
           </Link>

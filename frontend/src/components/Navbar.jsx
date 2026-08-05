@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Bell, Menu, X, LogOut, User, ChevronDown,
-  Zap, Calendar, Users, Trophy, BookOpen, Settings
+  Calendar, Users, Trophy, BookOpen, Settings
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { getNotifications, markAllAsRead } from '../api';
@@ -73,7 +73,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center shadow-glow group-hover:shadow-glow-pink transition-all duration-300">
-              <Zap size={16} className="text-white" />
+              <span className="text-white font-black text-sm">S</span>
             </div>
             <span className="text-xl font-bold gradient-text">SonaConnect</span>
           </Link>
