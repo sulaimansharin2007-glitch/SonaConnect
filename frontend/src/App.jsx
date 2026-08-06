@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import ChatBot from './components/ChatBot';
 
 // Pages
 import LandingPage from './pages/LandingPage';
@@ -87,6 +88,7 @@ export default function App() {
             },
           }}
         />
+        <ChatBot />
       </AuthProvider>
     </BrowserRouter>
   );

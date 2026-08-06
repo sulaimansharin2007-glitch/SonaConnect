@@ -101,4 +101,66 @@ const extractPosterData = async (req, res) => {
   }
 };
 
-module.exports = { extractPosterData };
+// @desc    AI Chatbot — students ask about events
+// @route   POST /api/ai/chat
+const chatEvent = async (req, res) => {
+  try {
+    if (!ai) {
+      return res.status(400).json({ message: 'AI service is not configured on the server.' });
+    }
+
+    const { message, history } = req.body;
+    if (!message) return res.status(400).json({ message: 'Message is required.' });
+
+    // Fetch all upcoming/current events for context
+    const Event = require('../models/Event');
+    const events = await Event.find({ isApproved: true })
+      .sort({ date: 1 })
+      .limit(30)
+      .select('title description date time venue organizer category registrationLink prizes eligibility');
+
+    const eventsContext = events.map((e, i) =>
+      `Event ${i + 1}: "${e.title}" | Category: ${e.category} | Date: ${e.date || 'TBD'} | Time: ${e.time || 'TBD'} | Venue: ${e.venue || 'TBD'} | Organizer: ${e.organizer || 'TBD'} | Prizes: ${e.prizes || 'None'} | Eligibility: ${e.eligibility || 'All students'} | Registration: ${e.registrationLink || 'On SonaConnect'} | Description: ${e.description || ''}`.trim()
+    ).join('\n\n');
+
+    const systemPrompt = `You are SonaBot, the official AI assistant for SonaConnect — the campus event management platform for Sona College of Technology, Salem.
+
+Your job is to help students discover, understand and discuss campus events. Be friendly, concise and helpful.
+
+Here are the current events on SonaConnect:
+${eventsContext || 'No events found currently.'}
+
+Guidelines:
+- Answer questions about specific events clearly (dates, venue, eligibility, prizes, registration).
+- Encourage students to register on SonaConnect.
+- For off-topic questions, gently redirect to campus events.
+- Keep responses brief and conversational.`;
+
+    // Build conversation history for context
+    const conversationParts = [];
+    if (history && Array.isArray(history)) {
+      history.slice(-6).forEach(msg => {
+        conversationParts.push({ role: msg.role === 'bot' ? 'model' : 'user', parts: [{ text: msg.text }] });
+      });
+    }
+    conversationParts.push({ role: 'user', parts: [{ text: message }] });
+
+    const model = ai.chats.create({
+      model: 'gemini-2.0-flash',
+      systemInstruction: systemPrompt,
+      history: conversationParts.slice(0, -1),
+    });
+
+    const result = await model.sendMessage({ message });
+    const reply = result.text;
+
+    res.json({ reply });
+  } catch (error) {
+    console.error('ChatBot Error:', error);
+    res.status(500).json({ message: error.message || 'Chatbot failed to respond.' });
+  }
+};
+
+module.exports = { extractPosterData, chatEvent };
+
+
