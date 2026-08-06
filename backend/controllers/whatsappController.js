@@ -108,7 +108,24 @@ const handleWebhook = async (req, res) => {
           const base64Data = Buffer.from(imageRes.data, 'binary').toString('base64');
           const mimeType = imageRes.headers['content-type'] || 'image/jpeg';
           console.log('📦 Image downloaded, mimeType:', mimeType);
-          
+
+          // Upload image to Imgur (free, no auth needed for anonymous uploads)
+          let posterUrl = '';
+          try {
+            const imgurRes = await axios.post('https://api.imgur.com/3/image', {
+              image: base64Data,
+              type: 'base64',
+              title: 'SonaConnect Event Poster',
+            }, {
+              headers: {
+                Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID || 'f5f9cf8e4a97bf0'}`,
+              }
+            });
+            posterUrl = imgurRes.data?.data?.link || '';
+            console.log('🖼️ Poster uploaded to Imgur:', posterUrl);
+          } catch (imgurErr) {
+            console.warn('⚠️ Imgur upload failed, continuing without poster:', imgurErr.message);
+          }
           const prompt = `
             You are an AI assistant that extracts event details from posters.
             Analyze this event poster and extract the following information. 
@@ -175,7 +192,7 @@ const handleWebhook = async (req, res) => {
             category: "other",
             organizer: user ? (user.name || user.email) : "WhatsApp Bot",
             club: user && user.clubManaged ? user.clubManaged : null,
-            posterUrl: "", 
+            posterUrl: posterUrl,
             prizes: parsedData.prizes || "",
             eligibility: parsedData.eligibility || "All Students",
             participationType: cleanParticipationType,
