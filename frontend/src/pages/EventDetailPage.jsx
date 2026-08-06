@@ -262,7 +262,7 @@ export default function EventDetailPage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setShowPosterModal(false)}
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-8 cursor-zoom-out backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4 sm:p-8 cursor-zoom-out backdrop-blur-sm"
           >
             <motion.img
               initial={{ scale: 0.9, opacity: 0 }}
@@ -271,18 +271,49 @@ export default function EventDetailPage() {
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
               src={event.posterUrl}
               alt={event.title}
-              className="max-w-full max-h-full object-contain rounded-xl shadow-2xl"
-              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking the image itself
+              className="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
             />
             
-            <button 
-              onClick={() => setShowPosterModal(false)}
-              className="absolute top-4 right-4 sm:top-8 sm:right-8 w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-colors backdrop-blur-md"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
+            {/* Controls */}
+            <div className="absolute top-4 right-4 flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+              <button
+                onClick={async () => {
+                  try {
+                    const res = await fetch(event.posterUrl);
+                    const blob = await res.blob();
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${event.title.replace(/\s+/g, '_')}_poster.jpg`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                  } catch { window.open(event.posterUrl, '_blank'); }
+                }}
+                className="flex items-center gap-2 px-4 py-2.5 bg-primary-500/80 hover:bg-primary-500 text-white rounded-xl text-sm font-semibold backdrop-blur-md transition-colors shadow-lg"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download
+              </button>
+              <button 
+                onClick={() => setShowPosterModal(false)}
+                className="w-10 h-10 bg-white/10 hover:bg-white/20 text-white rounded-xl flex items-center justify-center transition-colors backdrop-blur-md"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              </button>
+            </div>
+
+            {/* Bottom title */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2" onClick={(e) => e.stopPropagation()}>
+              <p className="text-white/70 text-sm font-medium bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm whitespace-nowrap">
+                {event.title}
+              </p>
+            </div>
           </motion.div>
         )}
+
       </AnimatePresence>
     </div>
   );
