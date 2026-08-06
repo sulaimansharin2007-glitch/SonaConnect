@@ -1,13 +1,13 @@
-const { GoogleGenAI } = require('@google/genai');
+const Groq = require('groq-sdk');
 
-// Initialize Gemini API
-let ai;
+// Initialize Groq API
+let groq;
 try {
-  if (process.env.GEMINI_API_KEY) {
-    ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  if (process.env.GROQ_API_KEY) {
+    groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
   }
 } catch (err) {
-  console.log('Gemini API initialization skipped (No API key found)');
+  console.log('Groq API initialization skipped');
 }
 
 // @desc    Extract event details from a base64 poster image
@@ -105,7 +105,8 @@ const extractPosterData = async (req, res) => {
 // @route   POST /api/ai/chat
 const chatEvent = async (req, res) => {
   try {
-    if (!ai) {
+    const groqClient = groq || (process.env.GROQ_API_KEY ? new Groq({ apiKey: process.env.GROQ_API_KEY }) : null);
+    if (!groqClient) {
       return res.status(400).json({ message: 'AI service is not configured on the server.' });
     }
 
@@ -151,22 +152,22 @@ Guidelines:
 - Keep responses brief, clear, and well-formatted.`;
 
     // Build conversation history for context
-    const conversationParts = [];
+    const messages = [{ role: 'system', content: systemPrompt }];
+    
     if (history && Array.isArray(history)) {
       history.slice(-6).forEach(msg => {
-        conversationParts.push({ role: msg.role === 'bot' ? 'model' : 'user', parts: [{ text: msg.text }] });
+        messages.push({ role: msg.role === 'bot' ? 'assistant' : 'user', content: msg.text });
       });
     }
-    conversationParts.push({ role: 'user', parts: [{ text: message }] });
+    messages.push({ role: 'user', content: message });
 
-    const model = ai.chats.create({
-      model: 'gemini-2.0-flash',
-      systemInstruction: systemPrompt,
-      history: conversationParts.slice(0, -1),
+    const chatCompletion = await groqClient.chat.completions.create({
+      messages: messages,
+      model: 'llama-3.1-8b-instant', // fast and great for general chat
+      temperature: 0.7,
     });
 
-    const result = await model.sendMessage({ message });
-    const reply = result.text;
+    const reply = chatCompletion.choices[0]?.message?.content || 'Sorry, I got confused for a second there.';
 
     res.json({ reply });
   } catch (error) {
