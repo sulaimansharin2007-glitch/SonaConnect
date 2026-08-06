@@ -43,25 +43,7 @@ export default function HackathonsPage() {
         </motion.div>
 
         {/* Stats Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="card bg-gradient-to-r from-yellow-500/10 via-orange-500/5 to-red-500/10 border-yellow-500/20 p-6 mb-8 grid grid-cols-2 sm:grid-cols-4 gap-4"
-        >
-          {[
-            { label: 'Total Hackathons', value: events.length, emoji: '💻' },
-            { label: 'Upcoming', value: upcoming.length, emoji: '🚀' },
-            { label: 'Completed', value: completed.length, emoji: '✅' },
-            { label: 'Prize Pools', value: events.filter((e) => e.prizes).length, emoji: '🏆' },
-          ].map(({ label, value, emoji }) => (
-            <div key={label} className="text-center">
-              <div className="text-2xl mb-1">{emoji}</div>
-              <div className="text-2xl font-black text-white">{value}</div>
-              <div className="text-white/40 text-xs">{label}</div>
-            </div>
-          ))}
-        </motion.div>
+
 
         {/* Tabs */}
         <div className="flex gap-2 mb-6">

@@ -80,7 +80,7 @@ const handleWebhook = async (req, res) => {
         return;
       }
 
-      if (message.type === 'image') {
+      if (message.image && message.image.id) {
         const imageId = message.image.id;
         console.log('🖼️ Processing image ID:', imageId);
         
