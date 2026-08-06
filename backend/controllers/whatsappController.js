@@ -180,7 +180,27 @@ const handleWebhook = async (req, res) => {
           }
           
           const parsedData = JSON.parse(jsonString);
-          
+
+          // --- Safe date parser ---
+          // Handles: "2026-09-03 - 2026-09-05", "03/09/2026", "September 3, 2026", plain "YYYY-MM-DD"
+          const parseEventDate = (raw) => {
+            if (!raw) return new Date().toISOString().split('T')[0];
+            const str = String(raw).trim();
+            // If it's a range like "2026-09-03 - 2026-09-05", take the start date
+            const rangePart = str.split(/\s*[-–to]+\s*/)[0].trim();
+            // Try DD/MM/YYYY or MM/DD/YYYY slash formats → convert to YYYY-MM-DD
+            const slashMatch = rangePart.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+            if (slashMatch) {
+              // Assume DD/MM/YYYY (Indian format)
+              return `${slashMatch[3]}-${slashMatch[2].padStart(2,'0')}-${slashMatch[1].padStart(2,'0')}`;
+            }
+            // Try natural language date
+            const d = new Date(rangePart);
+            if (!isNaN(d.getTime())) return d.toISOString().split('T')[0];
+            // Fallback: today
+            return new Date().toISOString().split('T')[0];
+          };
+
           let rawType = (parsedData.participationType || "solo").toLowerCase().trim();
           let cleanParticipationType = 'solo';
           if (rawType.includes('team')) {
@@ -190,7 +210,8 @@ const handleWebhook = async (req, res) => {
           const newEvent = await Event.create({
             title: parsedData.title || "Untitled Event",
             description: parsedData.description || "No description provided.",
-            date: parsedData.date || new Date().toISOString().split('T')[0],
+            date: parseEventDate(parsedData.date),
+
             time: parsedData.time || "TBD",
             venue: parsedData.venue || "TBD",
             category: "other",
