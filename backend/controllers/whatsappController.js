@@ -109,22 +109,26 @@ const handleWebhook = async (req, res) => {
           const mimeType = imageRes.headers['content-type'] || 'image/jpeg';
           console.log('📦 Image downloaded, mimeType:', mimeType);
 
-          // Upload image to Imgur (free, no auth needed for anonymous uploads)
+          // Upload image to ImgBB (free image hosting)
           let posterUrl = '';
           try {
-            const imgurRes = await axios.post('https://api.imgur.com/3/image', {
-              image: base64Data,
-              type: 'base64',
-              title: 'SonaConnect Event Poster',
-            }, {
-              headers: {
-                Authorization: `Client-ID ${process.env.IMGUR_CLIENT_ID || 'f5f9cf8e4a97bf0'}`,
-              }
-            });
-            posterUrl = imgurRes.data?.data?.link || '';
-            console.log('🖼️ Poster uploaded to Imgur:', posterUrl);
-          } catch (imgurErr) {
-            console.warn('⚠️ Imgur upload failed, continuing without poster:', imgurErr.message);
+            const imgbbKey = process.env.IMGBB_API_KEY;
+            if (imgbbKey) {
+              const FormData = require('form-data');
+              const form = new FormData();
+              form.append('key', imgbbKey);
+              form.append('image', base64Data);
+              form.append('name', 'SonaConnect_Poster');
+              const imgbbRes = await axios.post('https://api.imgbb.com/1/upload', form, {
+                headers: form.getHeaders()
+              });
+              posterUrl = imgbbRes.data?.data?.display_url || imgbbRes.data?.data?.url || '';
+              console.log('🖼️ Poster uploaded to ImgBB:', posterUrl);
+            } else {
+              console.warn('⚠️ IMGBB_API_KEY not set — poster not uploaded');
+            }
+          } catch (uploadErr) {
+            console.warn('⚠️ ImgBB upload failed, continuing without poster:', uploadErr.response?.data || uploadErr.message);
           }
           const prompt = `
             You are an AI assistant that extracts event details from posters.
