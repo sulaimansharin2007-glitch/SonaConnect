@@ -114,27 +114,41 @@ const chatEvent = async (req, res) => {
 
     // Fetch all upcoming/current events for context
     const Event = require('../models/Event');
-    const events = await Event.find({ isApproved: true })
-      .sort({ date: 1 })
-      .limit(30)
-      .select('title description date time venue organizer category registrationLink prizes eligibility');
+    const Club = require('../models/Club');
+    
+    const [events, clubs] = await Promise.all([
+      Event.find({ isApproved: true })
+        .sort({ date: 1 })
+        .limit(30)
+        .select('title description date time venue organizer category registrationLink prizes eligibility'),
+      Club.find({ isActive: true })
+        .select('name category description memberCount')
+    ]);
 
     const eventsContext = events.map((e, i) =>
       `Event ${i + 1}: "${e.title}" | Category: ${e.category} | Date: ${e.date || 'TBD'} | Time: ${e.time || 'TBD'} | Venue: ${e.venue || 'TBD'} | Organizer: ${e.organizer || 'TBD'} | Prizes: ${e.prizes || 'None'} | Eligibility: ${e.eligibility || 'All students'} | Registration: ${e.registrationLink || 'On SonaConnect'} | Description: ${e.description || ''}`.trim()
     ).join('\n\n');
 
+    const clubsContext = clubs.map((c, i) =>
+      `Club ${i + 1}: "${c.name}" | Category: ${c.category} | Members: ${c.memberCount || 0} | Description: ${c.description || ''}`.trim()
+    ).join('\n\n');
+
     const systemPrompt = `You are SonaBot, the official AI assistant for SonaConnect — the campus event management platform for Sona College of Technology, Salem.
 
-Your job is to help students discover, understand and discuss campus events. Be friendly, concise and helpful.
+Your job is to help students discover, understand, and discuss campus events, clubs, hackathons, and workshops. Be friendly, conversational, and helpful. 
 
-Here are the current events on SonaConnect:
+Here is the context about current events on SonaConnect:
 ${eventsContext || 'No events found currently.'}
 
+Here is the context about active clubs on SonaConnect:
+${clubsContext || 'No clubs found currently.'}
+
 Guidelines:
-- Answer questions about specific events clearly (dates, venue, eligibility, prizes, registration).
-- Encourage students to register on SonaConnect.
-- For off-topic questions, gently redirect to campus events.
-- Keep responses brief and conversational.`;
+- Answer questions naturally, even if they are general greetings or casual conversation.
+- If asked about events, clubs, hackathons, or workshops, use the context provided above to give accurate answers.
+- Pay attention to specific criteria like "for which department", "which year", "eligibility", etc., and answer accordingly.
+- If they ask something completely irrelevant to the college/platform, answer playfully but guide them back to campus activities.
+- Keep responses brief, clear, and well-formatted.`;
 
     // Build conversation history for context
     const conversationParts = [];
