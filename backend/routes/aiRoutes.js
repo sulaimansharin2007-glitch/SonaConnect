@@ -6,7 +6,7 @@ const { extractPosterData, chatEvent } = require('../controllers/aiController');
 // Only protected users can use this (Faculty, Admins)
 router.post('/extract-poster', protect, extractPosterData);
 
-// AI Chatbot — any logged-in user can chat about events
-router.post('/chat', protect, chatEvent);
+// AI Chatbot — anyone on the website can chat about events (no login required)
+router.post('/chat', chatEvent);
 
 module.exports = router;
