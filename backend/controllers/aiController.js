@@ -78,7 +78,7 @@ For the date, use YYYY-MM-DD format. If a date range is given (e.g. Sep 3-5), us
           ]
         }
       ],
-      model: 'meta-llama/llama-4-scout-17b-16e-instruct',
+      model: 'qwen/qwen3.6-27b',
       response_format: { type: 'json_object' },
       temperature: 0.2,
     });
