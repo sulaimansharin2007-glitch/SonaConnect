@@ -177,11 +177,14 @@ STRICT RULES — follow these always:
 
     const chatCompletion = await groqClient.chat.completions.create({
       messages: messages,
-      model: 'llama-3.1-8b-instant', // fast and great for general chat
+      model: 'qwen/qwen3.6-27b', // Reliable model available on current tier
       temperature: 0.7,
     });
 
-    const reply = chatCompletion.choices[0]?.message?.content || 'Sorry, I got confused for a second there.';
+    let reply = chatCompletion.choices[0]?.message?.content || 'Sorry, I got confused for a second there.';
+
+    // Strip out any <think> blocks if the model includes reasoning tokens
+    reply = reply.replace(/<think>[\s\S]*?<\/think>\s*/gi, '');
 
     res.json({ reply });
   } catch (error) {
