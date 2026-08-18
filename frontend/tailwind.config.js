@@ -7,6 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
       },
       colors: {
@@ -27,19 +28,19 @@ export default {
           accent: '#FF6584',
         },
         dark: {
-          DEFAULT: '#0A0A0F',
-          100: '#12121A',
-          200: '#1A1A2E',
-          300: '#1e1e30',
-          400: '#252540',
+          DEFAULT: '#0B1121',
+          100: '#111827',
+          200: '#1F2937',
+          300: '#374151',
+          400: '#4B5563',
         },
-        surface: '#1A1A2E',
+        surface: '#111827',
         accent: '#00D4AA',
         danger: '#FF4757',
       },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(135deg, #6C63FF 0%, #FF6584 100%)',
-        'gradient-dark': 'linear-gradient(180deg, #0A0A0F 0%, #12121A 100%)',
+        'gradient-dark': 'linear-gradient(180deg, #0B1121 0%, #111827 100%)',
         'gradient-card': 'linear-gradient(145deg, rgba(108,99,255,0.1) 0%, rgba(255,101,132,0.05) 100%)',
         'gradient-glow': 'radial-gradient(ellipse at center, rgba(108,99,255,0.3) 0%, transparent 70%)',
       },

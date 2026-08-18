@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, Loader2 } from 'lucide-react';
+import { format, parseISO } from 'date-fns';
 import Navbar from '../components/Navbar';
 import EventCard from '../components/EventCard';
 import FilterBar from '../components/FilterBar';
@@ -32,6 +33,21 @@ export default function EventsPage() {
     const debounce = setTimeout(fetchEvents, 300);
     return () => clearTimeout(debounce);
   }, [search, category, statusFilter]);
+
+  // Group events by date
+  const groupedEvents = events.reduce((acc, event) => {
+    const dateStr = event.date ? format(parseISO(event.date), 'MMMM d, yyyy (EEEE)') : 'Date TBA';
+    if (!acc[dateStr]) acc[dateStr] = [];
+    acc[dateStr].push(event);
+    return acc;
+  }, {});
+
+  // Sort dates (TBA at the end)
+  const sortedDates = Object.keys(groupedEvents).sort((a, b) => {
+    if (a === 'Date TBA') return 1;
+    if (b === 'Date TBA') return -1;
+    return new Date(a) - new Date(b);
+  });
 
   return (
     <div className="min-h-screen bg-dark bg-mesh">
@@ -82,10 +98,28 @@ export default function EventsPage() {
           </motion.div>
         ) : (
           <>
-            <p className="text-white/40 text-sm mb-4">{events.length} event{events.length !== 1 ? 's' : ''} found</p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {events.map((event, i) => (
-                <EventCard key={event._id} event={event} index={i} />
+            <p className="text-white/40 text-sm mb-6">{events.length} event{events.length !== 1 ? 's' : ''} found</p>
+            <div className="space-y-10">
+              {sortedDates.map((dateStr, idx) => (
+                <motion.div 
+                  key={dateStr}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                >
+                  <div className="flex items-center gap-4 mb-4">
+                    <h2 className="text-lg font-bold text-white whitespace-nowrap">{dateStr}</h2>
+                    <div className="h-px w-full bg-white/10"></div>
+                    <span className="text-white/40 text-sm whitespace-nowrap bg-white/5 px-3 py-1 rounded-full">
+                      {groupedEvents[dateStr].length} event{groupedEvents[dateStr].length !== 1 ? 's' : ''}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {groupedEvents[dateStr].map((event, i) => (
+                      <EventCard key={event._id} event={event} index={i} />
+                    ))}
+                  </div>
+                </motion.div>
               ))}
             </div>
           </>
