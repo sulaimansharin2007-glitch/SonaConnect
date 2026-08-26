@@ -52,21 +52,36 @@ const extractPosterData = async (req, res) => {
 
     const dataUrl = `data:${mimeType};base64,${base64Data}`;
 
-    const prompt = `You are an AI assistant that extracts event details from posters.
-Analyze this event poster and extract the following information.
+    const prompt = `You are an AI assistant that extracts event details from event posters with HIGH ACCURACY.
+
+Analyze this event poster carefully and extract the following information.
 Return ONLY a valid JSON object matching this exact structure:
 {
   "title": "Event Title Here",
   "description": "A brief 2-3 sentence description based on the poster",
-  "date": "YYYY-MM-DD",
+  "startDate": "YYYY-MM-DD",
+  "endDate": "YYYY-MM-DD",
   "time": "HH:MM AM/PM",
   "venue": "Event Venue",
   "prizes": "Prize details if any",
   "eligibility": "Who can attend (e.g. All Students, 3rd Years)",
-  "participationType": "solo or team"
+  "participationType": "solo or team",
+  "registrationLink": "https://... or google form link or any URL found on poster"
 }
-If any information is not found in the poster, leave it as an empty string "".
-For the date, use YYYY-MM-DD format. If a date range is given (e.g. Sep 3-5), use the start date.`;
+
+CRITICAL DATE INSTRUCTIONS:
+- The date on the poster IS the actual event date (when the event happens). Extract it accurately.
+- If the poster shows a single date like "September 15, 2026" → startDate: "2026-09-15", endDate: ""
+- If the poster shows a date range like "Sep 15-16, 2026" or "15th-16th September 2026" → startDate: "2026-09-15", endDate: "2026-09-16"
+- Always use YYYY-MM-DD format. If year is not mentioned, assume current or next year.
+- Do NOT put a wrong date. If you cannot read the date clearly, leave it as "".
+
+REGISTRATION LINK INSTRUCTIONS:
+- Look for any URL, QR code label, Google Form link, Devfolio link, or "Register at" text on the poster.
+- Include the full URL if visible (e.g. "https://forms.gle/...", "https://devfolio.co/...")
+- If no link found, leave as "".
+
+If any other information is not found, leave it as "".`;
 
     const chatCompletion = await groqClient.chat.completions.create({
       messages: [

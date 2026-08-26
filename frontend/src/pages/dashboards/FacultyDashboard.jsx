@@ -24,7 +24,7 @@ export default function FacultyDashboard() {
   const [extractingAI, setExtractingAI] = useState(false);
 
   const defaultForm = {
-    title: '', description: '', category: 'workshop', date: '', time: '', venue: '',
+    title: '', description: '', category: 'workshop', date: '', endDate: '', time: '', venue: '',
     organizer: '', inchargeStaff: '', registrationLink: '', deadline: '',
     participationType: '', prizes: '', eligibility: '', clubName: '', club: '', posterUrl: ''
   };
@@ -143,12 +143,14 @@ export default function FacultyDashboard() {
         ...prev,
         title: data.title || prev.title,
         description: data.description || prev.description,
-        date: data.date || prev.date,
+        date: data.startDate || data.date || prev.date,
+        endDate: data.endDate || prev.endDate,
         time: data.time || prev.time,
         venue: data.venue || prev.venue,
         prizes: data.prizes || prev.prizes,
         eligibility: data.eligibility || prev.eligibility,
         participationType: data.participationType || prev.participationType,
+        registrationLink: data.registrationLink || prev.registrationLink,
       }));
       toast.success('Fields auto-filled successfully!', { id: toastId });
     } catch (err) {
@@ -375,7 +377,8 @@ export default function FacultyDashboard() {
                     <select value={form.club} onChange={(e) => { const s = clubs.find((c) => c._id === e.target.value); setForm({ ...form, club: e.target.value, clubName: s?.name || '' }); }} className="input cursor-pointer">
                       <option value="">None</option>{clubs.map((c) => <option key={c._id} value={c._id}>{c.name}</option>)}
                     </select></div>
-                  <div><label className="text-sm text-slate-800/60 mb-1 block">Date</label><input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-800/60 mb-1 block">Start Date <span className="text-primary-500 text-xs">(event date)</span></label><input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-800/60 mb-1 block">End Date <span className="text-slate-400 text-xs">(if multi-day)</span></label><input type="date" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} className="input" /></div>
                   <div><label className="text-sm text-slate-800/60 mb-1 block">Time</label><input value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} placeholder="10:00 AM" className="input" /></div>
                   <div><label className="text-sm text-slate-800/60 mb-1 block">Venue</label><input value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="input" /></div>
                   <div><label className="text-sm text-slate-800/60 mb-1 block">Organizer</label><input value={form.organizer} onChange={(e) => setForm({ ...form, organizer: e.target.value })} className="input" /></div>

@@ -13,6 +13,7 @@ const eventSchema = new mongoose.Schema(
     clubName: { type: String, default: '' },
     posterUrl: { type: String, default: '' },
     date: { type: Date, default: null },
+    endDate: { type: Date, default: null },
     time: { type: String, default: '' },
     venue: { type: String, default: '' },
     organizer: { type: String, default: '' },
