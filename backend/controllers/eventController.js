@@ -56,6 +56,26 @@ const getEventById = async (req, res) => {
   }
 };
 
+// Helper: upload base64 image to ImgBB and return URL
+const uploadToImgBB = async (base64OrUrl) => {
+  try {
+    if (!base64OrUrl || base64OrUrl.startsWith('http')) return base64OrUrl; // already a URL
+    const imgbbKey = process.env.IMGBB_API_KEY;
+    if (!imgbbKey) return base64OrUrl;
+    const axios = require('axios');
+    const FormData = require('form-data');
+    const form = new FormData();
+    const base64Data = base64OrUrl.replace(/^data:image\/\w+;base64,/, '');
+    form.append('key', imgbbKey);
+    form.append('image', base64Data);
+    const res = await axios.post('https://api.imgbb.com/1/upload', form, { headers: form.getHeaders() });
+    return res.data?.data?.display_url || res.data?.data?.url || base64OrUrl;
+  } catch (err) {
+    console.warn('ImgBB upload failed:', err.message);
+    return base64OrUrl;
+  }
+};
+
 // @desc    Create event
 // @route   POST /api/events
 const createEvent = async (req, res) => {
@@ -64,6 +84,11 @@ const createEvent = async (req, res) => {
     // Auto-approve events created by admins and faculty
     if (['super_admin', 'club_admin', 'faculty'].includes(req.user.role)) {
       eventData.isApproved = true;
+    }
+
+    // Upload poster to ImgBB if it's a base64 string
+    if (eventData.posterUrl && eventData.posterUrl.startsWith('data:')) {
+      eventData.posterUrl = await uploadToImgBB(eventData.posterUrl);
     }
 
     const event = await Event.create(eventData);
@@ -92,7 +117,13 @@ const updateEvent = async (req, res) => {
     const event = await Event.findById(req.params.id);
     if (!event) return res.status(404).json({ message: 'Event not found' });
 
-    const updatedEvent = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const updateData = { ...req.body };
+    // Upload poster to ImgBB if it's a new base64 string
+    if (updateData.posterUrl && updateData.posterUrl.startsWith('data:')) {
+      updateData.posterUrl = await uploadToImgBB(updateData.posterUrl);
+    }
+
+    const updatedEvent = await Event.findByIdAndUpdate(req.params.id, updateData, { new: true });
     res.json(updatedEvent);
   } catch (error) {
     res.status(500).json({ message: error.message });
