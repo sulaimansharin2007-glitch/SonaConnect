@@ -103,19 +103,19 @@ export default function ChatBot() {
             exit={{ opacity: 0, y: 30, scale: 0.92 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className="fixed bottom-24 right-6 z-50 w-[350px] sm:w-[400px] flex flex-col rounded-3xl overflow-hidden shadow-2xl"
-            style={{ height: '560px', background: 'rgba(18,18,28,0.97)', border: '1px solid rgba(108,99,255,0.25)', backdropFilter: 'blur(24px)' }}
+            style={{ height: '560px', background: 'rgba(255,255,255,0.97)', border: '1px solid rgba(108,99,255,0.15)', backdropFilter: 'blur(24px)' }}
           >
             {/* Header */}
-            <div className="px-5 py-4 flex items-center gap-3 border-b border-slate-900/10 bg-gradient-to-r from-primary-500/20 to-pink-accent/10">
+            <div className="px-5 py-4 flex items-center gap-3 border-b border-slate-200 bg-gradient-to-r from-primary-500/10 to-pink-accent/5">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary-500 to-pink-accent flex items-center justify-center">
-                <Bot size={18} className="text-slate-900" />
+                <Bot size={18} className="text-white" />
               </div>
               <div>
                 <div className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
-                  SonaBot <Sparkles size={12} className="text-primary-400" />
+                  SonaBot <Sparkles size={12} className="text-primary-500" />
                 </div>
-                <div className="text-[11px] text-slate-700/50 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-pulse" />
+                <div className="text-[11px] text-slate-500 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
                   Online · Ask me about campus events
                 </div>
               </div>
@@ -132,7 +132,7 @@ export default function ChatBot() {
                   className={`flex items-end gap-2 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}
                 >
                   {/* Avatar */}
-                  <div className={`flex-shrink-0 w-7 h-7 rounded-xl flex items-center justify-center text-slate-900 ${msg.role === 'user' ? 'bg-primary-500/30' : 'bg-gradient-to-br from-primary-500 to-pink-accent'}`}>
+                  <div className={`flex-shrink-0 w-7 h-7 rounded-xl flex items-center justify-center ${msg.role === 'user' ? 'bg-primary-50 text-primary-600' : 'bg-gradient-to-br from-primary-500 to-pink-accent text-white'}`}>
                     {msg.role === 'user' ? <User size={14} /> : <Bot size={14} />}
                   </div>
 
@@ -140,8 +140,8 @@ export default function ChatBot() {
                   <div
                     className={`max-w-[78%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
                       msg.role === 'user'
-                        ? 'bg-primary-500/25 text-slate-900 rounded-br-sm border border-primary-500/20'
-                        : 'bg-white/[0.06] text-slate-700/90 rounded-bl-sm border border-slate-900/10'
+                        ? 'bg-primary-50 text-slate-900 rounded-br-sm border border-primary-100'
+                        : 'bg-slate-50 text-slate-800 rounded-bl-sm border border-slate-200'
                     }`}
                     dangerouslySetInnerHTML={{ __html: formatText(msg.text) }}
                   />
@@ -152,9 +152,9 @@ export default function ChatBot() {
               {loading && (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-end gap-2">
                   <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-primary-500 to-pink-accent flex items-center justify-center">
-                    <Bot size={14} className="text-slate-900" />
+                    <Bot size={14} className="text-white" />
                   </div>
-                  <div className="px-4 py-3 rounded-2xl rounded-bl-sm bg-white/[0.06] border border-slate-900/10 flex items-center gap-1.5">
+                  <div className="px-4 py-3 rounded-2xl rounded-bl-sm bg-slate-50 border border-slate-200 flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
                     <span className="w-1.5 h-1.5 bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                     <span className="w-1.5 h-1.5 bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
@@ -171,7 +171,7 @@ export default function ChatBot() {
                   <button
                     key={q}
                     onClick={() => { setInput(q); inputRef.current?.focus(); }}
-                    className="text-[11px] px-3 py-1.5 glass rounded-xl border border-primary-500/25 text-primary-300 hover:bg-primary-500/15 transition-all"
+                    className="text-[11px] px-3 py-1.5 glass rounded-xl border border-primary-200 text-primary-700 hover:bg-primary-50 transition-all"
                   >
                     {q}
                   </button>
@@ -180,8 +180,8 @@ export default function ChatBot() {
             )}
 
             {/* Input */}
-            <div className="px-4 pb-4 pt-2 border-t border-slate-900/10">
-              <div className="flex items-center gap-2 glass rounded-2xl border border-slate-900/15 px-4 py-2.5">
+            <div className="px-4 pb-4 pt-2 border-t border-slate-200">
+              <div className="flex items-center gap-2 glass rounded-2xl border border-slate-300 px-4 py-2.5 bg-white">
                 <textarea
                   ref={inputRef}
                   value={input}
@@ -189,19 +189,19 @@ export default function ChatBot() {
                   onKeyDown={handleKey}
                   placeholder="Ask about events..."
                   rows={1}
-                  className="flex-1 bg-transparent text-slate-900 text-sm placeholder-white/30 resize-none outline-none leading-relaxed"
+                  className="flex-1 bg-transparent text-slate-900 text-sm placeholder-slate-400 resize-none outline-none leading-relaxed"
                   style={{ maxHeight: '80px' }}
                 />
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   onClick={sendMessage}
                   disabled={!input.trim() || loading}
-                  className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-pink-accent flex items-center justify-center text-slate-900 disabled:opacity-40 transition-all flex-shrink-0"
+                  className="w-8 h-8 rounded-xl bg-gradient-to-br from-primary-500 to-pink-accent flex items-center justify-center text-white disabled:opacity-40 transition-all flex-shrink-0"
                 >
                   {loading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
                 </motion.button>
               </div>
-              <p className="text-[10px] text-slate-700/25 text-center mt-2">Powered by Gemini AI · SonaConnect</p>
+              <p className="text-[10px] text-slate-400 text-center mt-2">Powered by AI · SonaConnect</p>
             </div>
           </motion.div>
         )}

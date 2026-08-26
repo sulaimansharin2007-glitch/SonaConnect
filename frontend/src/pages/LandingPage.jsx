@@ -242,23 +242,23 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-900/10 py-10">
+      <footer className="border-t border-slate-200 py-10">
         <div className="container-custom">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <span className="text-slate-900 font-black text-xs">S</span>
+                <span className="text-white font-black text-xs">S</span>
               </div>
               <span className="font-bold gradient-text">SonaConnect</span>
             </div>
             <div className="text-center">
-              <p className="text-slate-700/30 text-sm mb-1">© {new Date().getFullYear()} SonaConnect — Sona College of Technology.</p>
-              <p className="text-slate-700/20 text-xs font-mono">Created by Sharin Banu S, Artificial Intelligence and Data Science, 2024-2028</p>
+              <p className="text-slate-500 text-sm mb-1">© {new Date().getFullYear()} SonaConnect — Sona College of Technology.</p>
+              <p className="text-slate-400 text-xs font-mono">Created by Sharin Banu S, Artificial Intelligence and Data Science, 2024-2028</p>
             </div>
-            <div className="flex items-center gap-4 text-slate-700/40 text-sm">
-              <a href="#" className="hover:text-slate-900 transition-colors">Privacy</a>
-              <a href="#" className="hover:text-slate-900 transition-colors">Terms</a>
-              <a href="#" className="hover:text-slate-900 transition-colors">Contact</a>
+            <div className="flex items-center gap-4 text-slate-500 text-sm">
+              <a href="#" className="hover:text-primary-600 transition-colors">Privacy</a>
+              <a href="#" className="hover:text-primary-600 transition-colors">Terms</a>
+              <a href="#" className="hover:text-primary-600 transition-colors">Contact</a>
             </div>
           </div>
         </div>
