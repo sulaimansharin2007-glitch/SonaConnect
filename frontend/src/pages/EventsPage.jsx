@@ -50,7 +50,7 @@ export default function EventsPage() {
   });
 
   return (
-    <div className="min-h-screen bg-dark bg-mesh">
+    <div className="min-h-screen bg-white bg-mesh">
       <Navbar />
       <div className="container-custom pt-24 pb-16">
         {/* Header */}
@@ -61,11 +61,11 @@ export default function EventsPage() {
         >
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-              <Calendar size={20} className="text-white" />
+              <Calendar size={20} className="text-slate-900" />
             </div>
-            <h1 className="text-3xl font-black text-white">Events</h1>
+            <h1 className="text-3xl font-black text-slate-900">Events</h1>
           </div>
-          <p className="text-white/50 ml-[52px]">Browse and register for all campus events</p>
+          <p className="text-slate-700/50 ml-[52px]">Browse and register for all campus events</p>
         </motion.div>
 
         {/* Filters */}
@@ -93,12 +93,12 @@ export default function EventsPage() {
             className="text-center py-32"
           >
             <div className="text-6xl mb-4">📅</div>
-            <h3 className="text-xl font-bold text-white mb-2">No events found</h3>
-            <p className="text-white/50">Try adjusting your filters or search query</p>
+            <h3 className="text-xl font-bold text-slate-900 mb-2">No events found</h3>
+            <p className="text-slate-700/50">Try adjusting your filters or search query</p>
           </motion.div>
         ) : (
           <>
-            <p className="text-white/40 text-sm mb-6">{events.length} event{events.length !== 1 ? 's' : ''} found</p>
+            <p className="text-slate-700/40 text-sm mb-6">{events.length} event{events.length !== 1 ? 's' : ''} found</p>
             <div className="space-y-10">
               {sortedDates.map((dateStr, idx) => (
                 <motion.div 
@@ -108,9 +108,9 @@ export default function EventsPage() {
                   transition={{ delay: idx * 0.1 }}
                 >
                   <div className="flex items-center gap-4 mb-4">
-                    <h2 className="text-lg font-bold text-white whitespace-nowrap">{dateStr}</h2>
-                    <div className="h-px w-full bg-white/10"></div>
-                    <span className="text-white/40 text-sm whitespace-nowrap bg-white/5 px-3 py-1 rounded-full">
+                    <h2 className="text-lg font-bold text-slate-900 whitespace-nowrap">{dateStr}</h2>
+                    <div className="h-px w-full bg-slate-900/10"></div>
+                    <span className="text-slate-700/40 text-sm whitespace-nowrap bg-slate-900/5 px-3 py-1 rounded-full">
                       {groupedEvents[dateStr].length} event{groupedEvents[dateStr].length !== 1 ? 's' : ''}
                     </span>
                   </div>

@@ -40,9 +40,9 @@ export default {
       },
       backgroundImage: {
         'gradient-primary': 'linear-gradient(135deg, #6C63FF 0%, #FF6584 100%)',
-        'gradient-dark': 'linear-gradient(180deg, #0B1121 0%, #111827 100%)',
-        'gradient-card': 'linear-gradient(145deg, rgba(108,99,255,0.1) 0%, rgba(255,101,132,0.05) 100%)',
-        'gradient-glow': 'radial-gradient(ellipse at center, rgba(108,99,255,0.3) 0%, transparent 70%)',
+        'gradient-dark': 'linear-gradient(180deg, #f8fafc 0%, #ffffff 100%)',
+        'gradient-card': 'linear-gradient(145deg, rgba(108,99,255,0.05) 0%, rgba(255,101,132,0.02) 100%)',
+        'gradient-glow': 'radial-gradient(ellipse at center, rgba(108,99,255,0.1) 0%, transparent 70%)',
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

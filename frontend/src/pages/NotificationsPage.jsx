@@ -11,7 +11,7 @@ const typeStyles = {
   registration: 'bg-accent/20 text-accent',
   announcement: 'bg-yellow-500/20 text-yellow-300',
   reminder: 'bg-orange-500/20 text-orange-300',
-  system: 'bg-white/10 text-white/60',
+  system: 'bg-slate-900/10 text-slate-700/60',
 };
 
 export default function NotificationsPage() {
@@ -54,18 +54,18 @@ export default function NotificationsPage() {
   const unread = notifications;
 
   return (
-    <div className="min-h-screen bg-dark bg-mesh">
+    <div className="min-h-screen bg-white bg-mesh">
       <Navbar />
       <div className="container-custom pt-24 pb-16 max-w-3xl">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-                <Bell size={20} className="text-white" />
+                <Bell size={20} className="text-slate-900" />
               </div>
               <div>
-                <h1 className="text-3xl font-black text-white">Notifications</h1>
-                <p className="text-white/50 text-sm">{notifications.length} notification{notifications.length !== 1 ? 's' : ''}</p>
+                <h1 className="text-3xl font-black text-slate-900">Notifications</h1>
+                <p className="text-slate-700/50 text-sm">{notifications.length} notification{notifications.length !== 1 ? 's' : ''}</p>
               </div>
             </div>
             {unread.length > 0 && (
@@ -83,8 +83,8 @@ export default function NotificationsPage() {
         ) : notifications.length === 0 ? (
           <div className="text-center py-32">
             <div className="text-6xl mb-4">🔔</div>
-            <h3 className="text-xl font-bold text-white mb-2">No notifications</h3>
-            <p className="text-white/50">You're all caught up!</p>
+            <h3 className="text-xl font-bold text-slate-900 mb-2">No notifications</h3>
+            <p className="text-slate-700/50">You're all caught up!</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -100,15 +100,15 @@ export default function NotificationsPage() {
                   <Bell size={16} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <h4 className="text-white font-semibold text-sm">{n.title}</h4>
-                  <p className="text-white/50 text-xs mt-0.5 line-clamp-2">{n.message}</p>
-                  <p className="text-white/30 text-[10px] mt-1.5">
+                  <h4 className="text-slate-900 font-semibold text-sm">{n.title}</h4>
+                  <p className="text-slate-700/50 text-xs mt-0.5 line-clamp-2">{n.message}</p>
+                  <p className="text-slate-700/30 text-[10px] mt-1.5">
                     {formatDistanceToNow(new Date(n.createdAt), { addSuffix: true })}
                   </p>
                 </div>
                 <button
                   onClick={() => handleMarkRead(n._id)}
-                  className="p-2 rounded-lg text-white/30 hover:text-primary-400 hover:bg-primary-500/10 flex-shrink-0"
+                  className="p-2 rounded-lg text-slate-700/30 hover:text-primary-400 hover:bg-primary-500/10 flex-shrink-0"
                   title="Dismiss"
                 >
                   <Check size={14} />

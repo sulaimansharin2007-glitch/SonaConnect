@@ -65,7 +65,7 @@ export default function Navbar() {
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'glass-dark shadow-lg' : 'bg-transparent'
+        scrolled ? 'glass shadow-lg' : 'bg-transparent'
       }`}
     >
       <div className="container-custom">
@@ -73,7 +73,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <div className="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center shadow-glow group-hover:shadow-glow-pink transition-all duration-300">
-              <span className="text-white font-black text-sm">S</span>
+              <span className="text-slate-900 font-black text-sm">S</span>
             </div>
             <span className="text-xl font-bold gradient-text">SonaConnect</span>
           </Link>
@@ -87,8 +87,8 @@ export default function Navbar() {
                   to={href}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     location.pathname === href
-                      ? 'text-white bg-primary-500/20 border border-primary-500/30'
-                      : 'text-white/60 hover:text-white hover:bg-white/5'
+                      ? 'text-slate-900 bg-primary-500/20 border border-primary-500/30'
+                      : 'text-slate-700/60 hover:text-slate-900 hover:bg-slate-900/5'
                   }`}
                 >
                   {label}
@@ -105,7 +105,7 @@ export default function Navbar() {
                 <div className="relative">
                   <button
                     onClick={() => { setNotifOpen(!notifOpen); setProfileOpen(false); }}
-                    className="relative p-2 rounded-xl text-white/60 hover:text-white hover:bg-white/5 transition-all"
+                    className="relative p-2 rounded-xl text-slate-700/60 hover:text-slate-900 hover:bg-slate-900/5 transition-all"
                   >
                     <Bell size={20} />
                     {unreadCount > 0 && (
@@ -122,9 +122,9 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute right-0 top-12 w-80 glass-dark border border-white/10 rounded-2xl shadow-card-hover overflow-hidden"
+                        className="absolute right-0 top-12 w-80 glass border border-slate-900/10 rounded-2xl shadow-card-hover overflow-hidden"
                       >
-                        <div className="flex items-center justify-between p-4 border-b border-white/10">
+                        <div className="flex items-center justify-between p-4 border-b border-slate-900/10">
                           <span className="font-semibold text-sm">Notifications</span>
                           <button onClick={handleMarkAllRead} className="text-xs text-primary-400 hover:text-primary-300">
                             Mark all read
@@ -132,15 +132,15 @@ export default function Navbar() {
                         </div>
                         <div className="max-h-72 overflow-y-auto">
                           {notifications.length === 0 ? (
-                            <div className="p-6 text-center text-white/40 text-sm">No notifications</div>
+                            <div className="p-6 text-center text-slate-700/40 text-sm">No notifications</div>
                           ) : (
                             notifications.slice(0, 8).map((n) => (
-                              <div key={n._id} className={`p-4 border-b border-white/5 hover:bg-white/5 transition-colors ${!n.isRead ? 'bg-primary-500/5' : ''}`}>
+                              <div key={n._id} className={`p-4 border-b border-slate-900/5 hover:bg-slate-900/5 transition-colors ${!n.isRead ? 'bg-primary-500/5' : ''}`}>
                                 <div className="flex items-start gap-3">
-                                  <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${!n.isRead ? 'bg-primary-400' : 'bg-white/20'}`} />
+                                  <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${!n.isRead ? 'bg-primary-400' : 'bg-slate-900/20'}`} />
                                   <div>
-                                    <p className="text-sm font-medium text-white">{n.title}</p>
-                                    <p className="text-xs text-white/50 mt-0.5">{n.message}</p>
+                                    <p className="text-sm font-medium text-slate-900">{n.title}</p>
+                                    <p className="text-xs text-slate-700/50 mt-0.5">{n.message}</p>
                                   </div>
                                 </div>
                               </div>
@@ -150,7 +150,7 @@ export default function Navbar() {
                         <Link
                           to="/notifications"
                           onClick={() => setNotifOpen(false)}
-                          className="block p-3 text-center text-xs text-primary-400 hover:text-primary-300 transition-colors border-t border-white/10"
+                          className="block p-3 text-center text-xs text-primary-400 hover:text-primary-300 transition-colors border-t border-slate-900/10"
                         >
                           View all notifications →
                         </Link>
@@ -169,7 +169,7 @@ export default function Navbar() {
                       {user.name?.[0]?.toUpperCase()}
                     </div>
                     <span className="text-sm font-medium hidden sm:block max-w-24 truncate">{user.name}</span>
-                    <ChevronDown size={14} className={`text-white/60 transition-transform ${profileOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown size={14} className={`text-slate-700/60 transition-transform ${profileOpen ? 'rotate-180' : ''}`} />
                   </button>
 
                   <AnimatePresence>
@@ -179,30 +179,30 @@ export default function Navbar() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute right-0 top-12 w-52 glass-dark border border-white/10 rounded-2xl shadow-card-hover overflow-hidden"
+                        className="absolute right-0 top-12 w-52 glass border border-slate-900/10 rounded-2xl shadow-card-hover overflow-hidden"
                       >
-                        <div className="p-4 border-b border-white/10">
-                          <p className="text-sm font-semibold text-white">{user.name}</p>
-                          <p className="text-xs text-white/50 mt-0.5">{user.email}</p>
+                        <div className="p-4 border-b border-slate-900/10">
+                          <p className="text-sm font-semibold text-slate-900">{user.name}</p>
+                          <p className="text-xs text-slate-700/50 mt-0.5">{user.email}</p>
                           <span className="badge-primary mt-2 inline-block capitalize">{user.role?.replace('_', ' ')}</span>
                         </div>
                         <div className="p-2">
                           <Link
                             to={getDashboardLink(user.role)}
                             onClick={() => setProfileOpen(false)}
-                            className="sidebar-item text-white/70 hover:text-white"
+                            className="sidebar-item text-slate-700/70 hover:text-slate-900"
                           >
                             <Calendar size={16} /> Dashboard
                           </Link>
                           <Link
                             to="/settings"
                             onClick={() => setProfileOpen(false)}
-                            className="sidebar-item text-white/70 hover:text-white"
+                            className="sidebar-item text-slate-700/70 hover:text-slate-900"
                           >
                             <Settings size={16} /> Settings
                           </Link>
                           {user.role === 'student' && (
-                            <Link to="/my-events" onClick={() => setProfileOpen(false)} className="sidebar-item text-white/70 hover:text-white">
+                            <Link to="/my-events" onClick={() => setProfileOpen(false)} className="sidebar-item text-slate-700/70 hover:text-slate-900">
                               <Calendar size={16} /> My Events
                             </Link>
                           )}
@@ -229,7 +229,7 @@ export default function Navbar() {
             {user && (
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="md:hidden p-2 rounded-xl text-white/60 hover:text-white hover:bg-white/5"
+                className="md:hidden p-2 rounded-xl text-slate-700/60 hover:text-slate-900 hover:bg-slate-900/5"
               >
                 {mobileOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
@@ -245,7 +245,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-dark border-t border-white/10"
+            className="md:hidden glass border-t border-slate-900/10"
           >
             <div className="container-custom py-4 flex flex-col gap-1">
               {navLinks.map(({ label, href, icon: Icon }) => (
@@ -254,7 +254,7 @@ export default function Navbar() {
                   to={href}
                   onClick={() => setMobileOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium ${
-                    location.pathname === href ? 'text-white bg-primary-500/20' : 'text-white/60'
+                    location.pathname === href ? 'text-slate-900 bg-primary-500/20' : 'text-slate-700/60'
                   }`}
                 >
                   <Icon size={18} /> {label}

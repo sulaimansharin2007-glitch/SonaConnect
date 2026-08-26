@@ -42,7 +42,7 @@ const roles = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-dark bg-mesh">
+    <div className="min-h-screen bg-white bg-mesh">
       <Navbar />
 
       {/* Hero Section */}
@@ -66,17 +66,17 @@ export default function LandingPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full border border-primary-500/30 mb-8">
               <Sparkles size={14} className="text-primary-400" />
-              <span className="text-sm text-white/70">Intelligent Campus Activity Platform</span>
-              <ChevronRight size={14} className="text-white/40" />
+              <span className="text-sm text-slate-700/70">Intelligent Campus Activity Platform</span>
+              <ChevronRight size={14} className="text-slate-700/40" />
             </div>
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] mb-6">
-              <span className="text-white">Your Campus,</span>
+              <span className="text-slate-900">Your Campus,</span>
               <br />
               <span className="gradient-text">Reimagined.</span>
             </h1>
 
-            <p className="text-white/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
+            <p className="text-slate-700/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
               SonaConnect is the all-in-one platform for Sona College — discover events, join clubs,
               register for hackathons and never miss what's happening on campus.
             </p>
@@ -95,12 +95,12 @@ export default function LandingPage() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.4, delay: 0.3 }}
-                  className="flex items-center gap-3 glass px-5 py-3 rounded-xl border border-white/10"
+                  className="flex items-center gap-3 glass px-5 py-3 rounded-xl border border-slate-900/10"
                 >
                   <Icon size={18} className="text-primary-400" />
                   <div className="text-left">
                     <div className="text-xl font-black gradient-text">{value}</div>
-                    <div className="text-xs text-white/50">{label}</div>
+                    <div className="text-xs text-slate-700/50">{label}</div>
                   </div>
                 </motion.div>
               ))}
@@ -116,10 +116,10 @@ export default function LandingPage() {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <div className="inline-flex items-center gap-2 px-4 py-1.5 glass rounded-full border border-primary-500/30 mb-4">
                 <Star size={12} className="text-primary-400" />
-                <span className="text-xs text-white/60">Platform Features</span>
+                <span className="text-xs text-slate-700/60">Platform Features</span>
               </div>
-              <h2 className="text-4xl font-black text-white mb-4">Everything You Need,<br /><span className="gradient-text">All In One Place</span></h2>
-              <p className="text-white/50 max-w-xl mx-auto">Built for students, clubs, faculty and administrators to manage campus life seamlessly.</p>
+              <h2 className="text-4xl font-black text-slate-900 mb-4">Everything You Need,<br /><span className="gradient-text">All In One Place</span></h2>
+              <p className="text-slate-700/50 max-w-xl mx-auto">Built for students, clubs, faculty and administrators to manage campus life seamlessly.</p>
             </motion.div>
           </div>
 
@@ -137,8 +137,8 @@ export default function LandingPage() {
                 <div className="w-12 h-12 glass rounded-2xl flex items-center justify-center mb-4 shadow-glow">
                   <f.icon size={22} className="text-primary-400" />
                 </div>
-                <h3 className="font-bold text-white text-lg mb-2">{f.title}</h3>
-                <p className="text-white/50 text-sm leading-relaxed">{f.desc}</p>
+                <h3 className="font-bold text-slate-900 text-lg mb-2">{f.title}</h3>
+                <p className="text-slate-700/50 text-sm leading-relaxed">{f.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -146,12 +146,12 @@ export default function LandingPage() {
       </section>
 
       {/* Clubs Section */}
-      <section className="py-24 bg-dark-100">
+      <section className="py-24 bg-slate-50">
         <div className="container-custom">
           <div className="text-center mb-16">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <h2 className="text-4xl font-black text-white mb-4">Explore Our <span className="gradient-text">16 Clubs</span></h2>
-              <p className="text-white/50 max-w-xl mx-auto">From arts to technology — find your tribe and join the action.</p>
+              <h2 className="text-4xl font-black text-slate-900 mb-4">Explore Our <span className="gradient-text">16 Clubs</span></h2>
+              <p className="text-slate-700/50 max-w-xl mx-auto">From arts to technology — find your tribe and join the action.</p>
             </motion.div>
           </div>
 
@@ -164,11 +164,11 @@ export default function LandingPage() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
                 whileHover={{ y: -4, scale: 1.02 }}
-                className="glass rounded-2xl p-4 text-center border border-white/10 hover:border-primary-500/30 transition-all duration-300 cursor-pointer"
+                className="glass rounded-2xl p-4 text-center border border-slate-900/10 hover:border-primary-500/30 transition-all duration-300 cursor-pointer"
               >
                 <div className="text-3xl mb-2">{club.emoji}</div>
-                <div className="text-white text-sm font-semibold leading-tight">{club.name}</div>
-                <div className="text-white/40 text-xs mt-1">{club.category}</div>
+                <div className="text-slate-900 text-sm font-semibold leading-tight">{club.name}</div>
+                <div className="text-slate-700/40 text-xs mt-1">{club.category}</div>
               </motion.div>
             ))}
           </div>
@@ -186,8 +186,8 @@ export default function LandingPage() {
         <div className="container-custom">
           <div className="text-center mb-16">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <h2 className="text-4xl font-black text-white mb-4">Built For <span className="gradient-text">Everyone</span></h2>
-              <p className="text-white/50 max-w-xl mx-auto">Role-based access so students, faculty and admins each get exactly what they need.</p>
+              <h2 className="text-4xl font-black text-slate-900 mb-4">Built For <span className="gradient-text">Everyone</span></h2>
+              <p className="text-slate-700/50 max-w-xl mx-auto">Role-based access so students, faculty and admins each get exactly what they need.</p>
             </motion.div>
           </div>
 
@@ -203,8 +203,8 @@ export default function LandingPage() {
                 className="card p-6 text-center"
               >
                 <div className="text-4xl mb-4">{role.icon}</div>
-                <h3 className="font-bold text-white text-lg mb-2">{role.title}</h3>
-                <p className="text-white/50 text-sm leading-relaxed">{role.desc}</p>
+                <h3 className="font-bold text-slate-900 text-lg mb-2">{role.title}</h3>
+                <p className="text-slate-700/50 text-sm leading-relaxed">{role.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -224,8 +224,8 @@ export default function LandingPage() {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary-500/20 blur-3xl pointer-events-none" />
             <div className="relative z-10">
               <div className="text-5xl mb-4">🚀</div>
-              <h2 className="text-4xl font-black text-white mb-4">Ready to Get Started?</h2>
-              <p className="text-white/60 text-lg max-w-lg mx-auto mb-8">
+              <h2 className="text-4xl font-black text-slate-900 mb-4">Ready to Get Started?</h2>
+              <p className="text-slate-700/60 text-lg max-w-lg mx-auto mb-8">
                 Join thousands of Sona College students already using SonaConnect to stay connected with campus life.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -242,23 +242,23 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-white/10 py-10">
+      <footer className="border-t border-slate-900/10 py-10">
         <div className="container-custom">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 bg-gradient-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-black text-xs">S</span>
+                <span className="text-slate-900 font-black text-xs">S</span>
               </div>
               <span className="font-bold gradient-text">SonaConnect</span>
             </div>
             <div className="text-center">
-              <p className="text-white/30 text-sm mb-1">© {new Date().getFullYear()} SonaConnect — Sona College of Technology.</p>
-              <p className="text-white/20 text-xs font-mono">Created by Sharin Banu S, Artificial Intelligence and Data Science, 2024-2028</p>
+              <p className="text-slate-700/30 text-sm mb-1">© {new Date().getFullYear()} SonaConnect — Sona College of Technology.</p>
+              <p className="text-slate-700/20 text-xs font-mono">Created by Sharin Banu S, Artificial Intelligence and Data Science, 2024-2028</p>
             </div>
-            <div className="flex items-center gap-4 text-white/40 text-sm">
-              <a href="#" className="hover:text-white transition-colors">Privacy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms</a>
-              <a href="#" className="hover:text-white transition-colors">Contact</a>
+            <div className="flex items-center gap-4 text-slate-700/40 text-sm">
+              <a href="#" className="hover:text-slate-900 transition-colors">Privacy</a>
+              <a href="#" className="hover:text-slate-900 transition-colors">Terms</a>
+              <a href="#" className="hover:text-slate-900 transition-colors">Contact</a>
             </div>
           </div>
         </div>

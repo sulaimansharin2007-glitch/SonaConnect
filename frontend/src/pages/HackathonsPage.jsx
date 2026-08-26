@@ -29,7 +29,7 @@ export default function HackathonsPage() {
   const shown = tab === 'upcoming' ? upcoming : completed;
 
   return (
-    <div className="min-h-screen bg-dark bg-mesh">
+    <div className="min-h-screen bg-white bg-mesh">
       <Navbar />
       <div className="container-custom pt-24 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
@@ -37,9 +37,9 @@ export default function HackathonsPage() {
             <div className="w-10 h-10 bg-gradient-to-br from-yellow-500/30 to-orange-500/20 rounded-xl flex items-center justify-center shadow-glow-pink border border-yellow-500/30">
               <Trophy size={20} className="text-yellow-400" />
             </div>
-            <h1 className="text-3xl font-black text-white">Hackathons</h1>
+            <h1 className="text-3xl font-black text-slate-900">Hackathons</h1>
           </div>
-          <p className="text-white/50 ml-[52px]">Compete, code, and win in college and external hackathons</p>
+          <p className="text-slate-700/50 ml-[52px]">Compete, code, and win in college and external hackathons</p>
         </motion.div>
 
         {/* Stats Banner */}
@@ -52,7 +52,7 @@ export default function HackathonsPage() {
               key={t}
               onClick={() => setTab(t)}
               className={`px-5 py-2.5 rounded-xl text-sm font-medium capitalize transition-all ${
-                tab === t ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30' : 'glass text-white/60 hover:text-white border border-white/10'
+                tab === t ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30' : 'glass text-slate-700/60 hover:text-slate-900 border border-slate-900/10'
               }`}
             >
               {t} ({t === 'upcoming' ? upcoming.length : completed.length})
@@ -67,8 +67,8 @@ export default function HackathonsPage() {
         ) : shown.length === 0 ? (
           <div className="text-center py-32">
             <div className="text-6xl mb-4">🏆</div>
-            <h3 className="text-xl font-bold text-white mb-2">No {tab} hackathons</h3>
-            <p className="text-white/50">Check back soon for new hackathons!</p>
+            <h3 className="text-xl font-bold text-slate-900 mb-2">No {tab} hackathons</h3>
+            <p className="text-slate-700/50">Check back soon for new hackathons!</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

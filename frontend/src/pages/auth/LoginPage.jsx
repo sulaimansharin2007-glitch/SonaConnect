@@ -37,7 +37,7 @@ export default function LoginPage() {
 
 
   return (
-    <div className="min-h-screen bg-dark bg-mesh flex items-center justify-center px-4 py-16">
+    <div className="min-h-screen bg-white bg-mesh flex items-center justify-center px-4 py-16">
       {/* Background orbs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/8 rounded-full blur-3xl" />
@@ -53,12 +53,12 @@ export default function LoginPage() {
         >
           <Link to="/" className="inline-flex items-center gap-2 group">
             <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-              <span className="text-white font-black text-lg">S</span>
+              <span className="text-slate-900 font-black text-lg">S</span>
             </div>
             <span className="text-2xl font-black gradient-text">SonaConnect</span>
           </Link>
-          <h1 className="text-2xl font-bold text-white mt-4">Welcome back</h1>
-          <p className="text-white/50 text-sm mt-1">Sign in to your account to continue</p>
+          <h1 className="text-2xl font-bold text-slate-900 mt-4">Welcome back</h1>
+          <p className="text-slate-700/50 text-sm mt-1">Sign in to your account to continue</p>
         </motion.div>
 
 
@@ -71,9 +71,9 @@ export default function LoginPage() {
         >
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="text-sm text-white/60 mb-2 block">Email Address</label>
+              <label className="text-sm text-slate-700/60 mb-2 block">Email Address</label>
               <div className="relative">
-                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700/40" />
                 <input
                   type="email"
                   placeholder="your@email.com"
@@ -86,9 +86,9 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="text-sm text-white/60 mb-2 block">Password</label>
+              <label className="text-sm text-slate-700/60 mb-2 block">Password</label>
               <div className="relative">
-                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700/40" />
                 <input
                   type={showPass ? 'text' : 'password'}
                   placeholder="••••••••"
@@ -100,7 +100,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-700/40 hover:text-slate-900"
                 >
                   {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -127,8 +127,8 @@ export default function LoginPage() {
             </motion.button>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-white/10 text-center">
-            <p className="text-white/50 text-sm">
+          <div className="mt-6 pt-6 border-t border-slate-900/10 text-center">
+            <p className="text-slate-700/50 text-sm">
               Don't have an account?{' '}
               <Link to="/register" className="text-primary-400 hover:text-primary-300 font-semibold">
                 Create one

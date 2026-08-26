@@ -34,7 +34,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-dark flex items-center justify-center px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-white flex items-center justify-center px-4 relative overflow-hidden">
       {/* Background effects */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-red-900/20 via-dark to-dark" />
@@ -55,8 +55,8 @@ export default function AdminLoginPage() {
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-red-500/20 to-orange-500/10 border border-red-500/30 mb-4 shadow-[0_0_40px_rgba(239,68,68,0.15)]">
             <ShieldCheck size={36} className="text-red-400" />
           </div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Admin Portal</h1>
-          <p className="text-white/40 text-sm mt-2 font-mono tracking-wider uppercase">SonaConnect · Restricted Access</p>
+          <h1 className="text-3xl font-black text-slate-900 tracking-tight">Admin Portal</h1>
+          <p className="text-slate-700/40 text-sm mt-2 font-mono tracking-wider uppercase">SonaConnect · Restricted Access</p>
         </motion.div>
 
         {/* Warning banner */}
@@ -75,20 +75,20 @@ export default function AdminLoginPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="bg-white/[0.03] border border-white/10 rounded-3xl p-8 backdrop-blur-xl shadow-[0_0_60px_rgba(0,0,0,0.5)]"
+          className="bg-white/[0.03] border border-slate-900/10 rounded-3xl p-8 backdrop-blur-xl shadow-[0_0_60px_rgba(0,0,0,0.5)]"
         >
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email */}
             <div>
-              <label className="text-xs text-white/40 mb-2 block font-mono uppercase tracking-wider">Admin Email</label>
+              <label className="text-xs text-slate-700/40 mb-2 block font-mono uppercase tracking-wider">Admin Email</label>
               <div className="relative">
-                <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
+                <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-700/30" />
                 <input
                   type="email"
                   placeholder="admin@sonaconnect.in"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 pl-11 text-white placeholder-white/20 focus:outline-none focus:border-red-500/50 focus:bg-white/8 transition-all text-sm"
+                  className="w-full bg-slate-900/5 border border-slate-900/10 rounded-xl px-4 py-3.5 pl-11 text-slate-900 placeholder-white/20 focus:outline-none focus:border-red-500/50 focus:bg-slate-900/8 transition-all text-sm"
                   required
                   autoComplete="email"
                 />
@@ -97,22 +97,22 @@ export default function AdminLoginPage() {
 
             {/* Password */}
             <div>
-              <label className="text-xs text-white/40 mb-2 block font-mono uppercase tracking-wider">Password</label>
+              <label className="text-xs text-slate-700/40 mb-2 block font-mono uppercase tracking-wider">Password</label>
               <div className="relative">
-                <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30" />
+                <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-700/30" />
                 <input
                   type={showPass ? 'text' : 'password'}
                   placeholder="••••••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 pl-11 pr-11 text-white placeholder-white/20 focus:outline-none focus:border-red-500/50 focus:bg-white/8 transition-all text-sm"
+                  className="w-full bg-slate-900/5 border border-slate-900/10 rounded-xl px-4 py-3.5 pl-11 pr-11 text-slate-900 placeholder-white/20 focus:outline-none focus:border-red-500/50 focus:bg-slate-900/8 transition-all text-sm"
                   required
                   autoComplete="current-password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPass(!showPass)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-700/30 hover:text-slate-700/60 transition-colors"
                 >
                   {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -125,7 +125,7 @@ export default function AdminLoginPage() {
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading || !email || !password}
-              className="w-full py-4 rounded-xl font-bold text-white text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
+              className="w-full py-4 rounded-xl font-bold text-slate-900 text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mt-2"
               style={{
                 background: loading ? 'rgba(239,68,68,0.3)' : 'linear-gradient(135deg, #dc2626, #b91c1c)',
                 boxShadow: '0 0 30px rgba(220,38,38,0.3)',
@@ -143,8 +143,8 @@ export default function AdminLoginPage() {
           </form>
 
           {/* Footer note */}
-          <div className="mt-6 pt-5 border-t border-white/5 text-center">
-            <p className="text-white/20 text-xs font-mono">
+          <div className="mt-6 pt-5 border-t border-slate-900/5 text-center">
+            <p className="text-slate-700/20 text-xs font-mono">
               SONACONNECT ADMIN · v1.0
             </p>
           </div>
@@ -157,7 +157,7 @@ export default function AdminLoginPage() {
           transition={{ delay: 0.3 }}
           className="text-center mt-6"
         >
-          <a href="/" className="text-white/20 hover:text-white/50 text-xs transition-colors font-mono">
+          <a href="/" className="text-slate-700/20 hover:text-slate-700/50 text-xs transition-colors font-mono">
             ← Return to main site
           </a>
         </motion.div>

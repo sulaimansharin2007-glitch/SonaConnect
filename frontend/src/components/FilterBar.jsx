@@ -21,7 +21,7 @@ export default function FilterBar({ search, setSearch, category, setCategory, st
     >
       {/* Search */}
       <div className="relative flex-1">
-        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40" />
+        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700/40" />
         <input
           type="text"
           placeholder="Search events..."
@@ -30,7 +30,7 @@ export default function FilterBar({ search, setSearch, category, setCategory, st
           className="input pl-9 pr-9"
         />
         {search && (
-          <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white">
+          <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-700/40 hover:text-slate-900">
             <X size={14} />
           </button>
         )}
@@ -44,8 +44,8 @@ export default function FilterBar({ search, setSearch, category, setCategory, st
             onClick={() => setCategory(cat.value)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 ${
               category === cat.value
-                ? 'bg-primary-500 text-white shadow-glow'
-                : 'glass text-white/60 hover:text-white border border-white/10 hover:border-primary-500/30'
+                ? 'bg-primary-500 text-slate-900 shadow-glow'
+                : 'glass text-slate-700/60 hover:text-slate-900 border border-slate-900/10 hover:border-primary-500/30'
             }`}
           >
             {cat.label}

@@ -74,7 +74,7 @@ function PosterLightbox({ posterUrl, title, onClose }) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleDownload}
-            className="flex items-center gap-2 px-4 py-2.5 bg-primary-500/80 hover:bg-primary-500 text-white rounded-xl text-sm font-semibold backdrop-blur-md transition-colors shadow-lg"
+            className="flex items-center gap-2 px-4 py-2.5 bg-primary-500/80 hover:bg-primary-500 text-slate-900 rounded-xl text-sm font-semibold backdrop-blur-md transition-colors shadow-lg"
           >
             <Download size={16} /> Download
           </motion.button>
@@ -84,7 +84,7 @@ function PosterLightbox({ posterUrl, title, onClose }) {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={onClose}
-            className="w-10 h-10 bg-white/10 hover:bg-white/20 text-white rounded-xl flex items-center justify-center backdrop-blur-md transition-colors"
+            className="w-10 h-10 bg-slate-900/10 hover:bg-slate-900/20 text-slate-900 rounded-xl flex items-center justify-center backdrop-blur-md transition-colors"
           >
             <X size={18} />
           </motion.button>
@@ -92,7 +92,7 @@ function PosterLightbox({ posterUrl, title, onClose }) {
 
         {/* Bottom title */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2" onClick={(e) => e.stopPropagation()}>
-          <p className="text-white/70 text-sm font-medium bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm">
+          <p className="text-slate-700/70 text-sm font-medium bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm">
             {title}
           </p>
         </div>
@@ -130,7 +130,7 @@ export default function EventCard({ event, index = 0 }) {
               />
               {/* Hover overlay */}
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                <span className="flex items-center gap-1.5 text-white text-sm font-semibold bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm">
+                <span className="flex items-center gap-1.5 text-slate-900 text-sm font-semibold bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm">
                   <ZoomIn size={14} /> View Poster
                 </span>
               </div>
@@ -155,7 +155,7 @@ export default function EventCard({ event, index = 0 }) {
           {/* Status */}
           {event.status === 'completed' && (
             <div className="absolute top-3 right-3">
-              <span className="badge bg-white/10 text-white/50 border border-white/20">Completed</span>
+              <span className="badge bg-slate-900/10 text-slate-700/50 border border-slate-900/20">Completed</span>
             </div>
           )}
 
@@ -169,27 +169,27 @@ export default function EventCard({ event, index = 0 }) {
 
         {/* Content */}
         <div className="p-4">
-          <h3 className="font-bold text-white text-base leading-snug line-clamp-2 group-hover:text-primary-300 transition-colors">
+          <h3 className="font-bold text-slate-900 text-base leading-snug line-clamp-2 group-hover:text-primary-300 transition-colors">
             {event.title}
           </h3>
 
           <div className="mt-3 space-y-1.5">
-            <div className="flex items-center gap-2 text-white/50 text-xs">
+            <div className="flex items-center gap-2 text-slate-700/50 text-xs">
               <Calendar size={12} className="text-primary-400 flex-shrink-0" />
               <span>{event.date ? format(new Date(event.date), 'EEE, dd MMM yyyy') : 'Date TBA'} {event.time ? `· ${event.time}` : ''}</span>
             </div>
-            <div className="flex items-center gap-2 text-white/50 text-xs">
+            <div className="flex items-center gap-2 text-slate-700/50 text-xs">
               <MapPin size={12} className="text-pink-accent flex-shrink-0" />
               <span className="truncate">{event.venue}</span>
             </div>
             {event.organizer && (
-              <div className="flex items-center gap-2 text-white/50 text-xs">
+              <div className="flex items-center gap-2 text-slate-700/50 text-xs">
                 <Users size={12} className="text-accent flex-shrink-0" />
                 <span className="truncate">{event.organizer}</span>
               </div>
             )}
             {event.registrationCount > 0 && (
-              <div className="flex items-center gap-2 text-white/50 text-xs">
+              <div className="flex items-center gap-2 text-slate-700/50 text-xs">
                 <Users size={12} className="text-yellow-400 flex-shrink-0" />
                 <span>{event.registrationCount} registered{event.maxParticipants ? ` / ${event.maxParticipants}` : ''}</span>
               </div>
@@ -200,7 +200,7 @@ export default function EventCard({ event, index = 0 }) {
           <div className="mt-4 flex items-center gap-2">
             <Link
               to={`/events/${event._id}`}
-              className="flex-1 flex items-center justify-between px-4 py-2.5 bg-gradient-to-r from-primary-500/20 to-pink-accent/10 border border-primary-500/30 rounded-xl text-sm font-semibold text-primary-300 hover:from-primary-500/30 hover:to-pink-accent/20 hover:text-white transition-all duration-200 group/btn"
+              className="flex-1 flex items-center justify-between px-4 py-2.5 bg-gradient-to-r from-primary-500/20 to-pink-accent/10 border border-primary-500/30 rounded-xl text-sm font-semibold text-primary-300 hover:from-primary-500/30 hover:to-pink-accent/20 hover:text-slate-900 transition-all duration-200 group/btn"
             >
               View Details
               <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
@@ -229,7 +229,7 @@ export default function EventCard({ event, index = 0 }) {
                   }
                 }}
                 title="Download Poster"
-                className="w-10 h-10 flex items-center justify-center glass border border-white/15 rounded-xl text-white/60 hover:text-white hover:border-primary-500/50 transition-all"
+                className="w-10 h-10 flex items-center justify-center glass border border-slate-900/15 rounded-xl text-slate-700/60 hover:text-slate-900 hover:border-primary-500/50 transition-all"
               >
                 <Download size={16} />
               </motion.button>

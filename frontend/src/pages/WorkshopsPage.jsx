@@ -34,7 +34,7 @@ export default function WorkshopsPage() {
   const filtered = tab === 'all' ? events : events.filter((e) => e.category === tab);
 
   return (
-    <div className="min-h-screen bg-dark bg-mesh">
+    <div className="min-h-screen bg-white bg-mesh">
       <Navbar />
       <div className="container-custom pt-24 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
@@ -42,9 +42,9 @@ export default function WorkshopsPage() {
             <div className="w-10 h-10 bg-gradient-to-br from-blue-500/30 to-cyan-500/20 rounded-xl flex items-center justify-center border border-blue-500/30">
               <BookOpen size={20} className="text-blue-400" />
             </div>
-            <h1 className="text-3xl font-black text-white">Workshops & Speakers Forum</h1>
+            <h1 className="text-3xl font-black text-slate-900">Workshops & Speakers Forum</h1>
           </div>
-          <p className="text-white/50 ml-[52px]">Learn from industry experts, attend seminars and hands-on workshops</p>
+          <p className="text-slate-700/50 ml-[52px]">Learn from industry experts, attend seminars and hands-on workshops</p>
         </motion.div>
 
         {/* Tabs */}
@@ -59,7 +59,7 @@ export default function WorkshopsPage() {
               key={value}
               onClick={() => setTab(value)}
               className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
-                tab === value ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' : 'glass text-white/60 hover:text-white border border-white/10'
+                tab === value ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' : 'glass text-slate-700/60 hover:text-slate-900 border border-slate-900/10'
               }`}
             >
               {label} ({count})
@@ -74,8 +74,8 @@ export default function WorkshopsPage() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-32">
             <div className="text-6xl mb-4">📚</div>
-            <h3 className="text-xl font-bold text-white mb-2">No workshops found</h3>
-            <p className="text-white/50">Stay tuned for upcoming workshops and seminars!</p>
+            <h3 className="text-xl font-bold text-slate-900 mb-2">No workshops found</h3>
+            <p className="text-slate-700/50">Stay tuned for upcoming workshops and seminars!</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

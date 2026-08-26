@@ -226,7 +226,7 @@ export default function SuperAdminDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-dark flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <Loader2 size={40} className="text-primary-500 animate-spin" />
       </div>
     );
@@ -236,17 +236,17 @@ export default function SuperAdminDashboard() {
   const approvedEvents = events.filter((e) => e.isApproved);
 
   return (
-    <div className="min-h-screen bg-dark bg-mesh">
+    <div className="min-h-screen bg-white bg-mesh">
       <Navbar />
       <div className="container-custom pt-24 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow">
-              <Shield size={20} className="text-white" />
+              <Shield size={20} className="text-slate-900" />
             </div>
-            <h1 className="text-3xl font-black text-white">Super Admin Dashboard</h1>
+            <h1 className="text-3xl font-black text-slate-900">Super Admin Dashboard</h1>
           </div>
-          <p className="text-white/50 ml-[52px]">Full platform control — manage events, clubs, and users</p>
+          <p className="text-slate-700/50 ml-[52px]">Full platform control — manage events, clubs, and users</p>
         </motion.div>
 
         <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
@@ -266,9 +266,9 @@ export default function SuperAdminDashboard() {
           ].map((s, i) => (
             <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}
               className={`stat-card bg-gradient-to-br ${s.gradient}`}>
-              <s.icon size={18} className="text-white/60" />
-              <span className="text-2xl font-black text-white">{s.value}</span>
-              <span className="text-white/50 text-xs">{s.label}</span>
+              <s.icon size={18} className="text-slate-700/60" />
+              <span className="text-2xl font-black text-slate-900">{s.value}</span>
+              <span className="text-slate-700/50 text-xs">{s.label}</span>
             </motion.div>
           ))}
         </div>
@@ -283,7 +283,7 @@ export default function SuperAdminDashboard() {
           ].map((t) => (
             <button key={t.key} onClick={() => setTab(t.key)}
               className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all ${
-                tab === t.key ? 'bg-primary-500 text-white shadow-glow' : 'glass text-white/60 hover:text-white border border-white/10'
+                tab === t.key ? 'bg-primary-500 text-slate-900 shadow-glow' : 'glass text-slate-700/60 hover:text-slate-900 border border-slate-900/10'
               }`}>{t.label}</button>
           ))}
         </div>
@@ -294,23 +294,23 @@ export default function SuperAdminDashboard() {
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-white/10">
-                    <th className="text-left px-5 py-3 text-white/50 font-medium">Title</th>
-                    <th className="text-left px-5 py-3 text-white/50 font-medium">Category</th>
-                    <th className="text-left px-5 py-3 text-white/50 font-medium">Date</th>
-                    <th className="text-left px-5 py-3 text-white/50 font-medium">Created By</th>
-                    <th className="text-left px-5 py-3 text-white/50 font-medium">Status</th>
-                    <th className="text-left px-5 py-3 text-white/50 font-medium">Approved</th>
-                    <th className="text-right px-5 py-3 text-white/50 font-medium">Actions</th>
+                  <tr className="border-b border-slate-900/10">
+                    <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Title</th>
+                    <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Category</th>
+                    <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Date</th>
+                    <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Created By</th>
+                    <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Status</th>
+                    <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Approved</th>
+                    <th className="text-right px-5 py-3 text-slate-700/50 font-medium">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {events.map((ev) => (
-                    <tr key={ev._id} className="border-b border-white/5 hover:bg-white/[0.02]">
-                      <td className="px-5 py-3 text-white font-medium max-w-40 truncate">{ev.title}</td>
+                    <tr key={ev._id} className="border-b border-slate-900/5 hover:bg-white/[0.02]">
+                      <td className="px-5 py-3 text-slate-900 font-medium max-w-40 truncate">{ev.title}</td>
                       <td className="px-5 py-3"><span className="badge-primary capitalize text-[10px]">{ev.category?.replace('_', ' ')}</span></td>
-                      <td className="px-5 py-3 text-white/60">{format(new Date(ev.date), 'dd MMM')}</td>
-                      <td className="px-5 py-3 text-white/60 text-xs">{ev.createdBy?.name || '—'}</td>
+                      <td className="px-5 py-3 text-slate-700/60">{format(new Date(ev.date), 'dd MMM')}</td>
+                      <td className="px-5 py-3 text-slate-700/60 text-xs">{ev.createdBy?.name || '—'}</td>
                       <td className="px-5 py-3"><span className={`badge text-[10px] ${ev.status === 'upcoming' ? 'badge-success' : 'badge-warning'}`}>{ev.status}</span></td>
                       <td className="px-5 py-3">
                         {ev.isApproved ? (
@@ -322,14 +322,14 @@ export default function SuperAdminDashboard() {
                       <td className="px-5 py-3">
                         <div className="flex items-center justify-end gap-1">
                           {!ev.isApproved && (
-                            <button onClick={() => handleApprove(ev._id)} className="p-1.5 rounded-lg text-white/40 hover:text-accent hover:bg-accent/10" title="Approve">
+                            <button onClick={() => handleApprove(ev._id)} className="p-1.5 rounded-lg text-slate-700/40 hover:text-accent hover:bg-accent/10" title="Approve">
                               <UserCheck size={14} />
                             </button>
                           )}
-                          <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg text-white/40 hover:text-blue-400 hover:bg-blue-500/10" title="Edit">
+                          <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg text-slate-700/40 hover:text-blue-400 hover:bg-blue-500/10" title="Edit">
                             <Edit3 size={14} />
                           </button>
-                          <button onClick={() => handleDelete(ev._id)} className="p-1.5 rounded-lg text-white/40 hover:text-danger hover:bg-danger/10" title="Delete">
+                          <button onClick={() => handleDelete(ev._id)} className="p-1.5 rounded-lg text-slate-700/40 hover:text-danger hover:bg-danger/10" title="Delete">
                             <Trash2 size={14} />
                           </button>
                         </div>
@@ -346,8 +346,8 @@ export default function SuperAdminDashboard() {
           pendingEvents.length === 0 ? (
             <div className="card p-12 text-center">
               <div className="text-5xl mb-3">✅</div>
-              <h3 className="text-xl font-bold text-white mb-2">All Caught Up!</h3>
-              <p className="text-white/50">No events pending approval</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">All Caught Up!</h3>
+              <p className="text-slate-700/50">No events pending approval</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -355,19 +355,19 @@ export default function SuperAdminDashboard() {
                 <motion.div key={ev._id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
                   className="card p-5 flex items-center gap-4">
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-white font-semibold truncate">{ev.title}</h4>
-                    <p className="text-white/40 text-xs mt-0.5">
+                    <h4 className="text-slate-900 font-semibold truncate">{ev.title}</h4>
+                    <p className="text-slate-700/40 text-xs mt-0.5">
                       {ev.category?.replace('_', ' ')} · {ev.date ? format(new Date(ev.date), 'dd MMM yyyy') : 'Date TBA'} · by {ev.createdBy?.name || 'Unknown'}
                     </p>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                       onClick={() => handleApprove(ev._id)}
-                      className="px-4 py-2 bg-accent/20 border border-accent/40 rounded-xl text-accent text-xs font-semibold hover:bg-accent hover:text-white transition-all">
+                      className="px-4 py-2 bg-accent/20 border border-accent/40 rounded-xl text-accent text-xs font-semibold hover:bg-accent hover:text-slate-900 transition-all">
                       Approve
                     </motion.button>
                     <button onClick={() => handleDelete(ev._id)}
-                      className="p-2 rounded-xl text-white/40 hover:text-danger hover:bg-danger/10">
+                      className="p-2 rounded-xl text-slate-700/40 hover:text-danger hover:bg-danger/10">
                       <Trash2 size={14} />
                     </button>
                   </div>
@@ -387,19 +387,19 @@ export default function SuperAdminDashboard() {
                     {club.category === 'technical' ? '💻' : club.category === 'sports' ? '⚽' : club.category === 'cultural' ? '🎭' : club.category === 'literary' ? '📚' : club.category === 'social' ? '🤝' : '🎨'}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-white font-semibold truncate pr-6">{club.name}</h4>
+                    <h4 className="text-slate-900 font-semibold truncate pr-6">{club.name}</h4>
                     <span className="badge-primary capitalize text-[10px]">{club.category}</span>
                   </div>
-                  <button onClick={() => openEditClub(club)} className="absolute right-4 top-4 p-1.5 rounded-lg text-white/40 hover:text-blue-400 hover:bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity" title="Edit Club">
+                  <button onClick={() => openEditClub(club)} className="absolute right-4 top-4 p-1.5 rounded-lg text-slate-700/40 hover:text-blue-400 hover:bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity" title="Edit Club">
                     <Edit3 size={14} />
                   </button>
                 </div>
-                <div className="flex flex-col gap-1 text-xs text-white/50">
+                <div className="flex flex-col gap-1 text-xs text-slate-700/50">
                   <div className="flex justify-between">
                     <span>{club.memberCount || club.members?.length || 0} members</span>
                   </div>
                   {club.facultyIncharge && (
-                    <div className="text-[11px] text-white/40 mt-1">
+                    <div className="text-[11px] text-slate-700/40 mt-1">
                       🧑‍🏫 {club.facultyIncharge} ({club.facultyEmail})
                     </div>
                   )}
@@ -421,7 +421,7 @@ export default function SuperAdminDashboard() {
                 onChange={(e) => setUserSearch(e.target.value)}
                 className="input flex-1"
               />
-              <span className="text-white/40 text-sm whitespace-nowrap">{users.length} total users</span>
+              <span className="text-slate-700/40 text-sm whitespace-nowrap">{users.length} total users</span>
             </div>
 
             {/* Role counts */}
@@ -435,9 +435,9 @@ export default function SuperAdminDashboard() {
                 <div key={s.label} className={`card p-4 bg-gradient-to-br ${s.color}`}>
                   <div className="flex items-center justify-between">
                     <span className="text-2xl">{s.icon}</span>
-                    <span className="text-2xl font-black text-white">{s.count}</span>
+                    <span className="text-2xl font-black text-slate-900">{s.count}</span>
                   </div>
-                  <span className="text-white/50 text-xs mt-1 block">{s.label}</span>
+                  <span className="text-slate-700/50 text-xs mt-1 block">{s.label}</span>
                 </div>
               ))}
             </div>
@@ -447,14 +447,14 @@ export default function SuperAdminDashboard() {
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-white/10">
-                      <th className="text-left px-5 py-3 text-white/50 font-medium">Name</th>
-                      <th className="text-left px-5 py-3 text-white/50 font-medium">Email</th>
-                      <th className="text-left px-5 py-3 text-white/50 font-medium">Dept.</th>
-                      <th className="text-left px-5 py-3 text-white/50 font-medium">Role</th>
+                    <tr className="border-b border-slate-900/10">
+                      <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Name</th>
+                      <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Email</th>
+                      <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Dept.</th>
+                      <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Role</th>
 
-                      <th className="text-left px-5 py-3 text-white/50 font-medium">Joined</th>
-                      <th className="text-right px-5 py-3 text-white/50 font-medium">Actions</th>
+                      <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Joined</th>
+                      <th className="text-right px-5 py-3 text-slate-700/50 font-medium">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -464,23 +464,23 @@ export default function SuperAdminDashboard() {
                         return !q || u.name?.toLowerCase().includes(q) || u.email?.toLowerCase().includes(q) || u.role?.toLowerCase().includes(q);
                       })
                       .map((u) => (
-                        <tr key={u._id} className="border-b border-white/5 hover:bg-white/[0.02]">
+                        <tr key={u._id} className="border-b border-slate-900/5 hover:bg-white/[0.02]">
                           <td className="px-5 py-3">
                             <div className="flex items-center gap-2">
-                              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary-500 to-pink-500 flex items-center justify-center text-xs font-bold text-white">
+                              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary-500 to-pink-500 flex items-center justify-center text-xs font-bold text-slate-900">
                                 {u.name?.charAt(0).toUpperCase()}
                               </div>
-                              <span className="text-white font-medium max-w-32 truncate">{u.name}</span>
+                              <span className="text-slate-900 font-medium max-w-32 truncate">{u.name}</span>
                             </div>
                           </td>
-                          <td className="px-5 py-3 text-white/60 max-w-40 truncate">{u.email}</td>
-                          <td className="px-5 py-3 text-white/50 text-xs">{u.department || '—'}</td>
+                          <td className="px-5 py-3 text-slate-700/60 max-w-40 truncate">{u.email}</td>
+                          <td className="px-5 py-3 text-slate-700/50 text-xs">{u.department || '—'}</td>
                           <td className="px-5 py-3">
-                            <span className="text-xs px-2 py-1 rounded-lg bg-white/10 text-white/70 capitalize border border-white/15">
+                            <span className="text-xs px-2 py-1 rounded-lg bg-slate-900/10 text-slate-700/70 capitalize border border-slate-900/15">
                               {u.role === 'student' ? '🎓' : u.role === 'faculty' ? '👨‍🏫' : u.role === 'club_admin' ? '🏅' : '🛡️'} {u.role?.replace('_', ' ')}
                             </span>
                           </td>
-                          <td className="px-5 py-3 text-white/40 text-xs">{u.createdAt ? format(new Date(u.createdAt), 'dd MMM yyyy') : '—'}</td>
+                          <td className="px-5 py-3 text-slate-700/40 text-xs">{u.createdAt ? format(new Date(u.createdAt), 'dd MMM yyyy') : '—'}</td>
                           <td className="px-5 py-3">
                             <div className="flex items-center justify-end">
                               {u.role !== 'super_admin' && (
@@ -495,7 +495,7 @@ export default function SuperAdminDashboard() {
                                       toast.error('Failed to delete user');
                                     }
                                   }}
-                                  className="p-1.5 rounded-lg text-white/40 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                                  className="p-1.5 rounded-lg text-slate-700/40 hover:text-red-400 hover:bg-red-500/10 transition-colors"
                                   title="Delete User"
                                 >
                                   <Trash2 size={14} />
@@ -508,7 +508,7 @@ export default function SuperAdminDashboard() {
                   </tbody>
                 </table>
                 {users.length === 0 && (
-                  <div className="px-5 py-12 text-center text-white/40">
+                  <div className="px-5 py-12 text-center text-slate-700/40">
                     <div className="text-4xl mb-2">👥</div>
                     No users found.
                   </div>
@@ -527,22 +527,22 @@ export default function SuperAdminDashboard() {
             onClick={() => setShowModal(false)}>
             <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass-dark border border-primary-500/30 rounded-3xl p-6 max-w-2xl w-full max-h-[85vh] overflow-y-auto">
+              className="glass border border-primary-500/30 rounded-3xl p-6 max-w-2xl w-full max-h-[85vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-white">
+                <h3 className="text-xl font-bold text-slate-900">
                   {editingEvent ? 'Edit Event' : 'Add Event'}
                 </h3>
-                <button onClick={() => setShowModal(false)} className="p-2 rounded-xl text-white/40 hover:text-white hover:bg-white/10"><X size={18} /></button>
+                <button onClick={() => setShowModal(false)} className="p-2 rounded-xl text-slate-700/40 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
               </div>
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Image Upload */}
-                <div className="flex flex-col items-center justify-center border-2 border-dashed border-white/20 rounded-2xl p-6 bg-white/5 hover:bg-white/10 transition-colors relative overflow-hidden group">
+                <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-900/20 rounded-2xl p-6 bg-slate-900/5 hover:bg-slate-900/10 transition-colors relative overflow-hidden group">
                   {form.posterUrl ? (
                     <>
                       <img src={form.posterUrl} alt="Preview" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-30 transition-opacity" />
                       <div className="relative z-10 text-center opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Image size={24} className="mx-auto text-white mb-2" />
-                        <span className="text-sm text-white font-medium">Change Image</span>
+                        <Image size={24} className="mx-auto text-slate-900 mb-2" />
+                        <span className="text-sm text-slate-900 font-medium">Change Image</span>
                       </div>
                     </>
                   ) : (
@@ -550,8 +550,8 @@ export default function SuperAdminDashboard() {
                       <div className="w-12 h-12 rounded-full bg-primary-500/20 flex items-center justify-center mx-auto mb-3">
                         <Image size={24} className="text-primary-400" />
                       </div>
-                      <p className="text-sm font-medium text-white mb-1">Upload Event Poster</p>
-                      <p className="text-xs text-white/50">PNG, JPG up to 5MB</p>
+                      <p className="text-sm font-medium text-slate-900 mb-1">Upload Event Poster</p>
+                      <p className="text-xs text-slate-700/50">PNG, JPG up to 5MB</p>
                     </div>
                   )}
                   <input
@@ -583,41 +583,41 @@ export default function SuperAdminDashboard() {
                   </div>
                 )}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="sm:col-span-2"><label className="text-sm text-white/60 mb-1 block">Title</label>
+                  <div className="sm:col-span-2"><label className="text-sm text-slate-700/60 mb-1 block">Title</label>
                     <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="input" /></div>
-                  <div className="sm:col-span-2"><label className="text-sm text-white/60 mb-1 block">Description</label>
+                  <div className="sm:col-span-2"><label className="text-sm text-slate-700/60 mb-1 block">Description</label>
                     <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="input min-h-24 resize-none" /></div>
-                  <div><label className="text-sm text-white/60 mb-1 block">Category</label>
+                  <div><label className="text-sm text-slate-700/60 mb-1 block">Category</label>
                     <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="input cursor-pointer">
                       {categories.map((c) => <option key={c} value={c}>{categoryLabels[c] || c}</option>)}
                     </select></div>
-                  <div><label className="text-sm text-white/60 mb-1 block">Club</label>
+                  <div><label className="text-sm text-slate-700/60 mb-1 block">Club</label>
                     <select value={form.club} onChange={(e) => { const s = clubs.find((c) => c._id === e.target.value); setForm({ ...form, club: e.target.value, clubName: s?.name || '' }); }} className="input cursor-pointer">
                       <option value="">None</option>{clubs.map((c) => <option key={c._id} value={c._id}>{c.name}</option>)}
                     </select></div>
-                  <div><label className="text-sm text-white/60 mb-1 block">Date</label><input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="input" /></div>
-                  <div><label className="text-sm text-white/60 mb-1 block">Time</label><input value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} placeholder="10:00 AM" className="input" /></div>
-                  <div><label className="text-sm text-white/60 mb-1 block">Venue</label><input value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="input" /></div>
-                  <div><label className="text-sm text-white/60 mb-1 block">Organizer</label><input value={form.organizer} onChange={(e) => setForm({ ...form, organizer: e.target.value })} className="input" /></div>
-                  <div><label className="text-sm text-white/60 mb-1 block">Incharge Staff</label><input value={form.inchargeStaff} onChange={(e) => setForm({ ...form, inchargeStaff: e.target.value })} className="input" /></div>
-                  <div><label className="text-sm text-white/60 mb-1 block">Deadline</label><input type="date" value={form.deadline} onChange={(e) => setForm({ ...form, deadline: e.target.value })} className="input" /></div>
-                  <div><label className="text-sm text-white/60 mb-1 block">Participation Type</label>
+                  <div><label className="text-sm text-slate-700/60 mb-1 block">Date</label><input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-700/60 mb-1 block">Time</label><input value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} placeholder="10:00 AM" className="input" /></div>
+                  <div><label className="text-sm text-slate-700/60 mb-1 block">Venue</label><input value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-700/60 mb-1 block">Organizer</label><input value={form.organizer} onChange={(e) => setForm({ ...form, organizer: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-700/60 mb-1 block">Incharge Staff</label><input value={form.inchargeStaff} onChange={(e) => setForm({ ...form, inchargeStaff: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-700/60 mb-1 block">Deadline</label><input type="date" value={form.deadline} onChange={(e) => setForm({ ...form, deadline: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-700/60 mb-1 block">Participation Type</label>
                     <div className="grid grid-cols-2 gap-2">
                       {['Solo', 'Team'].map((pt) => (
                         <button key={pt} type="button" onClick={() => setForm({ ...form, participationType: pt.toLowerCase() })}
                           className={`py-2.5 rounded-xl text-sm font-medium transition-all border ${
                             form.participationType === pt.toLowerCase()
-                              ? 'bg-primary-500/20 border-primary-500/50 text-white'
-                              : 'glass border-white/10 text-white/50 hover:border-white/20'
+                              ? 'bg-primary-500/20 border-primary-500/50 text-slate-900'
+                              : 'glass border-slate-900/10 text-slate-700/50 hover:border-slate-900/20'
                           }`}>
                           {pt === 'Solo' ? '🧑 Solo' : '👥 Team'}
                         </button>
                       ))}
                     </div>
                   </div>
-                  <div><label className="text-sm text-white/60 mb-1 block">Registration Link</label><input value={form.registrationLink} onChange={(e) => setForm({ ...form, registrationLink: e.target.value })} className="input" /></div>
-                  <div className="sm:col-span-2"><label className="text-sm text-white/60 mb-1 block">Prizes</label><input value={form.prizes} onChange={(e) => setForm({ ...form, prizes: e.target.value })} className="input" /></div>
-                  <div className="sm:col-span-2"><label className="text-sm text-white/60 mb-1 block">Eligibility</label><input value={form.eligibility} onChange={(e) => setForm({ ...form, eligibility: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-700/60 mb-1 block">Registration Link</label><input value={form.registrationLink} onChange={(e) => setForm({ ...form, registrationLink: e.target.value })} className="input" /></div>
+                  <div className="sm:col-span-2"><label className="text-sm text-slate-700/60 mb-1 block">Prizes</label><input value={form.prizes} onChange={(e) => setForm({ ...form, prizes: e.target.value })} className="input" /></div>
+                  <div className="sm:col-span-2"><label className="text-sm text-slate-700/60 mb-1 block">Eligibility</label><input value={form.eligibility} onChange={(e) => setForm({ ...form, eligibility: e.target.value })} className="input" /></div>
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button type="button" onClick={() => setShowModal(false)} className="btn-secondary flex-1">Cancel</button>
@@ -638,22 +638,22 @@ export default function SuperAdminDashboard() {
             onClick={() => setShowClubModal(false)}>
             <motion.div initial={{ scale: 0.95 }} animate={{ scale: 1 }} exit={{ scale: 0.95 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass-dark border border-primary-500/30 rounded-3xl p-6 max-w-md w-full">
+              className="glass border border-primary-500/30 rounded-3xl p-6 max-w-md w-full">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-bold text-white">Edit Club In-charge</h3>
-                <button onClick={() => setShowClubModal(false)} className="p-2 rounded-xl text-white/40 hover:text-white hover:bg-white/10"><X size={18} /></button>
+                <h3 className="text-xl font-bold text-slate-900">Edit Club In-charge</h3>
+                <button onClick={() => setShowClubModal(false)} className="p-2 rounded-xl text-slate-700/40 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
               </div>
               <form onSubmit={handleClubSubmit} className="space-y-4">
                 <div>
-                  <label className="text-sm text-white/60 mb-1 block">Club Name</label>
-                  <input value={clubForm.name} readOnly className="input bg-white/5 cursor-not-allowed text-white/50" />
+                  <label className="text-sm text-slate-700/60 mb-1 block">Club Name</label>
+                  <input value={clubForm.name} readOnly className="input bg-slate-900/5 cursor-not-allowed text-slate-700/50" />
                 </div>
                 <div>
-                  <label className="text-sm text-white/60 mb-1 block">Faculty In-charge Name</label>
+                  <label className="text-sm text-slate-700/60 mb-1 block">Faculty In-charge Name</label>
                   <input value={clubForm.facultyIncharge} onChange={(e) => setClubForm({ ...clubForm, facultyIncharge: e.target.value })} className="input" placeholder="e.g. Dr. Ramesh Kumar" required />
                 </div>
                 <div>
-                  <label className="text-sm text-white/60 mb-1 block">Faculty Email</label>
+                  <label className="text-sm text-slate-700/60 mb-1 block">Faculty Email</label>
                   <input type="email" value={clubForm.facultyEmail} onChange={(e) => setClubForm({ ...clubForm, facultyEmail: e.target.value })} className="input" placeholder="e.g. ramesh@sona.edu.in" required />
                 </div>
                 <div className="flex gap-3 pt-2">

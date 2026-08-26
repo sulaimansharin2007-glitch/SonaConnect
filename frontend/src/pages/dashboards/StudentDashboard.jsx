@@ -34,7 +34,7 @@ export default function StudentDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-dark flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <Loader2 size={40} className="text-primary-500 animate-spin" />
       </div>
     );
@@ -46,15 +46,15 @@ export default function StudentDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-dark bg-mesh">
+    <div className="min-h-screen bg-white bg-mesh">
       <Navbar />
       <div className="container-custom pt-24 pb-16">
         {/* Welcome */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-          <h1 className="text-3xl font-black text-white">
+          <h1 className="text-3xl font-black text-slate-900">
             Welcome back, <span className="gradient-text">{user?.name?.split(' ')[0]}</span> 👋
           </h1>
-          <p className="text-white/50 mt-1">Here's what's happening on campus today</p>
+          <p className="text-slate-700/50 mt-1">Here's what's happening on campus today</p>
         </motion.div>
 
         {/* Stats */}
@@ -68,10 +68,10 @@ export default function StudentDashboard() {
               className={`stat-card bg-gradient-to-br ${s.color}`}
             >
               <div className="flex items-center justify-between">
-                <s.icon size={22} className="text-white/70" />
-                <span className="text-3xl font-black text-white">{s.value}</span>
+                <s.icon size={22} className="text-slate-700/70" />
+                <span className="text-3xl font-black text-slate-900">{s.value}</span>
               </div>
-              <span className="text-white/50 text-sm">{s.label}</span>
+              <span className="text-slate-700/50 text-sm">{s.label}</span>
             </motion.div>
           ))}
         </div>
@@ -82,7 +82,7 @@ export default function StudentDashboard() {
             {/* Upcoming Events */}
             <div>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-white">Upcoming Events</h2>
+                <h2 className="text-xl font-bold text-slate-900">Upcoming Events</h2>
                 <Link to="/events" className="text-primary-400 text-sm hover:text-primary-300 flex items-center gap-1">
                   See All <ArrowRight size={14} />
                 </Link>
@@ -99,7 +99,7 @@ export default function StudentDashboard() {
           <div className="space-y-6">
             {/* Quick Links */}
             <div className="card p-5">
-              <h3 className="font-bold text-white mb-4">Quick Links</h3>
+              <h3 className="font-bold text-slate-900 mb-4">Quick Links</h3>
               <div className="space-y-2">
                 {[
                   { to: '/events', label: 'Browse Events', icon: Calendar, color: 'text-primary-400' },
@@ -117,19 +117,19 @@ export default function StudentDashboard() {
             {/* Recent Notifications */}
             <div className="card p-5">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-white">Notifications</h3>
+                <h3 className="font-bold text-slate-900">Notifications</h3>
                 <Link to="/notifications" className="text-primary-400 text-xs">View all</Link>
               </div>
               <div className="space-y-3">
                 {notifications.length === 0 ? (
-                  <p className="text-white/40 text-sm">No notifications</p>
+                  <p className="text-slate-700/40 text-sm">No notifications</p>
                 ) : (
                   notifications.map((n) => (
                     <div key={n._id} className="flex items-start gap-2">
-                      <div className={`w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 ${!n.isRead ? 'bg-primary-400' : 'bg-white/20'}`} />
+                      <div className={`w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 ${!n.isRead ? 'bg-primary-400' : 'bg-slate-900/20'}`} />
                       <div>
-                        <p className="text-white text-xs font-medium">{n.title}</p>
-                        <p className="text-white/40 text-[11px] mt-0.5 line-clamp-1">{n.message}</p>
+                        <p className="text-slate-900 text-xs font-medium">{n.title}</p>
+                        <p className="text-slate-700/40 text-[11px] mt-0.5 line-clamp-1">{n.message}</p>
                       </div>
                     </div>
                   ))
