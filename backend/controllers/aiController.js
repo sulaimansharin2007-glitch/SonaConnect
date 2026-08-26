@@ -119,7 +119,12 @@ If any other information is not found, leave it as "".`;
       throw new Error('AI returned invalid data format. Please try again.');
     }
 
-    res.json(parsedData);
+    // Force clear hallucinatory default date 2026-01-01
+    if (parsedData.startDate === '2026-01-01') parsedData.startDate = '';
+    if (parsedData.endDate === '2026-01-01') parsedData.endDate = '';
+    if (parsedData.date === '2026-01-01') parsedData.date = '';
+
+    res.json({ data: parsedData });
   } catch (error) {
     console.error('AI Extraction Error:', error.message);
     res.status(500).json({ message: error.message || 'Failed to extract data from image' });
