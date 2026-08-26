@@ -70,11 +70,12 @@ Return ONLY a valid JSON object matching this exact structure:
 }
 
 CRITICAL DATE INSTRUCTIONS:
-- The date on the poster IS the actual event date (when the event happens). Extract it accurately.
-- If the poster shows a single date like "September 15, 2026" → startDate: "2026-09-15", endDate: ""
-- If the poster shows a date range like "Sep 15-16, 2026" or "15th-16th September 2026" → startDate: "2026-09-15", endDate: "2026-09-16"
-- Always use YYYY-MM-DD format. If year is not mentioned, assume current or next year.
-- Do NOT put a wrong date. If you cannot read the date clearly, leave it as "".
+- The date on the poster IS the actual event date (when the event happens). Extract it accurately by reading the text carefully. Look for months (Jan, Feb, Sep, September, etc) and days.
+- If the poster shows a single date like "September 15" → startDate: "2026-09-15", endDate: ""
+- If the poster shows a date range like "Sep 15-16", "15 & 16 Sep", or "15th-16th September" → startDate: "2026-09-15", endDate: "2026-09-16"
+- Always use YYYY-MM-DD format. Assume year 2026 if not explicitly mentioned.
+- ABSOLUTELY NEVER default to "2026-01-01" or January 1 unless it actually says January 1 on the poster. 
+- If you genuinely cannot find any date on the poster, you MUST leave it as "".
 
 REGISTRATION LINK INSTRUCTIONS:
 - Look for any URL, QR code label, Google Form link, Devfolio link, or "Register at" text on the poster.
