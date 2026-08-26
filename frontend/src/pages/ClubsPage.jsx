@@ -46,7 +46,7 @@ export default function ClubsPage() {
             </div>
             <h1 className="text-3xl font-black text-slate-900">Clubs</h1>
           </div>
-          <p className="text-slate-700/50 ml-[52px]">Explore and join our 16 college clubs</p>
+          <p className="text-slate-800/50 ml-[52px]">Explore and join our 16 college clubs</p>
         </motion.div>
 
         {/* Search & Filter */}
@@ -56,7 +56,7 @@ export default function ClubsPage() {
           className="glass rounded-2xl p-4 flex flex-col sm:flex-row gap-3 mb-8"
         >
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-800" />
             <input
               type="text"
               placeholder="Search clubs..."
@@ -73,7 +73,7 @@ export default function ClubsPage() {
                 className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition-all duration-200 ${
                   category === cat
                     ? 'bg-primary-500 text-slate-900 shadow-glow'
-                    : 'glass text-slate-700/60 hover:text-slate-900 border border-slate-900/10 hover:border-primary-500/30'
+                    : 'glass text-slate-800/60 hover:text-slate-900 border border-slate-900/10 hover:border-primary-500/30'
                 }`}
               >
                 {cat}
@@ -91,7 +91,7 @@ export default function ClubsPage() {
           <div className="text-center py-32">
             <div className="text-6xl mb-4">🏛️</div>
             <h3 className="text-xl font-bold text-slate-900 mb-2">No clubs found</h3>
-            <p className="text-slate-700/50">Try adjusting your search or filters</p>
+            <p className="text-slate-800/50">Try adjusting your search or filters</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">

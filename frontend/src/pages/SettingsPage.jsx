@@ -40,38 +40,38 @@ export default function SettingsPage() {
       <div className="max-w-4xl mx-auto px-4 pt-24">
         {/* Header */}
         <div className="flex items-center gap-3 mb-8">
-          <Link to="/" className="p-2 glass rounded-xl text-slate-700/60 hover:text-slate-900 transition-colors">
+          <Link to="/" className="p-2 glass rounded-xl text-slate-800/60 hover:text-slate-900 transition-colors">
             <ArrowLeft size={18} />
           </Link>
           <div>
             <h1 className="text-2xl font-bold">Account Settings</h1>
-            <p className="text-slate-700/50 text-sm">Manage your profile and account preferences</p>
+            <p className="text-slate-800/50 text-sm">Manage your profile and account preferences</p>
           </div>
         </div>
 
         {/* Profile Details Card */}
         <div className="glass rounded-2xl p-6 border border-slate-900/10 mb-8 space-y-4">
-          <h2 className="text-lg font-semibold flex items-center gap-2 text-slate-700/90">
+          <h2 className="text-lg font-semibold flex items-center gap-2 text-slate-800/90">
             <User size={18} className="text-primary-400" /> Account Information
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
             <div className="bg-slate-900/5 p-4 rounded-xl border border-slate-900/5">
-              <span className="text-xs text-slate-700 block mb-1 flex items-center gap-1">
+              <span className="text-xs text-slate-800 block mb-1 flex items-center gap-1">
                 <User size={12} /> Full Name
               </span>
               <p className="font-medium text-slate-900">{user?.name || 'N/A'}</p>
             </div>
 
             <div className="bg-slate-900/5 p-4 rounded-xl border border-slate-900/5">
-              <span className="text-xs text-slate-700 block mb-1 flex items-center gap-1">
+              <span className="text-xs text-slate-800 block mb-1 flex items-center gap-1">
                 <Mail size={12} /> Email Address
               </span>
               <p className="font-medium text-slate-900">{user?.email || 'N/A'}</p>
             </div>
 
             <div className="bg-slate-900/5 p-4 rounded-xl border border-slate-900/5">
-              <span className="text-xs text-slate-700 block mb-1 flex items-center gap-1">
+              <span className="text-xs text-slate-800 block mb-1 flex items-center gap-1">
                 <Building size={12} /> Role / Department
               </span>
               <p className="font-medium text-slate-900 capitalize">
@@ -81,7 +81,7 @@ export default function SettingsPage() {
 
             {user?.phoneNumber && (
               <div className="bg-slate-900/5 p-4 rounded-xl border border-slate-900/5">
-                <span className="text-xs text-slate-700 block mb-1 flex items-center gap-1">
+                <span className="text-xs text-slate-800 block mb-1 flex items-center gap-1">
                   <Phone size={12} /> WhatsApp Phone Number
                 </span>
                 <p className="font-medium text-slate-900">+{user.phoneNumber}</p>
@@ -97,7 +97,7 @@ export default function SettingsPage() {
               <h2 className="text-lg font-semibold flex items-center gap-2 text-red-400">
                 <AlertTriangle size={18} /> Danger Zone
               </h2>
-              <p className="text-sm text-slate-700/60 mt-1">
+              <p className="text-sm text-slate-800/60 mt-1">
                 Permanently delete your SonaConnect account. This action cannot be undone.
               </p>
             </div>
@@ -127,13 +127,13 @@ export default function SettingsPage() {
 
               <div className="text-center">
                 <h3 className="text-xl font-bold text-slate-900">Are you absolutely sure?</h3>
-                <p className="text-xs text-slate-700/60 mt-2 leading-relaxed">
+                <p className="text-xs text-slate-800/60 mt-2 leading-relaxed">
                   This will permanently delete your account (<strong className="text-slate-900">{user?.email}</strong>) and remove your data from SonaConnect.
                 </p>
               </div>
 
               <div className="pt-2">
-                <label className="text-xs text-slate-700/50 block mb-1">
+                <label className="text-xs text-slate-800/50 block mb-1">
                   Type <span className="font-mono text-red-400 font-bold">DELETE</span> to confirm:
                 </label>
                 <input

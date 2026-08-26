@@ -5,6 +5,9 @@ const Notification = require('../models/Notification');
 // @route   GET /api/events
 const getEvents = async (req, res) => {
   try {
+    // Auto-delete events that are past their date (completed)
+    await Event.deleteMany({ date: { $lt: new Date() }, isApproved: true });
+
     const { category, status, club, search } = req.query;
     let query = { isApproved: true };
     if (category) query.category = category;

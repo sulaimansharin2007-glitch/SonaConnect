@@ -77,7 +77,7 @@ export default function ClubDetailPage() {
     <div className="min-h-screen bg-white bg-mesh">
       <Navbar />
       <div className="container-custom pt-24 pb-16">
-        <Link to="/clubs" className="inline-flex items-center gap-2 text-slate-700/50 hover:text-slate-900 text-sm mb-6 transition-colors">
+        <Link to="/clubs" className="inline-flex items-center gap-2 text-slate-800/50 hover:text-slate-900 text-sm mb-6 transition-colors">
           <ArrowLeft size={16} /> Back to Clubs
         </Link>
 
@@ -101,21 +101,21 @@ export default function ClubDetailPage() {
                 <h1 className="text-3xl font-black text-slate-900">{club.name}</h1>
                 <span className="badge-primary capitalize">{club.category}</span>
               </div>
-              <p className="text-slate-700/60 leading-relaxed mb-4">{club.description}</p>
+              <p className="text-slate-800/60 leading-relaxed mb-4">{club.description}</p>
 
               <div className="flex flex-wrap items-center gap-6 text-sm">
-                <div className="flex items-center gap-2 text-slate-700/50">
+                <div className="flex items-center gap-2 text-slate-800/50">
                   <Users size={16} className="text-primary-400" />
                   <span>{club.memberCount || club.members?.length || 0} members</span>
                 </div>
                 {club.facultyIncharge && (
-                  <div className="flex items-center gap-2 text-slate-700/50">
+                  <div className="flex items-center gap-2 text-slate-800/50">
                     <User size={16} className="text-accent" />
                     <span>{club.facultyIncharge}</span>
                   </div>
                 )}
                 {club.facultyEmail && (
-                  <div className="flex items-center gap-2 text-slate-700/50">
+                  <div className="flex items-center gap-2 text-slate-800/50">
                     <Mail size={16} className="text-pink-accent" />
                     <span>{club.facultyEmail}</span>
                   </div>
@@ -147,7 +147,7 @@ export default function ClubDetailPage() {
               key={t}
               onClick={() => setTab(t)}
               className={`px-5 py-2.5 rounded-xl text-sm font-medium capitalize transition-all ${
-                tab === t ? 'bg-primary-500 text-slate-900 shadow-glow' : 'glass text-slate-700/60 hover:text-slate-900 border border-slate-900/10'
+                tab === t ? 'bg-primary-500 text-slate-900 shadow-glow' : 'glass text-slate-800/60 hover:text-slate-900 border border-slate-900/10'
               }`}
             >
               {t === 'events' ? <Calendar size={14} className="inline mr-1.5" /> : <Megaphone size={14} className="inline mr-1.5" />}
@@ -161,7 +161,7 @@ export default function ClubDetailPage() {
           events.length === 0 ? (
             <div className="text-center py-20">
               <div className="text-5xl mb-3">📅</div>
-              <p className="text-slate-700/50">No events yet from this club</p>
+              <p className="text-slate-800/50">No events yet from this club</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -175,7 +175,7 @@ export default function ClubDetailPage() {
             {club.announcements?.length === 0 ? (
               <div className="text-center py-20">
                 <div className="text-5xl mb-3">📢</div>
-                <p className="text-slate-700/50">No announcements yet</p>
+                <p className="text-slate-800/50">No announcements yet</p>
               </div>
             ) : (
               club.announcements?.map((a, i) => (
@@ -187,9 +187,9 @@ export default function ClubDetailPage() {
                   className="card p-5"
                 >
                   <h4 className="font-bold text-slate-900 mb-1">{a.title}</h4>
-                  <p className="text-slate-700/60 text-sm">{a.message}</p>
+                  <p className="text-slate-800/60 text-sm">{a.message}</p>
                   {a.createdAt && (
-                    <p className="text-slate-700 text-xs mt-2">
+                    <p className="text-slate-800 text-xs mt-2">
                       {new Date(a.createdAt).toLocaleDateString()}
                     </p>
                   )}

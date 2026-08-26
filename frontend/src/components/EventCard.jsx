@@ -92,7 +92,7 @@ function PosterLightbox({ posterUrl, title, onClose }) {
 
         {/* Bottom title */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2" onClick={(e) => e.stopPropagation()}>
-          <p className="text-slate-700/70 text-sm font-medium bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm">
+          <p className="text-slate-800/70 text-sm font-medium bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm">
             {title}
           </p>
         </div>
@@ -155,7 +155,7 @@ export default function EventCard({ event, index = 0 }) {
           {/* Status */}
           {event.status === 'completed' && (
             <div className="absolute top-3 right-3">
-              <span className="badge bg-slate-900/10 text-slate-700/50 border border-slate-900/20">Completed</span>
+              <span className="badge bg-slate-900/10 text-slate-800/50 border border-slate-900/20">Completed</span>
             </div>
           )}
 
@@ -174,22 +174,22 @@ export default function EventCard({ event, index = 0 }) {
           </h3>
 
           <div className="mt-3 space-y-1.5">
-            <div className="flex items-center gap-2 text-slate-700/50 text-xs">
+            <div className="flex items-center gap-2 text-slate-800/50 text-xs">
               <Calendar size={12} className="text-primary-400 flex-shrink-0" />
               <span>{event.date ? format(new Date(event.date), 'EEE, dd MMM yyyy') : 'Date TBA'} {event.time ? `· ${event.time}` : ''}</span>
             </div>
-            <div className="flex items-center gap-2 text-slate-700/50 text-xs">
+            <div className="flex items-center gap-2 text-slate-800/50 text-xs">
               <MapPin size={12} className="text-pink-accent flex-shrink-0" />
               <span className="truncate">{event.venue}</span>
             </div>
             {event.organizer && (
-              <div className="flex items-center gap-2 text-slate-700/50 text-xs">
+              <div className="flex items-center gap-2 text-slate-800/50 text-xs">
                 <Users size={12} className="text-accent flex-shrink-0" />
                 <span className="truncate">{event.organizer}</span>
               </div>
             )}
             {event.registrationCount > 0 && (
-              <div className="flex items-center gap-2 text-slate-700/50 text-xs">
+              <div className="flex items-center gap-2 text-slate-800/50 text-xs">
                 <Users size={12} className="text-yellow-400 flex-shrink-0" />
                 <span>{event.registrationCount} registered{event.maxParticipants ? ` / ${event.maxParticipants}` : ''}</span>
               </div>
@@ -229,7 +229,7 @@ export default function EventCard({ event, index = 0 }) {
                   }
                 }}
                 title="Download Poster"
-                className="w-10 h-10 flex items-center justify-center glass border border-slate-900/15 rounded-xl text-slate-700/60 hover:text-slate-900 hover:border-primary-500/50 transition-all"
+                className="w-10 h-10 flex items-center justify-center glass border border-slate-900/15 rounded-xl text-slate-800/60 hover:text-slate-900 hover:border-primary-500/50 transition-all"
               >
                 <Download size={16} />
               </motion.button>

@@ -58,7 +58,7 @@ export default function LoginPage() {
             <span className="text-2xl font-black gradient-text">SonaConnect</span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900 mt-4">Welcome back</h1>
-          <p className="text-slate-700/50 text-sm mt-1">Sign in to your account to continue</p>
+          <p className="text-slate-800/50 text-sm mt-1">Sign in to your account to continue</p>
         </motion.div>
 
 
@@ -71,9 +71,9 @@ export default function LoginPage() {
         >
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="text-sm text-slate-700/60 mb-2 block">Email Address</label>
+              <label className="text-sm text-slate-800/60 mb-2 block">Email Address</label>
               <div className="relative">
-                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
+                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-800" />
                 <input
                   type="email"
                   placeholder="your@email.com"
@@ -86,9 +86,9 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="text-sm text-slate-700/60 mb-2 block">Password</label>
+              <label className="text-sm text-slate-800/60 mb-2 block">Password</label>
               <div className="relative">
-                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
+                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-800" />
                 <input
                   type={showPass ? 'text' : 'password'}
                   placeholder="••••••••"
@@ -100,7 +100,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-700 hover:text-slate-900"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-800 hover:text-slate-900"
                 >
                   {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -128,7 +128,7 @@ export default function LoginPage() {
           </form>
 
           <div className="mt-6 pt-6 border-t border-slate-900/10 text-center">
-            <p className="text-slate-700/50 text-sm">
+            <p className="text-slate-800/50 text-sm">
               Don't have an account?{' '}
               <Link to="/register" className="text-primary-400 hover:text-primary-300 font-semibold">
                 Create one

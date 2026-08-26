@@ -65,7 +65,7 @@ export default function EventsPage() {
             </div>
             <h1 className="text-3xl font-black text-slate-900">Events</h1>
           </div>
-          <p className="text-slate-700/50 ml-[52px]">Browse and register for all campus events</p>
+          <p className="text-slate-800/50 ml-[52px]">Browse and register for all campus events</p>
         </motion.div>
 
         {/* Filters */}
@@ -94,11 +94,11 @@ export default function EventsPage() {
           >
             <div className="text-6xl mb-4">📅</div>
             <h3 className="text-xl font-bold text-slate-900 mb-2">No events found</h3>
-            <p className="text-slate-700/50">Try adjusting your filters or search query</p>
+            <p className="text-slate-800/50">Try adjusting your filters or search query</p>
           </motion.div>
         ) : (
           <>
-            <p className="text-slate-700 text-sm mb-6">{events.length} event{events.length !== 1 ? 's' : ''} found</p>
+            <p className="text-slate-800 text-sm mb-6">{events.length} event{events.length !== 1 ? 's' : ''} found</p>
             <div className="space-y-10">
               {sortedDates.map((dateStr, idx) => (
                 <motion.div 
@@ -110,7 +110,7 @@ export default function EventsPage() {
                   <div className="flex items-center gap-4 mb-4">
                     <h2 className="text-lg font-bold text-slate-900 whitespace-nowrap">{dateStr}</h2>
                     <div className="h-px w-full bg-slate-900/10"></div>
-                    <span className="text-slate-700 text-sm whitespace-nowrap bg-slate-900/5 px-3 py-1 rounded-full">
+                    <span className="text-slate-800 text-sm whitespace-nowrap bg-slate-900/5 px-3 py-1 rounded-full">
                       {groupedEvents[dateStr].length} event{groupedEvents[dateStr].length !== 1 ? 's' : ''}
                     </span>
                   </div>

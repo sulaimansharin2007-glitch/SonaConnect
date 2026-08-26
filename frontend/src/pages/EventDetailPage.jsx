@@ -74,7 +74,7 @@ export default function EventDetailPage() {
 
       <div className="container-custom pt-24 pb-16">
         {/* Back button */}
-        <Link to="/events" className="inline-flex items-center gap-2 text-slate-700/50 hover:text-slate-900 text-sm mb-6 transition-colors">
+        <Link to="/events" className="inline-flex items-center gap-2 text-slate-800/50 hover:text-slate-900 text-sm mb-6 transition-colors">
           <ArrowLeft size={16} /> Back to Events
         </Link>
 
@@ -112,7 +112,7 @@ export default function EventDetailPage() {
 
               {/* Status badge */}
               <div className="absolute top-4 right-4">
-                <span className={`badge border ${isUpcoming ? 'badge-success' : 'bg-slate-900/10 text-slate-700/50 border-slate-900/20'}`}>
+                <span className={`badge border ${isUpcoming ? 'badge-success' : 'bg-slate-900/10 text-slate-800/50 border-slate-900/20'}`}>
                   {isUpcoming ? '🟢 Upcoming' : '⏹ ' + event.status}
                 </span>
               </div>
@@ -138,12 +138,12 @@ export default function EventDetailPage() {
                   <span className="badge bg-yellow-500/20 text-yellow-300 border border-yellow-500/30">⭐ Featured</span>
                 )}
                 {event.clubName && (
-                  <span className="badge bg-slate-900/10 text-slate-700/60 border border-slate-900/15">{event.clubName}</span>
+                  <span className="badge bg-slate-900/10 text-slate-800/60 border border-slate-900/15">{event.clubName}</span>
                 )}
               </div>
 
               <h1 className="text-3xl sm:text-4xl font-black text-slate-900 leading-tight mb-4">{event.title}</h1>
-              <p className="text-slate-700/60 leading-relaxed whitespace-pre-line">{event.description}</p>
+              <p className="text-slate-800/60 leading-relaxed whitespace-pre-line">{event.description}</p>
             </motion.div>
 
             {/* Prizes / Eligibility */}
@@ -160,7 +160,7 @@ export default function EventDetailPage() {
                       <Trophy size={18} className="text-yellow-400" />
                       <span className="font-bold text-slate-900">Prizes</span>
                     </div>
-                    <p className="text-slate-700/60 text-sm">{event.prizes}</p>
+                    <p className="text-slate-800/60 text-sm">{event.prizes}</p>
                   </div>
                 )}
                 {event.eligibility && (
@@ -169,7 +169,7 @@ export default function EventDetailPage() {
                       <CheckCircle size={18} className="text-blue-400" />
                       <span className="font-bold text-slate-900">Eligibility</span>
                     </div>
-                    <p className="text-slate-700/60 text-sm">{event.eligibility}</p>
+                    <p className="text-slate-800/60 text-sm">{event.eligibility}</p>
                   </div>
                 )}
               </motion.div>
@@ -190,21 +190,21 @@ export default function EventDetailPage() {
                   <Calendar size={18} className="text-primary-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <div className="text-slate-900 text-sm font-semibold">{event.date ? format(new Date(event.date), 'EEEE, dd MMMM yyyy') : 'Date TBA'}</div>
-                    <div className="text-slate-700/50 text-xs mt-0.5">{event.time}</div>
+                    <div className="text-slate-800/50 text-xs mt-0.5">{event.time}</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <MapPin size={18} className="text-pink-accent mt-0.5 flex-shrink-0" />
                   <div>
                     <div className="text-slate-900 text-sm font-semibold">{event.venue}</div>
-                    <div className="text-slate-700/50 text-xs mt-0.5">Venue</div>
+                    <div className="text-slate-800/50 text-xs mt-0.5">Venue</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <User size={18} className="text-accent mt-0.5 flex-shrink-0" />
                   <div>
                     <div className="text-slate-900 text-sm font-semibold">{event.organizer}</div>
-                    {event.inchargeStaff && <div className="text-slate-700/50 text-xs mt-0.5">Incharge: {event.inchargeStaff}</div>}
+                    {event.inchargeStaff && <div className="text-slate-800/50 text-xs mt-0.5">Incharge: {event.inchargeStaff}</div>}
                   </div>
                 </div>
                 {event.deadline && (
@@ -214,7 +214,7 @@ export default function EventDetailPage() {
                       <div className={`text-sm font-semibold ${deadlinePassed ? 'text-danger' : 'text-slate-900'}`}>
                         {deadlinePassed ? 'Deadline Passed' : (event.deadline ? format(new Date(event.deadline), 'dd MMM yyyy') : 'No Deadline')}
                       </div>
-                      <div className="text-slate-700/50 text-xs mt-0.5">Registration Deadline</div>
+                      <div className="text-slate-800/50 text-xs mt-0.5">Registration Deadline</div>
                     </div>
                   </div>
                 )}
@@ -245,7 +245,7 @@ export default function EventDetailPage() {
               {/* Share */}
               <button
                 onClick={() => { navigator.clipboard.writeText(window.location.href); toast.success('Link copied!'); }}
-                className="flex items-center justify-center gap-2 w-full py-2.5 glass rounded-xl border border-slate-900/10 text-slate-700/60 hover:text-slate-900 text-sm transition-colors"
+                className="flex items-center justify-center gap-2 w-full py-2.5 glass rounded-xl border border-slate-900/10 text-slate-800/60 hover:text-slate-900 text-sm transition-colors"
               >
                 <Share2 size={14} /> Share Event
               </button>
@@ -307,7 +307,7 @@ export default function EventDetailPage() {
 
             {/* Bottom title */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2" onClick={(e) => e.stopPropagation()}>
-              <p className="text-slate-700/70 text-sm font-medium bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm whitespace-nowrap">
+              <p className="text-slate-800/70 text-sm font-medium bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm whitespace-nowrap">
                 {event.title}
               </p>
             </div>

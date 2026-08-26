@@ -104,16 +104,16 @@ export default function RegisterPage() {
             <span className="text-2xl font-black gradient-text">SonaConnect</span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900 mt-4">Create Account</h1>
-          <p className="text-slate-700/50 text-sm mt-1">Join the campus activity network</p>
+          <p className="text-slate-800/50 text-sm mt-1">Join the campus activity network</p>
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="card p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div>
-              <label className="text-sm text-slate-700/60 mb-1.5 block">Full Name</label>
+              <label className="text-sm text-slate-800/60 mb-1.5 block">Full Name</label>
               <div className="relative">
-                <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
+                <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-800" />
                 <input type="text" placeholder="Your full name" value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   className="input pl-10" required />
@@ -122,9 +122,9 @@ export default function RegisterPage() {
 
             {/* Email */}
             <div>
-              <label className="text-sm text-slate-700/60 mb-1.5 block">Email Address</label>
+              <label className="text-sm text-slate-800/60 mb-1.5 block">Email Address</label>
               <div className="relative">
-                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
+                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-800" />
                 <input type="email" placeholder="your@email.com" value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   className="input pl-10" required />
@@ -133,14 +133,14 @@ export default function RegisterPage() {
 
             {/* Password */}
             <div>
-              <label className="text-sm text-slate-700/60 mb-1.5 block">Password</label>
+              <label className="text-sm text-slate-800/60 mb-1.5 block">Password</label>
               <div className="relative">
-                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
+                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-800" />
                 <input type={showPass ? 'text' : 'password'} placeholder="Min. 6 characters" value={form.password}
                   onChange={(e) => setForm({ ...form, password: e.target.value })}
                   className="input pl-10 pr-10" required />
                 <button type="button" onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-700 hover:text-slate-900">
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-800 hover:text-slate-900">
                   {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
@@ -148,12 +148,12 @@ export default function RegisterPage() {
 
             {/* Role */}
             <div>
-              <label className="text-sm text-slate-700/60 mb-1.5 block">I am a...</label>
+              <label className="text-sm text-slate-800/60 mb-1.5 block">I am a...</label>
               <div className="grid grid-cols-2 gap-2">
                 {[{ value: 'student', label: '🎓 Student' }, { value: 'faculty', label: '👨‍🏫 Faculty' }].map(({ value, label }) => (
                   <button key={value} type="button" onClick={() => setForm({ ...form, role: value })}
                     className={`py-2.5 rounded-xl text-sm font-medium transition-all duration-200 border ${
-                      form.role === value ? 'bg-primary-500/20 border-primary-500/50 text-slate-900' : 'glass border-slate-900/10 text-slate-700/50 hover:border-slate-900/20'
+                      form.role === value ? 'bg-primary-500/20 border-primary-500/50 text-slate-900' : 'glass border-slate-900/10 text-slate-800/50 hover:border-slate-900/20'
                     }`}>
                     {label}
                   </button>
@@ -164,9 +164,9 @@ export default function RegisterPage() {
             {/* Department (Students & Admins) */}
             {form.role !== 'faculty' && (
               <div>
-                <label className="text-sm text-slate-700/60 mb-1.5 block">Department</label>
+                <label className="text-sm text-slate-800/60 mb-1.5 block">Department</label>
                 <div className="relative">
-                  <BookOpen size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
+                  <BookOpen size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-800" />
                   <select value={form.department} onChange={(e) => setForm({ ...form, department: e.target.value })}
                     className="input pl-10 cursor-pointer" required>
                     <option value="">Select department</option>
@@ -179,7 +179,7 @@ export default function RegisterPage() {
             {/* Roll Number (student only) */}
             {form.role === 'student' && (
               <div>
-                <label className="text-sm text-slate-700/60 mb-1.5 block">Roll Number <span className="text-slate-700">(optional)</span></label>
+                <label className="text-sm text-slate-800/60 mb-1.5 block">Roll Number <span className="text-slate-800">(optional)</span></label>
                 <input type="text" placeholder="e.g. CS21001" value={form.rollNumber}
                   onChange={(e) => setForm({ ...form, rollNumber: e.target.value })}
                   className="input" />
@@ -189,11 +189,11 @@ export default function RegisterPage() {
             {/* WhatsApp Phone Number (Faculty & Club Admins only) */}
             {(form.role === 'faculty' || form.role === 'club_admin') && (
               <div>
-                <label className="text-sm text-slate-700/60 mb-1.5 block">
-                  WhatsApp Number <span className="text-red-400">*</span> <span className="text-slate-700">(used to send event posters to bot)</span>
+                <label className="text-sm text-slate-800/60 mb-1.5 block">
+                  WhatsApp Number <span className="text-red-400">*</span> <span className="text-slate-800">(used to send event posters to bot)</span>
                 </label>
                 <div className="relative">
-                  <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
+                  <Phone size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-800" />
                   <input type="text" placeholder="e.g. 919876543210 (with country code)" value={form.phoneNumber}
                     onChange={(e) => setForm({ ...form, phoneNumber: e.target.value })}
                     className="input pl-10" required />
@@ -204,9 +204,9 @@ export default function RegisterPage() {
             {/* Access Code (faculty only) */}
             {form.role === 'faculty' && (
               <div>
-                <label className="text-sm text-slate-700/60 mb-1.5 block">Faculty Access Code <span className="text-red-400">*</span></label>
+                <label className="text-sm text-slate-800/60 mb-1.5 block">Faculty Access Code <span className="text-red-400">*</span></label>
                 <div className="relative">
-                  <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
+                  <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-800" />
                   <input type="password" placeholder="Enter secret code" value={form.accessCode}
                     onChange={(e) => setForm({ ...form, accessCode: e.target.value })}
                     className="input pl-10" required />
@@ -223,7 +223,7 @@ export default function RegisterPage() {
           </form>
 
           <div className="mt-6 pt-6 border-t border-slate-900/10 text-center">
-            <p className="text-slate-700/50 text-sm">
+            <p className="text-slate-800/50 text-sm">
               Already have an account?{' '}
               <Link to="/login" className="text-primary-400 hover:text-primary-300 font-semibold">Sign in</Link>
             </p>

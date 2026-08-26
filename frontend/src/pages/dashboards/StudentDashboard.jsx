@@ -54,7 +54,7 @@ export default function StudentDashboard() {
           <h1 className="text-3xl font-black text-slate-900">
             Welcome back, <span className="gradient-text">{user?.name?.split(' ')[0]}</span> 👋
           </h1>
-          <p className="text-slate-700/50 mt-1">Here's what's happening on campus today</p>
+          <p className="text-slate-800/50 mt-1">Here's what's happening on campus today</p>
         </motion.div>
 
         {/* Stats */}
@@ -68,10 +68,10 @@ export default function StudentDashboard() {
               className={`stat-card bg-gradient-to-br ${s.color}`}
             >
               <div className="flex items-center justify-between">
-                <s.icon size={22} className="text-slate-700/70" />
+                <s.icon size={22} className="text-slate-800/70" />
                 <span className="text-3xl font-black text-slate-900">{s.value}</span>
               </div>
-              <span className="text-slate-700/50 text-sm">{s.label}</span>
+              <span className="text-slate-800/50 text-sm">{s.label}</span>
             </motion.div>
           ))}
         </div>
@@ -122,14 +122,14 @@ export default function StudentDashboard() {
               </div>
               <div className="space-y-3">
                 {notifications.length === 0 ? (
-                  <p className="text-slate-700 text-sm">No notifications</p>
+                  <p className="text-slate-800 text-sm">No notifications</p>
                 ) : (
                   notifications.map((n) => (
                     <div key={n._id} className="flex items-start gap-2">
                       <div className={`w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 ${!n.isRead ? 'bg-primary-400' : 'bg-slate-900/20'}`} />
                       <div>
                         <p className="text-slate-900 text-xs font-medium">{n.title}</p>
-                        <p className="text-slate-700 text-[11px] mt-0.5 line-clamp-1">{n.message}</p>
+                        <p className="text-slate-800 text-[11px] mt-0.5 line-clamp-1">{n.message}</p>
                       </div>
                     </div>
                   ))

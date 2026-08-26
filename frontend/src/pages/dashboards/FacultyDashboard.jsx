@@ -189,7 +189,7 @@ export default function FacultyDashboard() {
       <div className="container-custom pt-24 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <h1 className="text-3xl font-black text-slate-900">Faculty Dashboard 👨‍🏫</h1>
-          <p className="text-slate-700/50 mt-1">Manage workshops, hackathons and seminars</p>
+          <p className="text-slate-800/50 mt-1">Manage workshops, hackathons and seminars</p>
         </motion.div>
 
         <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
@@ -208,16 +208,16 @@ export default function FacultyDashboard() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-slate-900/10">
-                  <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Title</th>
-                  <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Category</th>
-                  <th className="text-left px-5 py-3 text-slate-700/50 font-medium">Date</th>
-                  <th className="text-right px-5 py-3 text-slate-700/50 font-medium">Actions</th>
+                  <th className="text-left px-5 py-3 text-slate-800/50 font-medium">Title</th>
+                  <th className="text-left px-5 py-3 text-slate-800/50 font-medium">Category</th>
+                  <th className="text-left px-5 py-3 text-slate-800/50 font-medium">Date</th>
+                  <th className="text-right px-5 py-3 text-slate-800/50 font-medium">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {myEvents.length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="px-5 py-12 text-center text-slate-700">
+                    <td colSpan="5" className="px-5 py-12 text-center text-slate-800">
                       <div className="text-4xl mb-2">📋</div>
                       No events yet. Create your first event!
                     </td>
@@ -227,13 +227,13 @@ export default function FacultyDashboard() {
                     <tr key={ev._id} className="border-b border-slate-900/5 hover:bg-slate-50">
                       <td className="px-5 py-3 text-slate-900 font-medium max-w-48 truncate">{ev.title}</td>
                       <td className="px-5 py-3"><span className="badge-primary capitalize text-[10px]">{ev.category?.replace('_', ' ')}</span></td>
-                      <td className="px-5 py-3 text-slate-700/60">{ev.date ? format(new Date(ev.date), 'dd MMM yyyy') : '—'}</td>
+                      <td className="px-5 py-3 text-slate-800/60">{ev.date ? format(new Date(ev.date), 'dd MMM yyyy') : '—'}</td>
                       <td className="px-5 py-3">
                         <div className="flex items-center justify-end gap-2">
-                          <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg text-slate-700 hover:text-blue-400 hover:bg-blue-500/10" title="Edit Event">
+                          <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg text-slate-800 hover:text-blue-400 hover:bg-blue-500/10" title="Edit Event">
                             <Edit3 size={14} />
                           </button>
-                          <button onClick={() => handleDelete(ev._id)} className="p-1.5 rounded-lg text-slate-700 hover:text-danger hover:bg-danger/10" title="Delete Event">
+                          <button onClick={() => handleDelete(ev._id)} className="p-1.5 rounded-lg text-slate-800 hover:text-danger hover:bg-danger/10" title="Delete Event">
                             <Trash2 size={14} />
                           </button>
                         </div>
@@ -251,7 +251,7 @@ export default function FacultyDashboard() {
           <div className="mt-12 space-y-6">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-4">
               <h2 className="text-2xl font-black text-slate-900">Clubs under my In-charge 🏢</h2>
-              <p className="text-slate-700/50 text-sm mt-1">View and manage members of the clubs you supervise</p>
+              <p className="text-slate-800/50 text-sm mt-1">View and manage members of the clubs you supervise</p>
             </motion.div>
 
             {managedClubs.map((club) => (
@@ -262,18 +262,18 @@ export default function FacultyDashboard() {
                       <span>{club.name}</span>
                       <span className="badge-primary capitalize text-xs">{club.category}</span>
                     </h3>
-                    <p className="text-slate-700 text-sm mt-1">{club.description || 'No description provided.'}</p>
+                    <p className="text-slate-800 text-sm mt-1">{club.description || 'No description provided.'}</p>
                   </div>
                   <div className="text-right">
                     <span className="text-2xl font-black text-slate-900">{club.members?.length || 0}</span>
-                    <p className="text-slate-700 text-xs font-medium">Total Members</p>
+                    <p className="text-slate-800 text-xs font-medium">Total Members</p>
                   </div>
                 </div>
 
                 <div>
                   <h4 className="font-bold text-slate-900 text-sm mb-3">Members Directory</h4>
                   {(!club.members || club.members.length === 0) ? (
-                    <p className="text-slate-700 text-sm">No members joined yet.</p>
+                    <p className="text-slate-800 text-sm">No members joined yet.</p>
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       {club.members.map((member) => (
@@ -283,7 +283,7 @@ export default function FacultyDashboard() {
                           </div>
                           <div className="min-w-0 flex-1">
                             <p className="text-slate-900 font-semibold text-sm truncate">{member.name}</p>
-                            <p className="text-slate-700 text-xs truncate">{member.email}</p>
+                            <p className="text-slate-800 text-xs truncate">{member.email}</p>
                             <p className="text-primary-400/80 text-[10px] font-mono mt-0.5">
                               {member.department} {member.rollNumber ? `· ${member.rollNumber}` : ''}
                             </p>
@@ -312,7 +312,7 @@ export default function FacultyDashboard() {
                 <h3 className="text-xl font-bold text-slate-900">
                   {editingEvent ? 'Edit Event' : 'Add Workshop / Hackathon'}
                 </h3>
-                <button onClick={() => setShowModal(false)} className="p-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
+                <button onClick={() => setShowModal(false)} className="p-2 rounded-xl text-slate-800 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
               </div>
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Image Upload */}
@@ -331,7 +331,7 @@ export default function FacultyDashboard() {
                         <Image size={24} className="text-primary-400" />
                       </div>
                       <p className="text-sm font-medium text-slate-900 mb-1">Upload Event Poster</p>
-                      <p className="text-xs text-slate-700/50">PNG, JPG up to 5MB</p>
+                      <p className="text-xs text-slate-800/50">PNG, JPG up to 5MB</p>
                     </div>
                   )}
                   <input
@@ -363,41 +363,41 @@ export default function FacultyDashboard() {
                   </div>
                 )}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="sm:col-span-2"><label className="text-sm text-slate-700/60 mb-1 block">Title</label>
+                  <div className="sm:col-span-2"><label className="text-sm text-slate-800/60 mb-1 block">Title</label>
                     <input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="input" /></div>
-                  <div className="sm:col-span-2"><label className="text-sm text-slate-700/60 mb-1 block">Description</label>
+                  <div className="sm:col-span-2"><label className="text-sm text-slate-800/60 mb-1 block">Description</label>
                     <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} className="input min-h-24 resize-none" /></div>
-                  <div><label className="text-sm text-slate-700/60 mb-1 block">Category</label>
+                  <div><label className="text-sm text-slate-800/60 mb-1 block">Category</label>
                     <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} className="input cursor-pointer">
                       {categories.map((c) => <option key={c} value={c}>{categoryLabels[c] || c}</option>)}
                     </select></div>
-                  <div><label className="text-sm text-slate-700/60 mb-1 block">Club</label>
+                  <div><label className="text-sm text-slate-800/60 mb-1 block">Club</label>
                     <select value={form.club} onChange={(e) => { const s = clubs.find((c) => c._id === e.target.value); setForm({ ...form, club: e.target.value, clubName: s?.name || '' }); }} className="input cursor-pointer">
                       <option value="">None</option>{clubs.map((c) => <option key={c._id} value={c._id}>{c.name}</option>)}
                     </select></div>
-                  <div><label className="text-sm text-slate-700/60 mb-1 block">Date</label><input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="input" /></div>
-                  <div><label className="text-sm text-slate-700/60 mb-1 block">Time</label><input value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} placeholder="10:00 AM" className="input" /></div>
-                  <div><label className="text-sm text-slate-700/60 mb-1 block">Venue</label><input value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="input" /></div>
-                  <div><label className="text-sm text-slate-700/60 mb-1 block">Organizer</label><input value={form.organizer} onChange={(e) => setForm({ ...form, organizer: e.target.value })} className="input" /></div>
-                  <div><label className="text-sm text-slate-700/60 mb-1 block">Incharge Staff</label><input value={form.inchargeStaff} onChange={(e) => setForm({ ...form, inchargeStaff: e.target.value })} className="input" /></div>
-                  <div><label className="text-sm text-slate-700/60 mb-1 block">Deadline</label><input type="date" value={form.deadline} onChange={(e) => setForm({ ...form, deadline: e.target.value })} className="input" /></div>
-                  <div><label className="text-sm text-slate-700/60 mb-1 block">Participation Type</label>
+                  <div><label className="text-sm text-slate-800/60 mb-1 block">Date</label><input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-800/60 mb-1 block">Time</label><input value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} placeholder="10:00 AM" className="input" /></div>
+                  <div><label className="text-sm text-slate-800/60 mb-1 block">Venue</label><input value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-800/60 mb-1 block">Organizer</label><input value={form.organizer} onChange={(e) => setForm({ ...form, organizer: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-800/60 mb-1 block">Incharge Staff</label><input value={form.inchargeStaff} onChange={(e) => setForm({ ...form, inchargeStaff: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-800/60 mb-1 block">Deadline</label><input type="date" value={form.deadline} onChange={(e) => setForm({ ...form, deadline: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-800/60 mb-1 block">Participation Type</label>
                     <div className="grid grid-cols-2 gap-2">
                       {['Solo', 'Team'].map((pt) => (
                         <button key={pt} type="button" onClick={() => setForm({ ...form, participationType: pt.toLowerCase() })}
                           className={`py-2.5 rounded-xl text-sm font-medium transition-all border ${
                             form.participationType === pt.toLowerCase()
                               ? 'bg-primary-500/20 border-primary-500/50 text-slate-900'
-                              : 'glass border-slate-900/10 text-slate-700/50 hover:border-slate-900/20'
+                              : 'glass border-slate-900/10 text-slate-800/50 hover:border-slate-900/20'
                           }`}>
                           {pt === 'Solo' ? '🧑 Solo' : '👥 Team'}
                         </button>
                       ))}
                     </div>
                   </div>
-                  <div><label className="text-sm text-slate-700/60 mb-1 block">Registration Link</label><input value={form.registrationLink} onChange={(e) => setForm({ ...form, registrationLink: e.target.value })} className="input" /></div>
-                  <div className="sm:col-span-2"><label className="text-sm text-slate-700/60 mb-1 block">Prizes</label><input value={form.prizes} onChange={(e) => setForm({ ...form, prizes: e.target.value })} className="input" /></div>
-                  <div className="sm:col-span-2"><label className="text-sm text-slate-700/60 mb-1 block">Eligibility</label><input value={form.eligibility} onChange={(e) => setForm({ ...form, eligibility: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-800/60 mb-1 block">Registration Link</label><input value={form.registrationLink} onChange={(e) => setForm({ ...form, registrationLink: e.target.value })} className="input" /></div>
+                  <div className="sm:col-span-2"><label className="text-sm text-slate-800/60 mb-1 block">Prizes</label><input value={form.prizes} onChange={(e) => setForm({ ...form, prizes: e.target.value })} className="input" /></div>
+                  <div className="sm:col-span-2"><label className="text-sm text-slate-800/60 mb-1 block">Eligibility</label><input value={form.eligibility} onChange={(e) => setForm({ ...form, eligibility: e.target.value })} className="input" /></div>
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button type="button" onClick={() => setShowModal(false)} className="btn-secondary flex-1">Cancel</button>

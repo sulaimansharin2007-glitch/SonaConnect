@@ -50,7 +50,7 @@ export default function MyRegistrations() {
             </div>
             <h1 className="text-3xl font-black text-slate-900">My Registrations</h1>
           </div>
-          <p className="text-slate-700/50 ml-[52px]">Track your registered events and QR passes</p>
+          <p className="text-slate-800/50 ml-[52px]">Track your registered events and QR passes</p>
         </motion.div>
 
         {loading ? (
@@ -61,7 +61,7 @@ export default function MyRegistrations() {
           <div className="text-center py-32">
             <div className="text-6xl mb-4">📋</div>
             <h3 className="text-xl font-bold text-slate-900 mb-2">No registrations yet</h3>
-            <p className="text-slate-700/50 mb-4">Browse events and register to see them here</p>
+            <p className="text-slate-800/50 mb-4">Browse events and register to see them here</p>
             <Link to="/events" className="btn-primary inline-block">Browse Events</Link>
           </div>
         ) : (
@@ -82,13 +82,13 @@ export default function MyRegistrations() {
                   <div className="flex-1 min-w-0">
                     <h3 className="text-slate-900 font-bold truncate hover:text-primary-300 transition-colors">{reg.event?.title}</h3>
                     <div className="flex flex-wrap items-center gap-3 mt-1">
-                      <span className="flex items-center gap-1 text-slate-700 text-xs">
+                      <span className="flex items-center gap-1 text-slate-800 text-xs">
                         <Calendar size={11} /> {reg.event?.date ? format(new Date(reg.event.date), 'dd MMM yyyy') : 'Date TBA'}
                       </span>
-                      <span className="flex items-center gap-1 text-slate-700 text-xs">
+                      <span className="flex items-center gap-1 text-slate-800 text-xs">
                         <Clock size={11} /> {reg.event?.time || '—'}
                       </span>
-                      <span className="flex items-center gap-1 text-slate-700 text-xs">
+                      <span className="flex items-center gap-1 text-slate-800 text-xs">
                         <MapPin size={11} /> {reg.event?.venue || '—'}
                       </span>
                     </div>
@@ -113,7 +113,7 @@ export default function MyRegistrations() {
                   {reg.event?.status === 'upcoming' && (
                     <button
                       onClick={() => handleCancel(reg._id)}
-                      className="p-1.5 rounded-lg text-slate-700 hover:text-danger hover:bg-danger/10 transition-colors"
+                      className="p-1.5 rounded-lg text-slate-800 hover:text-danger hover:bg-danger/10 transition-colors"
                     >
                       <Trash2 size={14} />
                     </button>
@@ -138,9 +138,9 @@ export default function MyRegistrations() {
               onClick={(e) => e.stopPropagation()}
               className="glass border border-primary-500/30 rounded-3xl p-8 max-w-sm w-full text-center shadow-card-hover"
             >
-              <button onClick={() => setShowQR(null)} className="absolute top-4 right-4 p-2 rounded-xl text-slate-700 hover:text-slate-900"><X size={18} /></button>
+              <button onClick={() => setShowQR(null)} className="absolute top-4 right-4 p-2 rounded-xl text-slate-800 hover:text-slate-900"><X size={18} /></button>
               <h3 className="text-xl font-bold text-slate-900 mb-2">QR Entry Pass</h3>
-              <p className="text-slate-700/50 text-sm mb-6">{showQR.event?.title}</p>
+              <p className="text-slate-800/50 text-sm mb-6">{showQR.event?.title}</p>
 
               <div className="bg-white rounded-2xl p-6 inline-block mb-6">
                 {showQR.qrCode ? (
@@ -156,15 +156,15 @@ export default function MyRegistrations() {
 
               <div className="space-y-2 text-left glass rounded-xl p-4 mb-6">
                 <div className="flex justify-between text-sm">
-                  <span className="text-slate-700/50">Date</span>
+                  <span className="text-slate-800/50">Date</span>
                   <span className="text-slate-900 font-medium">{showQR.event?.date ? format(new Date(showQR.event.date), 'dd MMM yyyy') : 'Date TBA'}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-slate-700/50">Venue</span>
+                  <span className="text-slate-800/50">Venue</span>
                   <span className="text-slate-900 font-medium">{showQR.event?.venue}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-slate-700/50">Status</span>
+                  <span className="text-slate-800/50">Status</span>
                   <span className="text-accent font-medium capitalize">{showQR.attendanceStatus}</span>
                 </div>
               </div>

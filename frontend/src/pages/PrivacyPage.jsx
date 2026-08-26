@@ -7,7 +7,7 @@ export default function PrivacyPage() {
       <div className="max-w-3xl mx-auto">
 
         {/* Back */}
-        <Link to="/" className="inline-flex items-center gap-2 text-slate-700/50 hover:text-slate-900 text-sm mb-8 transition-colors">
+        <Link to="/" className="inline-flex items-center gap-2 text-slate-800/50 hover:text-slate-900 text-sm mb-8 transition-colors">
           <ArrowLeft size={16} /> Back to SonaConnect
         </Link>
 
@@ -18,11 +18,11 @@ export default function PrivacyPage() {
           </div>
           <div>
             <h1 className="text-3xl font-bold">Privacy Policy</h1>
-            <p className="text-slate-700/50 text-sm">Last updated: July 2025</p>
+            <p className="text-slate-800/50 text-sm">Last updated: July 2025</p>
           </div>
         </div>
 
-        <div className="space-y-8 text-slate-700/80 leading-relaxed">
+        <div className="space-y-8 text-slate-800/80 leading-relaxed">
 
           <section className="glass rounded-2xl p-6 border border-slate-900/10">
             <h2 className="text-xl font-semibold text-slate-900 mb-3">1. About SonaConnect</h2>
@@ -93,7 +93,7 @@ export default function PrivacyPage() {
 
         </div>
 
-        <p className="text-center text-slate-700 text-sm mt-12">
+        <p className="text-center text-slate-800 text-sm mt-12">
           © {new Date().getFullYear()} SonaConnect — Sona College of Technology
         </p>
 

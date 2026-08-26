@@ -59,7 +59,7 @@ export default function ForgotPasswordPage() {
             <span className="text-2xl font-black gradient-text">SonaConnect</span>
           </Link>
           <h1 className="text-2xl font-bold text-slate-900 mt-4">Reset Password</h1>
-          <p className="text-slate-700/50 text-sm mt-1">
+          <p className="text-slate-800/50 text-sm mt-1">
             {step === 1 ? 'Enter your email to receive a recovery OTP' : 'Enter OTP and your new password'}
           </p>
         </motion.div>
@@ -68,9 +68,9 @@ export default function ForgotPasswordPage() {
           {step === 1 ? (
             <form onSubmit={handleRequestOTP} className="space-y-5">
               <div>
-                <label className="text-sm text-slate-700/60 mb-2 block">Registered Email Address</label>
+                <label className="text-sm text-slate-800/60 mb-2 block">Registered Email Address</label>
                 <div className="relative">
-                  <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
+                  <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-800" />
                   <input
                     type="email"
                     placeholder="your@email.com"
@@ -99,7 +99,7 @@ export default function ForgotPasswordPage() {
           ) : (
             <form onSubmit={handleResetPassword} className="space-y-5">
               <div>
-                <label className="text-sm text-slate-700/60 mb-2 block">Recovery OTP</label>
+                <label className="text-sm text-slate-800/60 mb-2 block">Recovery OTP</label>
                 <input
                   type="text"
                   maxLength={6}
@@ -112,9 +112,9 @@ export default function ForgotPasswordPage() {
               </div>
 
               <div>
-                <label className="text-sm text-slate-700/60 mb-2 block">New Password</label>
+                <label className="text-sm text-slate-800/60 mb-2 block">New Password</label>
                 <div className="relative">
-                  <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
+                  <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-800" />
                   <input
                     type="password"
                     placeholder="Min. 6 characters"

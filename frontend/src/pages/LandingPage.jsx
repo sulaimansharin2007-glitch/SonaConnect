@@ -66,8 +66,8 @@ export default function LandingPage() {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full border border-primary-500/30 mb-8">
               <Sparkles size={14} className="text-primary-400" />
-              <span className="text-sm text-slate-700/70">Intelligent Campus Activity Platform</span>
-              <ChevronRight size={14} className="text-slate-700" />
+              <span className="text-sm text-slate-800/70">Intelligent Campus Activity Platform</span>
+              <ChevronRight size={14} className="text-slate-800" />
             </div>
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] mb-6">
@@ -76,7 +76,7 @@ export default function LandingPage() {
               <span className="gradient-text">Reimagined.</span>
             </h1>
 
-            <p className="text-slate-700/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
+            <p className="text-slate-800/60 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
               SonaConnect is the all-in-one platform for Sona College — discover events, join clubs,
               register for hackathons and never miss what's happening on campus.
             </p>
@@ -100,7 +100,7 @@ export default function LandingPage() {
                   <Icon size={18} className="text-primary-400" />
                   <div className="text-left">
                     <div className="text-xl font-black gradient-text">{value}</div>
-                    <div className="text-xs text-slate-700/50">{label}</div>
+                    <div className="text-xs text-slate-800/50">{label}</div>
                   </div>
                 </motion.div>
               ))}
@@ -116,10 +116,10 @@ export default function LandingPage() {
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <div className="inline-flex items-center gap-2 px-4 py-1.5 glass rounded-full border border-primary-500/30 mb-4">
                 <Star size={12} className="text-primary-400" />
-                <span className="text-xs text-slate-700/60">Platform Features</span>
+                <span className="text-xs text-slate-800/60">Platform Features</span>
               </div>
               <h2 className="text-4xl font-black text-slate-900 mb-4">Everything You Need,<br /><span className="gradient-text">All In One Place</span></h2>
-              <p className="text-slate-700/50 max-w-xl mx-auto">Built for students, clubs, faculty and administrators to manage campus life seamlessly.</p>
+              <p className="text-slate-800/50 max-w-xl mx-auto">Built for students, clubs, faculty and administrators to manage campus life seamlessly.</p>
             </motion.div>
           </div>
 
@@ -138,7 +138,7 @@ export default function LandingPage() {
                   <f.icon size={22} className="text-primary-400" />
                 </div>
                 <h3 className="font-bold text-slate-900 text-lg mb-2">{f.title}</h3>
-                <p className="text-slate-700/50 text-sm leading-relaxed">{f.desc}</p>
+                <p className="text-slate-800/50 text-sm leading-relaxed">{f.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -151,7 +151,7 @@ export default function LandingPage() {
           <div className="text-center mb-16">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <h2 className="text-4xl font-black text-slate-900 mb-4">Explore Our <span className="gradient-text">16 Clubs</span></h2>
-              <p className="text-slate-700/50 max-w-xl mx-auto">From arts to technology — find your tribe and join the action.</p>
+              <p className="text-slate-800/50 max-w-xl mx-auto">From arts to technology — find your tribe and join the action.</p>
             </motion.div>
           </div>
 
@@ -168,7 +168,7 @@ export default function LandingPage() {
               >
                 <div className="text-3xl mb-2">{club.emoji}</div>
                 <div className="text-slate-900 text-sm font-semibold leading-tight">{club.name}</div>
-                <div className="text-slate-700 text-xs mt-1">{club.category}</div>
+                <div className="text-slate-800 text-xs mt-1">{club.category}</div>
               </motion.div>
             ))}
           </div>
@@ -187,7 +187,7 @@ export default function LandingPage() {
           <div className="text-center mb-16">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <h2 className="text-4xl font-black text-slate-900 mb-4">Built For <span className="gradient-text">Everyone</span></h2>
-              <p className="text-slate-700/50 max-w-xl mx-auto">Role-based access so students, faculty and admins each get exactly what they need.</p>
+              <p className="text-slate-800/50 max-w-xl mx-auto">Role-based access so students, faculty and admins each get exactly what they need.</p>
             </motion.div>
           </div>
 
@@ -204,7 +204,7 @@ export default function LandingPage() {
               >
                 <div className="text-4xl mb-4">{role.icon}</div>
                 <h3 className="font-bold text-slate-900 text-lg mb-2">{role.title}</h3>
-                <p className="text-slate-700/50 text-sm leading-relaxed">{role.desc}</p>
+                <p className="text-slate-800/50 text-sm leading-relaxed">{role.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -225,7 +225,7 @@ export default function LandingPage() {
             <div className="relative z-10">
               <div className="text-5xl mb-4">🚀</div>
               <h2 className="text-4xl font-black text-slate-900 mb-4">Ready to Get Started?</h2>
-              <p className="text-slate-700/60 text-lg max-w-lg mx-auto mb-8">
+              <p className="text-slate-800/60 text-lg max-w-lg mx-auto mb-8">
                 Join thousands of Sona College students already using SonaConnect to stay connected with campus life.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -252,10 +252,10 @@ export default function LandingPage() {
               <span className="font-bold gradient-text">SonaConnect</span>
             </div>
             <div className="text-center">
-              <p className="text-slate-700 text-sm mb-1">© {new Date().getFullYear()} SonaConnect — Sona College of Technology.</p>
-              <p className="text-slate-700 text-xs font-mono">Created by Sharin Banu S, Artificial Intelligence and Data Science, 2024-2028</p>
+              <p className="text-slate-800 text-sm mb-1">© {new Date().getFullYear()} SonaConnect — Sona College of Technology.</p>
+              <p className="text-slate-800 text-xs font-mono">Created by Sharin Banu S, Artificial Intelligence and Data Science, 2024-2028</p>
             </div>
-            <div className="flex items-center gap-4 text-slate-700 text-sm">
+            <div className="flex items-center gap-4 text-slate-800 text-sm">
               <a href="#" className="hover:text-primary-600 transition-colors">Privacy</a>
               <a href="#" className="hover:text-primary-600 transition-colors">Terms</a>
               <a href="#" className="hover:text-primary-600 transition-colors">Contact</a>

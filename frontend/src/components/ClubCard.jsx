@@ -45,7 +45,7 @@ export default function ClubCard({ club, index = 0 }) {
           <span className={`badge capitalize ${
             club.category === 'technical' ? 'badge-primary' :
             club.category === 'sports' ? 'badge-success' :
-            'bg-slate-900/10 text-slate-700/60 border border-slate-900/15'
+            'bg-slate-900/10 text-slate-800/60 border border-slate-900/15'
           }`}>
             {club.category}
           </span>
@@ -55,18 +55,18 @@ export default function ClubCard({ club, index = 0 }) {
         <h3 className="font-bold text-slate-900 text-lg leading-tight group-hover:text-primary-300 transition-colors">
           {club.name}
         </h3>
-        <p className="text-slate-700/50 text-xs mt-1.5 line-clamp-2 leading-relaxed">
+        <p className="text-slate-800/50 text-xs mt-1.5 line-clamp-2 leading-relaxed">
           {club.description}
         </p>
 
         {/* Stats */}
         <div className="flex items-center gap-4 mt-4 pt-4 border-t border-slate-900/10">
-          <div className="flex items-center gap-1.5 text-slate-700/50 text-xs">
+          <div className="flex items-center gap-1.5 text-slate-800/50 text-xs">
             <Users size={12} className="text-primary-400" />
             <span>{club.memberCount || club.members?.length || 0} members</span>
           </div>
           {club.facultyIncharge && (
-            <div className="flex items-center gap-1.5 text-slate-700/50 text-xs truncate">
+            <div className="flex items-center gap-1.5 text-slate-800/50 text-xs truncate">
               <Calendar size={12} className="text-pink-accent" />
               <span className="truncate">{club.facultyIncharge}</span>
             </div>
@@ -76,7 +76,7 @@ export default function ClubCard({ club, index = 0 }) {
         {/* CTA */}
         <Link
           to={`/clubs/${club._id}`}
-          className="mt-4 flex items-center justify-between w-full px-4 py-2.5 glass border border-slate-900/15 rounded-xl text-sm font-semibold text-slate-700/70 hover:text-slate-900 hover:border-primary-500/40 hover:bg-primary-500/10 transition-all duration-200 group/btn"
+          className="mt-4 flex items-center justify-between w-full px-4 py-2.5 glass border border-slate-900/15 rounded-xl text-sm font-semibold text-slate-800/70 hover:text-slate-900 hover:border-primary-500/40 hover:bg-primary-500/10 transition-all duration-200 group/btn"
         >
           View Club
           <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />

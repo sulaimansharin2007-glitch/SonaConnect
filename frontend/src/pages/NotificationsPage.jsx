@@ -11,7 +11,7 @@ const typeStyles = {
   registration: 'bg-accent/20 text-accent',
   announcement: 'bg-yellow-500/20 text-yellow-300',
   reminder: 'bg-orange-500/20 text-orange-300',
-  system: 'bg-slate-900/10 text-slate-700/60',
+  system: 'bg-slate-900/10 text-slate-800/60',
 };
 
 export default function NotificationsPage() {
@@ -65,7 +65,7 @@ export default function NotificationsPage() {
               </div>
               <div>
                 <h1 className="text-3xl font-black text-slate-900">Notifications</h1>
-                <p className="text-slate-700/50 text-sm">{notifications.length} notification{notifications.length !== 1 ? 's' : ''}</p>
+                <p className="text-slate-800/50 text-sm">{notifications.length} notification{notifications.length !== 1 ? 's' : ''}</p>
               </div>
             </div>
             {unread.length > 0 && (
@@ -84,7 +84,7 @@ export default function NotificationsPage() {
           <div className="text-center py-32">
             <div className="text-6xl mb-4">🔔</div>
             <h3 className="text-xl font-bold text-slate-900 mb-2">No notifications</h3>
-            <p className="text-slate-700/50">You're all caught up!</p>
+            <p className="text-slate-800/50">You're all caught up!</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -101,14 +101,14 @@ export default function NotificationsPage() {
                 </div>
                 <div className="flex-1 min-w-0">
                   <h4 className="text-slate-900 font-semibold text-sm">{n.title}</h4>
-                  <p className="text-slate-700/50 text-xs mt-0.5 line-clamp-2">{n.message}</p>
-                  <p className="text-slate-700 text-[10px] mt-1.5">
+                  <p className="text-slate-800/50 text-xs mt-0.5 line-clamp-2">{n.message}</p>
+                  <p className="text-slate-800 text-[10px] mt-1.5">
                     {formatDistanceToNow(new Date(n.createdAt), { addSuffix: true })}
                   </p>
                 </div>
                 <button
                   onClick={() => handleMarkRead(n._id)}
-                  className="p-2 rounded-lg text-slate-700 hover:text-primary-400 hover:bg-primary-500/10 flex-shrink-0"
+                  className="p-2 rounded-lg text-slate-800 hover:text-primary-400 hover:bg-primary-500/10 flex-shrink-0"
                   title="Dismiss"
                 >
                   <Check size={14} />
