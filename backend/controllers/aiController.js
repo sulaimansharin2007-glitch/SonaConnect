@@ -119,12 +119,14 @@ If any other information is not found, leave it as "".`;
       throw new Error('AI returned invalid data format. Please try again.');
     }
 
-    // Force clear hallucinatory default date 2026-01-01
-    if (parsedData.startDate === '2026-01-01') parsedData.startDate = '';
-    if (parsedData.endDate === '2026-01-01') parsedData.endDate = '';
-    if (parsedData.date === '2026-01-01') parsedData.date = '';
+    // Wipe out hallucinated Jan 1 date — if AI returns any January 1st date, it's almost certainly wrong
+    const isJan1 = (d) => d && (d === '2026-01-01' || d === '2025-01-01' || d === '2027-01-01' || /^\d{4}-01-01$/.test(d));
+    if (isJan1(parsedData.startDate)) parsedData.startDate = '';
+    if (isJan1(parsedData.endDate)) parsedData.endDate = '';
+    if (isJan1(parsedData.date)) parsedData.date = '';
 
-    res.json({ data: parsedData });
+    // Return flat object so frontend can directly use data.startDate, data.title etc.
+    res.json(parsedData);
   } catch (error) {
     console.error('AI Extraction Error:', error.message);
     res.status(500).json({ message: error.message || 'Failed to extract data from image' });

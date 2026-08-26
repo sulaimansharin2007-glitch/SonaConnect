@@ -143,7 +143,9 @@ export default function FacultyDashboard() {
         ...prev,
         title: data.title || prev.title,
         description: data.description || prev.description,
-        date: data.startDate || data.date || prev.date,
+        // Reject AI hallucinated Jan 1 dates
+        date: (/^\d{4}-01-01$/.test(data.startDate) ? '' : data.startDate) ||
+              (/^\d{4}-01-01$/.test(data.date) ? '' : data.date) || prev.date,
         endDate: data.endDate || prev.endDate,
         time: data.time || prev.time,
         venue: data.venue || prev.venue,
