@@ -225,10 +225,10 @@ export default function ClubAdminDashboard() {
                     <td className="px-5 py-3 text-slate-700/60">{ev.registrationCount || 0}</td>
                     <td className="px-5 py-3">
                       <div className="flex items-center justify-end gap-2">
-                        <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg text-slate-500 hover:text-primary-400 hover:bg-primary-500/10 transition-colors">
+                        <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg text-slate-700 hover:text-primary-400 hover:bg-primary-500/10 transition-colors">
                           <Edit3 size={14} />
                         </button>
-                        <button onClick={() => handleDelete(ev._id)} className="p-1.5 rounded-lg text-slate-500 hover:text-danger hover:bg-danger/10 transition-colors">
+                        <button onClick={() => handleDelete(ev._id)} className="p-1.5 rounded-lg text-slate-700 hover:text-danger hover:bg-danger/10 transition-colors">
                           <Trash2 size={14} />
                         </button>
                       </div>
@@ -256,7 +256,7 @@ export default function ClubAdminDashboard() {
             >
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold text-slate-900">{editingEvent ? 'Edit Event' : 'Add New Event'}</h3>
-                <button onClick={() => setShowModal(false)} className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
+                <button onClick={() => setShowModal(false)} className="p-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -412,7 +412,7 @@ export default function ClubAdminDashboard() {
             >
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold text-slate-900">Post Announcement</h3>
-                <button onClick={() => setShowAnnouncementModal(false)} className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
+                <button onClick={() => setShowAnnouncementModal(false)} className="p-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
               </div>
               <form onSubmit={handleAnnouncement} className="space-y-4">
                 <div>

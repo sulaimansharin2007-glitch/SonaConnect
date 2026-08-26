@@ -56,7 +56,7 @@ export default function ClubsPage() {
           className="glass rounded-2xl p-4 flex flex-col sm:flex-row gap-3 mb-8"
         >
           <div className="relative flex-1">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
             <input
               type="text"
               placeholder="Search clubs..."

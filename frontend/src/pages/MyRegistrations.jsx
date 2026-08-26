@@ -82,13 +82,13 @@ export default function MyRegistrations() {
                   <div className="flex-1 min-w-0">
                     <h3 className="text-slate-900 font-bold truncate hover:text-primary-300 transition-colors">{reg.event?.title}</h3>
                     <div className="flex flex-wrap items-center gap-3 mt-1">
-                      <span className="flex items-center gap-1 text-slate-500 text-xs">
+                      <span className="flex items-center gap-1 text-slate-700 text-xs">
                         <Calendar size={11} /> {reg.event?.date ? format(new Date(reg.event.date), 'dd MMM yyyy') : 'Date TBA'}
                       </span>
-                      <span className="flex items-center gap-1 text-slate-500 text-xs">
+                      <span className="flex items-center gap-1 text-slate-700 text-xs">
                         <Clock size={11} /> {reg.event?.time || '—'}
                       </span>
-                      <span className="flex items-center gap-1 text-slate-500 text-xs">
+                      <span className="flex items-center gap-1 text-slate-700 text-xs">
                         <MapPin size={11} /> {reg.event?.venue || '—'}
                       </span>
                     </div>
@@ -113,7 +113,7 @@ export default function MyRegistrations() {
                   {reg.event?.status === 'upcoming' && (
                     <button
                       onClick={() => handleCancel(reg._id)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-danger hover:bg-danger/10 transition-colors"
+                      className="p-1.5 rounded-lg text-slate-700 hover:text-danger hover:bg-danger/10 transition-colors"
                     >
                       <Trash2 size={14} />
                     </button>
@@ -138,7 +138,7 @@ export default function MyRegistrations() {
               onClick={(e) => e.stopPropagation()}
               className="glass border border-primary-500/30 rounded-3xl p-8 max-w-sm w-full text-center shadow-card-hover"
             >
-              <button onClick={() => setShowQR(null)} className="absolute top-4 right-4 p-2 rounded-xl text-slate-500 hover:text-slate-900"><X size={18} /></button>
+              <button onClick={() => setShowQR(null)} className="absolute top-4 right-4 p-2 rounded-xl text-slate-700 hover:text-slate-900"><X size={18} /></button>
               <h3 className="text-xl font-bold text-slate-900 mb-2">QR Entry Pass</h3>
               <p className="text-slate-700/50 text-sm mb-6">{showQR.event?.title}</p>
 

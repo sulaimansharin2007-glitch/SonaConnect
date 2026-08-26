@@ -73,7 +73,7 @@ export default function LoginPage() {
             <div>
               <label className="text-sm text-slate-700/60 mb-2 block">Email Address</label>
               <div className="relative">
-                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
                 <input
                   type="email"
                   placeholder="your@email.com"
@@ -88,7 +88,7 @@ export default function LoginPage() {
             <div>
               <label className="text-sm text-slate-700/60 mb-2 block">Password</label>
               <div className="relative">
-                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
                 <input
                   type={showPass ? 'text' : 'password'}
                   placeholder="••••••••"
@@ -100,7 +100,7 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-900"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-700 hover:text-slate-900"
                 >
                   {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>

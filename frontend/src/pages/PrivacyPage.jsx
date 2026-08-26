@@ -93,7 +93,7 @@ export default function PrivacyPage() {
 
         </div>
 
-        <p className="text-center text-slate-400 text-sm mt-12">
+        <p className="text-center text-slate-700 text-sm mt-12">
           © {new Date().getFullYear()} SonaConnect — Sona College of Technology
         </p>
 

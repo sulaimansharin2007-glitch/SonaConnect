@@ -217,7 +217,7 @@ export default function FacultyDashboard() {
               <tbody>
                 {myEvents.length === 0 ? (
                   <tr>
-                    <td colSpan="5" className="px-5 py-12 text-center text-slate-500">
+                    <td colSpan="5" className="px-5 py-12 text-center text-slate-700">
                       <div className="text-4xl mb-2">📋</div>
                       No events yet. Create your first event!
                     </td>
@@ -230,10 +230,10 @@ export default function FacultyDashboard() {
                       <td className="px-5 py-3 text-slate-700/60">{ev.date ? format(new Date(ev.date), 'dd MMM yyyy') : '—'}</td>
                       <td className="px-5 py-3">
                         <div className="flex items-center justify-end gap-2">
-                          <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg text-slate-500 hover:text-blue-400 hover:bg-blue-500/10" title="Edit Event">
+                          <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg text-slate-700 hover:text-blue-400 hover:bg-blue-500/10" title="Edit Event">
                             <Edit3 size={14} />
                           </button>
-                          <button onClick={() => handleDelete(ev._id)} className="p-1.5 rounded-lg text-slate-500 hover:text-danger hover:bg-danger/10" title="Delete Event">
+                          <button onClick={() => handleDelete(ev._id)} className="p-1.5 rounded-lg text-slate-700 hover:text-danger hover:bg-danger/10" title="Delete Event">
                             <Trash2 size={14} />
                           </button>
                         </div>
@@ -262,18 +262,18 @@ export default function FacultyDashboard() {
                       <span>{club.name}</span>
                       <span className="badge-primary capitalize text-xs">{club.category}</span>
                     </h3>
-                    <p className="text-slate-500 text-sm mt-1">{club.description || 'No description provided.'}</p>
+                    <p className="text-slate-700 text-sm mt-1">{club.description || 'No description provided.'}</p>
                   </div>
                   <div className="text-right">
                     <span className="text-2xl font-black text-slate-900">{club.members?.length || 0}</span>
-                    <p className="text-slate-500 text-xs font-medium">Total Members</p>
+                    <p className="text-slate-700 text-xs font-medium">Total Members</p>
                   </div>
                 </div>
 
                 <div>
                   <h4 className="font-bold text-slate-900 text-sm mb-3">Members Directory</h4>
                   {(!club.members || club.members.length === 0) ? (
-                    <p className="text-slate-500 text-sm">No members joined yet.</p>
+                    <p className="text-slate-700 text-sm">No members joined yet.</p>
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       {club.members.map((member) => (
@@ -283,7 +283,7 @@ export default function FacultyDashboard() {
                           </div>
                           <div className="min-w-0 flex-1">
                             <p className="text-slate-900 font-semibold text-sm truncate">{member.name}</p>
-                            <p className="text-slate-500 text-xs truncate">{member.email}</p>
+                            <p className="text-slate-700 text-xs truncate">{member.email}</p>
                             <p className="text-primary-400/80 text-[10px] font-mono mt-0.5">
                               {member.department} {member.rollNumber ? `· ${member.rollNumber}` : ''}
                             </p>
@@ -312,7 +312,7 @@ export default function FacultyDashboard() {
                 <h3 className="text-xl font-bold text-slate-900">
                   {editingEvent ? 'Edit Event' : 'Add Workshop / Hackathon'}
                 </h3>
-                <button onClick={() => setShowModal(false)} className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
+                <button onClick={() => setShowModal(false)} className="p-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
               </div>
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Image Upload */}

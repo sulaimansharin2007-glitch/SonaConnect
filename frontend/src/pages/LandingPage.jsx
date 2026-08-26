@@ -67,7 +67,7 @@ export default function LandingPage() {
             <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full border border-primary-500/30 mb-8">
               <Sparkles size={14} className="text-primary-400" />
               <span className="text-sm text-slate-700/70">Intelligent Campus Activity Platform</span>
-              <ChevronRight size={14} className="text-slate-500" />
+              <ChevronRight size={14} className="text-slate-700" />
             </div>
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] mb-6">
@@ -168,7 +168,7 @@ export default function LandingPage() {
               >
                 <div className="text-3xl mb-2">{club.emoji}</div>
                 <div className="text-slate-900 text-sm font-semibold leading-tight">{club.name}</div>
-                <div className="text-slate-500 text-xs mt-1">{club.category}</div>
+                <div className="text-slate-700 text-xs mt-1">{club.category}</div>
               </motion.div>
             ))}
           </div>
@@ -252,10 +252,10 @@ export default function LandingPage() {
               <span className="font-bold gradient-text">SonaConnect</span>
             </div>
             <div className="text-center">
-              <p className="text-slate-500 text-sm mb-1">© {new Date().getFullYear()} SonaConnect — Sona College of Technology.</p>
-              <p className="text-slate-400 text-xs font-mono">Created by Sharin Banu S, Artificial Intelligence and Data Science, 2024-2028</p>
+              <p className="text-slate-700 text-sm mb-1">© {new Date().getFullYear()} SonaConnect — Sona College of Technology.</p>
+              <p className="text-slate-700 text-xs font-mono">Created by Sharin Banu S, Artificial Intelligence and Data Science, 2024-2028</p>
             </div>
-            <div className="flex items-center gap-4 text-slate-500 text-sm">
+            <div className="flex items-center gap-4 text-slate-700 text-sm">
               <a href="#" className="hover:text-primary-600 transition-colors">Privacy</a>
               <a href="#" className="hover:text-primary-600 transition-colors">Terms</a>
               <a href="#" className="hover:text-primary-600 transition-colors">Contact</a>

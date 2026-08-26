@@ -189,7 +189,7 @@ export default function ClubDetailPage() {
                   <h4 className="font-bold text-slate-900 mb-1">{a.title}</h4>
                   <p className="text-slate-700/60 text-sm">{a.message}</p>
                   {a.createdAt && (
-                    <p className="text-slate-400 text-xs mt-2">
+                    <p className="text-slate-700 text-xs mt-2">
                       {new Date(a.createdAt).toLocaleDateString()}
                     </p>
                   )}

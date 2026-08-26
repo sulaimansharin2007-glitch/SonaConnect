@@ -114,7 +114,7 @@ export default function ChatBot() {
                 <div className="font-bold text-slate-900 text-sm flex items-center gap-1.5">
                   SonaBot <Sparkles size={12} className="text-primary-500" />
                 </div>
-                <div className="text-[11px] text-slate-500 flex items-center gap-1">
+                <div className="text-[11px] text-slate-700 flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
                   Online · Ask me about campus events
                 </div>
@@ -201,7 +201,7 @@ export default function ChatBot() {
                   {loading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
                 </motion.button>
               </div>
-              <p className="text-[10px] text-slate-400 text-center mt-2">Powered by AI · SonaConnect</p>
+              <p className="text-[10px] text-slate-700 text-center mt-2">Powered by AI · SonaConnect</p>
             </div>
           </motion.div>
         )}

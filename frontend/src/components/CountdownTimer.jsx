@@ -31,7 +31,7 @@ export default function CountdownTimer({ targetDate, className = '' }) {
 
   if (timeLeft.expired) {
     return (
-      <div className={`flex items-center gap-1.5 text-slate-500 text-xs ${className}`}>
+      <div className={`flex items-center gap-1.5 text-slate-700 text-xs ${className}`}>
         <Clock size={12} />
         <span>Event completed</span>
       </div>

@@ -132,7 +132,7 @@ export default function Navbar() {
                         </div>
                         <div className="max-h-72 overflow-y-auto">
                           {notifications.length === 0 ? (
-                            <div className="p-6 text-center text-slate-500 text-sm">No notifications</div>
+                            <div className="p-6 text-center text-slate-700 text-sm">No notifications</div>
                           ) : (
                             notifications.slice(0, 8).map((n) => (
                               <div key={n._id} className={`p-4 border-b border-slate-900/5 hover:bg-slate-900/5 transition-colors ${!n.isRead ? 'bg-primary-500/5' : ''}`}>

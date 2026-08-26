@@ -70,7 +70,7 @@ export default function ForgotPasswordPage() {
               <div>
                 <label className="text-sm text-slate-700/60 mb-2 block">Registered Email Address</label>
                 <div className="relative">
-                  <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
                   <input
                     type="email"
                     placeholder="your@email.com"
@@ -114,7 +114,7 @@ export default function ForgotPasswordPage() {
               <div>
                 <label className="text-sm text-slate-700/60 mb-2 block">New Password</label>
                 <div className="relative">
-                  <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
                   <input
                     type="password"
                     placeholder="Min. 6 characters"

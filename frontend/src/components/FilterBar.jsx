@@ -21,7 +21,7 @@ export default function FilterBar({ search, setSearch, category, setCategory, st
     >
       {/* Search */}
       <div className="relative flex-1">
-        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+        <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-700" />
         <input
           type="text"
           placeholder="Search events..."
@@ -30,7 +30,7 @@ export default function FilterBar({ search, setSearch, category, setCategory, st
           className="input pl-9 pr-9"
         />
         {search && (
-          <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-900">
+          <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-700 hover:text-slate-900">
             <X size={14} />
           </button>
         )}
