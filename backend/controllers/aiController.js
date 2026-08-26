@@ -25,83 +25,65 @@ try {
 // @route   POST /api/ai/extract-poster
 const extractPosterData = async (req, res) => {
   try {
-    const groqClient = groq || (process.env.GROQ_API_KEY ? new Groq({ apiKey: process.env.GROQ_API_KEY }) : null);
-    if (!groqClient) {
-      return res.status(400).json({ message: 'AI service is not configured on the server.' });
-    }
-
     const { base64Image } = req.body;
     if (!base64Image) {
       return res.status(400).json({ message: 'No image provided' });
     }
 
+    // Parse image data
     let mimeType = 'image/jpeg';
     let base64Data;
-
-    // Check if it's a URL or already base64
     if (base64Image.startsWith('http://') || base64Image.startsWith('https://')) {
       const axios = require('axios');
       const imageResponse = await axios.get(base64Image, { responseType: 'arraybuffer' });
       mimeType = (imageResponse.headers['content-type'] || 'image/jpeg').split(';')[0];
       base64Data = Buffer.from(imageResponse.data).toString('base64');
     } else {
-      const matches = base64Image.match(/^data:(image\/\w+);base64,/);
+      const matches = base64Image.match(/^data:(image\/[\w+]+);base64,/);
       if (matches && matches[1]) mimeType = matches[1];
-      base64Data = base64Image.replace(/^data:image\/\w+;base64,/, '');
+      base64Data = base64Image.replace(/^data:image\/[\w+]+;base64,/, '');
     }
 
-    const dataUrl = `data:${mimeType};base64,${base64Data}`;
-
-    const prompt = `You are an AI assistant that extracts event details from event posters with HIGH ACCURACY.
-
-Analyze this event poster carefully and extract the following information.
-Return ONLY a valid JSON object matching this exact structure:
+    const prompt = `You are extracting event details from this poster image. Read ALL text on the poster carefully.
+Return ONLY a valid JSON object:
 {
-  "title": "Event Title Here",
-  "description": "A brief 2-3 sentence description based on the poster",
+  "title": "Event name",
+  "description": "2-3 sentence description",
   "startDate": "YYYY-MM-DD",
   "endDate": "YYYY-MM-DD",
-  "time": "HH:MM AM/PM",
-  "venue": "Event Venue",
-  "prizes": "Prize details if any",
-  "eligibility": "Who can attend (e.g. All Students, 3rd Years)",
-  "participationType": "solo or team",
-  "registrationLink": "https://... or google form link or any URL found on poster"
+  "time": "HH:MM AM/PM or empty",
+  "venue": "Location",
+  "prizes": "Prize info or empty",
+  "eligibility": "Who can join or empty",
+  "participationType": "solo or team or empty",
+  "registrationLink": "URL if visible on poster or empty"
 }
 
-CRITICAL DATE INSTRUCTIONS:
-- The date on the poster IS the actual event date (when the event happens). Extract it accurately by reading the text carefully. Look for months (Jan, Feb, Sep, September, etc) and days.
-- If the poster shows a single date like "September 15" → startDate: "2026-09-15", endDate: ""
-- If the poster shows a date range like "Sep 15-16", "15 & 16 Sep", or "15th-16th September" → startDate: "2026-09-15", endDate: "2026-09-16"
-- Always use YYYY-MM-DD format. Assume year 2026 if not explicitly mentioned.
-- ABSOLUTELY NEVER default to "2026-01-01" or January 1 unless it actually says January 1 on the poster. 
-- If you genuinely cannot find any date on the poster, you MUST leave it as "".
+DATE RULES (very important):
+- Look carefully for month names (Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec).
+- Single date "September 15" → startDate:"2026-09-15", endDate:""
+- Date range "Sep 15-16" or "15 & 16 Sep" → startDate:"2026-09-15", endDate:"2026-09-16"
+- If year not shown, use 2026.
+- If you cannot find a date, return "". NEVER return "2026-01-01" unless January 1 is literally written.`;
 
-REGISTRATION LINK INSTRUCTIONS:
-- Look for any URL, QR code label, Google Form link, Devfolio link, or "Register at" text on the poster.
-- Include the full URL if visible (e.g. "https://forms.gle/...", "https://devfolio.co/...")
-- If no link found, leave as "".
+    // Use Gemini Flash for vision (free tier, excellent at OCR and image reading)
+    const geminiKey = process.env.GEMINI_API_KEY;
+    if (!geminiKey) {
+      return res.status(400).json({ message: 'Vision AI (GEMINI_API_KEY) is not configured on the server.' });
+    }
 
-If any other information is not found, leave it as "".`;
+    const { GoogleGenerativeAI } = require('@google/generative-ai');
+    const genAI = new GoogleGenerativeAI(geminiKey);
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-    const chatCompletion = await groqClient.chat.completions.create({
-      messages: [
-        {
-          role: 'user',
-          content: [
-            { type: 'text', text: prompt },
-            { type: 'image_url', image_url: { url: dataUrl } }
-          ]
-        }
-      ],
-      model: 'qwen/qwen3.6-27b',
-      response_format: { type: 'json_object' },
-      temperature: 0.2,
-    });
+    const result = await model.generateContent([
+      prompt,
+      { inlineData: { mimeType, data: base64Data } }
+    ]);
 
-    let jsonString = chatCompletion.choices[0]?.message?.content || '{}';
+    let jsonString = result.response.text();
 
-    // Strip markdown if present
+    // Strip markdown code fences if present
     const markdownMatch = jsonString.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
     if (markdownMatch && markdownMatch[1]) {
       jsonString = markdownMatch[1];
@@ -116,16 +98,15 @@ If any other information is not found, leave it as "".`;
       parsedData = JSON.parse(jsonString);
     } catch (parseError) {
       console.error('JSON Parse Error:', jsonString);
-      throw new Error('AI returned invalid data format. Please try again.');
+      throw new Error('AI returned invalid data. Please try again.');
     }
 
-    // Wipe out hallucinated Jan 1 date — if AI returns any January 1st date, it's almost certainly wrong
-    const isJan1 = (d) => d && (d === '2026-01-01' || d === '2025-01-01' || d === '2027-01-01' || /^\d{4}-01-01$/.test(d));
+    // Safety net: clear any Jan 1 hallucination just in case
+    const isJan1 = (d) => d && /^\d{4}-01-01$/.test(d);
     if (isJan1(parsedData.startDate)) parsedData.startDate = '';
     if (isJan1(parsedData.endDate)) parsedData.endDate = '';
     if (isJan1(parsedData.date)) parsedData.date = '';
 
-    // Return flat object so frontend can directly use data.startDate, data.title etc.
     res.json(parsedData);
   } catch (error) {
     console.error('AI Extraction Error:', error.message);
