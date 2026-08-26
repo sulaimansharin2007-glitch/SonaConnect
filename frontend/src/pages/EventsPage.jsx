@@ -98,7 +98,7 @@ export default function EventsPage() {
           </motion.div>
         ) : (
           <>
-            <p className="text-slate-700/40 text-sm mb-6">{events.length} event{events.length !== 1 ? 's' : ''} found</p>
+            <p className="text-slate-500 text-sm mb-6">{events.length} event{events.length !== 1 ? 's' : ''} found</p>
             <div className="space-y-10">
               {sortedDates.map((dateStr, idx) => (
                 <motion.div 
@@ -110,7 +110,7 @@ export default function EventsPage() {
                   <div className="flex items-center gap-4 mb-4">
                     <h2 className="text-lg font-bold text-slate-900 whitespace-nowrap">{dateStr}</h2>
                     <div className="h-px w-full bg-slate-900/10"></div>
-                    <span className="text-slate-700/40 text-sm whitespace-nowrap bg-slate-900/5 px-3 py-1 rounded-full">
+                    <span className="text-slate-500 text-sm whitespace-nowrap bg-slate-900/5 px-3 py-1 rounded-full">
                       {groupedEvents[dateStr].length} event{groupedEvents[dateStr].length !== 1 ? 's' : ''}
                     </span>
                   </div>

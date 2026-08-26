@@ -122,14 +122,14 @@ export default function StudentDashboard() {
               </div>
               <div className="space-y-3">
                 {notifications.length === 0 ? (
-                  <p className="text-slate-700/40 text-sm">No notifications</p>
+                  <p className="text-slate-500 text-sm">No notifications</p>
                 ) : (
                   notifications.map((n) => (
                     <div key={n._id} className="flex items-start gap-2">
                       <div className={`w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0 ${!n.isRead ? 'bg-primary-400' : 'bg-slate-900/20'}`} />
                       <div>
                         <p className="text-slate-900 text-xs font-medium">{n.title}</p>
-                        <p className="text-slate-700/40 text-[11px] mt-0.5 line-clamp-1">{n.message}</p>
+                        <p className="text-slate-500 text-[11px] mt-0.5 line-clamp-1">{n.message}</p>
                       </div>
                     </div>
                   ))

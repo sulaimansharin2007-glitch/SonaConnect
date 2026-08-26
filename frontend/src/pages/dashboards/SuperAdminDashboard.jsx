@@ -306,7 +306,7 @@ export default function SuperAdminDashboard() {
                 </thead>
                 <tbody>
                   {events.map((ev) => (
-                    <tr key={ev._id} className="border-b border-slate-900/5 hover:bg-white/[0.02]">
+                    <tr key={ev._id} className="border-b border-slate-900/5 hover:bg-slate-50">
                       <td className="px-5 py-3 text-slate-900 font-medium max-w-40 truncate">{ev.title}</td>
                       <td className="px-5 py-3"><span className="badge-primary capitalize text-[10px]">{ev.category?.replace('_', ' ')}</span></td>
                       <td className="px-5 py-3 text-slate-700/60">{format(new Date(ev.date), 'dd MMM')}</td>
@@ -322,14 +322,14 @@ export default function SuperAdminDashboard() {
                       <td className="px-5 py-3">
                         <div className="flex items-center justify-end gap-1">
                           {!ev.isApproved && (
-                            <button onClick={() => handleApprove(ev._id)} className="p-1.5 rounded-lg text-slate-700/40 hover:text-accent hover:bg-accent/10" title="Approve">
+                            <button onClick={() => handleApprove(ev._id)} className="p-1.5 rounded-lg text-slate-500 hover:text-accent hover:bg-accent/10" title="Approve">
                               <UserCheck size={14} />
                             </button>
                           )}
-                          <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg text-slate-700/40 hover:text-blue-400 hover:bg-blue-500/10" title="Edit">
+                          <button onClick={() => openEdit(ev)} className="p-1.5 rounded-lg text-slate-500 hover:text-blue-400 hover:bg-blue-500/10" title="Edit">
                             <Edit3 size={14} />
                           </button>
-                          <button onClick={() => handleDelete(ev._id)} className="p-1.5 rounded-lg text-slate-700/40 hover:text-danger hover:bg-danger/10" title="Delete">
+                          <button onClick={() => handleDelete(ev._id)} className="p-1.5 rounded-lg text-slate-500 hover:text-danger hover:bg-danger/10" title="Delete">
                             <Trash2 size={14} />
                           </button>
                         </div>
@@ -356,7 +356,7 @@ export default function SuperAdminDashboard() {
                   className="card p-5 flex items-center gap-4">
                   <div className="flex-1 min-w-0">
                     <h4 className="text-slate-900 font-semibold truncate">{ev.title}</h4>
-                    <p className="text-slate-700/40 text-xs mt-0.5">
+                    <p className="text-slate-500 text-xs mt-0.5">
                       {ev.category?.replace('_', ' ')} · {ev.date ? format(new Date(ev.date), 'dd MMM yyyy') : 'Date TBA'} · by {ev.createdBy?.name || 'Unknown'}
                     </p>
                   </div>
@@ -367,7 +367,7 @@ export default function SuperAdminDashboard() {
                       Approve
                     </motion.button>
                     <button onClick={() => handleDelete(ev._id)}
-                      className="p-2 rounded-xl text-slate-700/40 hover:text-danger hover:bg-danger/10">
+                      className="p-2 rounded-xl text-slate-500 hover:text-danger hover:bg-danger/10">
                       <Trash2 size={14} />
                     </button>
                   </div>
@@ -390,7 +390,7 @@ export default function SuperAdminDashboard() {
                     <h4 className="text-slate-900 font-semibold truncate pr-6">{club.name}</h4>
                     <span className="badge-primary capitalize text-[10px]">{club.category}</span>
                   </div>
-                  <button onClick={() => openEditClub(club)} className="absolute right-4 top-4 p-1.5 rounded-lg text-slate-700/40 hover:text-blue-400 hover:bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity" title="Edit Club">
+                  <button onClick={() => openEditClub(club)} className="absolute right-4 top-4 p-1.5 rounded-lg text-slate-500 hover:text-blue-400 hover:bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity" title="Edit Club">
                     <Edit3 size={14} />
                   </button>
                 </div>
@@ -399,7 +399,7 @@ export default function SuperAdminDashboard() {
                     <span>{club.memberCount || club.members?.length || 0} members</span>
                   </div>
                   {club.facultyIncharge && (
-                    <div className="text-[11px] text-slate-700/40 mt-1">
+                    <div className="text-[11px] text-slate-500 mt-1">
                       🧑‍🏫 {club.facultyIncharge} ({club.facultyEmail})
                     </div>
                   )}
@@ -421,7 +421,7 @@ export default function SuperAdminDashboard() {
                 onChange={(e) => setUserSearch(e.target.value)}
                 className="input flex-1"
               />
-              <span className="text-slate-700/40 text-sm whitespace-nowrap">{users.length} total users</span>
+              <span className="text-slate-500 text-sm whitespace-nowrap">{users.length} total users</span>
             </div>
 
             {/* Role counts */}
@@ -464,7 +464,7 @@ export default function SuperAdminDashboard() {
                         return !q || u.name?.toLowerCase().includes(q) || u.email?.toLowerCase().includes(q) || u.role?.toLowerCase().includes(q);
                       })
                       .map((u) => (
-                        <tr key={u._id} className="border-b border-slate-900/5 hover:bg-white/[0.02]">
+                        <tr key={u._id} className="border-b border-slate-900/5 hover:bg-slate-50">
                           <td className="px-5 py-3">
                             <div className="flex items-center gap-2">
                               <div className="w-7 h-7 rounded-full bg-gradient-to-br from-primary-500 to-pink-500 flex items-center justify-center text-xs font-bold text-slate-900">
@@ -480,7 +480,7 @@ export default function SuperAdminDashboard() {
                               {u.role === 'student' ? '🎓' : u.role === 'faculty' ? '👨‍🏫' : u.role === 'club_admin' ? '🏅' : '🛡️'} {u.role?.replace('_', ' ')}
                             </span>
                           </td>
-                          <td className="px-5 py-3 text-slate-700/40 text-xs">{u.createdAt ? format(new Date(u.createdAt), 'dd MMM yyyy') : '—'}</td>
+                          <td className="px-5 py-3 text-slate-500 text-xs">{u.createdAt ? format(new Date(u.createdAt), 'dd MMM yyyy') : '—'}</td>
                           <td className="px-5 py-3">
                             <div className="flex items-center justify-end">
                               {u.role !== 'super_admin' && (
@@ -495,7 +495,7 @@ export default function SuperAdminDashboard() {
                                       toast.error('Failed to delete user');
                                     }
                                   }}
-                                  className="p-1.5 rounded-lg text-slate-700/40 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                                  className="p-1.5 rounded-lg text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors"
                                   title="Delete User"
                                 >
                                   <Trash2 size={14} />
@@ -508,7 +508,7 @@ export default function SuperAdminDashboard() {
                   </tbody>
                 </table>
                 {users.length === 0 && (
-                  <div className="px-5 py-12 text-center text-slate-700/40">
+                  <div className="px-5 py-12 text-center text-slate-500">
                     <div className="text-4xl mb-2">👥</div>
                     No users found.
                   </div>
@@ -532,7 +532,7 @@ export default function SuperAdminDashboard() {
                 <h3 className="text-xl font-bold text-slate-900">
                   {editingEvent ? 'Edit Event' : 'Add Event'}
                 </h3>
-                <button onClick={() => setShowModal(false)} className="p-2 rounded-xl text-slate-700/40 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
+                <button onClick={() => setShowModal(false)} className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
               </div>
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Image Upload */}
@@ -641,7 +641,7 @@ export default function SuperAdminDashboard() {
               className="glass border border-primary-500/30 rounded-3xl p-6 max-w-md w-full">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-bold text-slate-900">Edit Club In-charge</h3>
-                <button onClick={() => setShowClubModal(false)} className="p-2 rounded-xl text-slate-700/40 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
+                <button onClick={() => setShowClubModal(false)} className="p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-900/10"><X size={18} /></button>
               </div>
               <form onSubmit={handleClubSubmit} className="space-y-4">
                 <div>

@@ -57,21 +57,21 @@ export default function SettingsPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
             <div className="bg-slate-900/5 p-4 rounded-xl border border-slate-900/5">
-              <span className="text-xs text-slate-700/40 block mb-1 flex items-center gap-1">
+              <span className="text-xs text-slate-500 block mb-1 flex items-center gap-1">
                 <User size={12} /> Full Name
               </span>
               <p className="font-medium text-slate-900">{user?.name || 'N/A'}</p>
             </div>
 
             <div className="bg-slate-900/5 p-4 rounded-xl border border-slate-900/5">
-              <span className="text-xs text-slate-700/40 block mb-1 flex items-center gap-1">
+              <span className="text-xs text-slate-500 block mb-1 flex items-center gap-1">
                 <Mail size={12} /> Email Address
               </span>
               <p className="font-medium text-slate-900">{user?.email || 'N/A'}</p>
             </div>
 
             <div className="bg-slate-900/5 p-4 rounded-xl border border-slate-900/5">
-              <span className="text-xs text-slate-700/40 block mb-1 flex items-center gap-1">
+              <span className="text-xs text-slate-500 block mb-1 flex items-center gap-1">
                 <Building size={12} /> Role / Department
               </span>
               <p className="font-medium text-slate-900 capitalize">
@@ -81,7 +81,7 @@ export default function SettingsPage() {
 
             {user?.phoneNumber && (
               <div className="bg-slate-900/5 p-4 rounded-xl border border-slate-900/5">
-                <span className="text-xs text-slate-700/40 block mb-1 flex items-center gap-1">
+                <span className="text-xs text-slate-500 block mb-1 flex items-center gap-1">
                   <Phone size={12} /> WhatsApp Phone Number
                 </span>
                 <p className="font-medium text-slate-900">+{user.phoneNumber}</p>

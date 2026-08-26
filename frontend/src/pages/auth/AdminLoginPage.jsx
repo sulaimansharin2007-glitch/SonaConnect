@@ -56,7 +56,7 @@ export default function AdminLoginPage() {
             <ShieldCheck size={36} className="text-red-400" />
           </div>
           <h1 className="text-3xl font-black text-slate-900 tracking-tight">Admin Portal</h1>
-          <p className="text-slate-700/40 text-sm mt-2 font-mono tracking-wider uppercase">SonaConnect · Restricted Access</p>
+          <p className="text-slate-500 text-sm mt-2 font-mono tracking-wider uppercase">SonaConnect · Restricted Access</p>
         </motion.div>
 
         {/* Warning banner */}
@@ -75,14 +75,14 @@ export default function AdminLoginPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15 }}
-          className="bg-white/[0.03] border border-slate-900/10 rounded-3xl p-8 backdrop-blur-xl shadow-[0_0_60px_rgba(0,0,0,0.5)]"
+          className="bg-slate-50 border border-slate-900/10 rounded-3xl p-8 backdrop-blur-xl shadow-[0_0_60px_rgba(0,0,0,0.5)]"
         >
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email */}
             <div>
-              <label className="text-xs text-slate-700/40 mb-2 block font-mono uppercase tracking-wider">Admin Email</label>
+              <label className="text-xs text-slate-500 mb-2 block font-mono uppercase tracking-wider">Admin Email</label>
               <div className="relative">
-                <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-700/30" />
+                <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type="email"
                   placeholder="admin@sonaconnect.in"
@@ -97,9 +97,9 @@ export default function AdminLoginPage() {
 
             {/* Password */}
             <div>
-              <label className="text-xs text-slate-700/40 mb-2 block font-mono uppercase tracking-wider">Password</label>
+              <label className="text-xs text-slate-500 mb-2 block font-mono uppercase tracking-wider">Password</label>
               <div className="relative">
-                <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-700/30" />
+                <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
                   type={showPass ? 'text' : 'password'}
                   placeholder="••••••••••••"
@@ -112,7 +112,7 @@ export default function AdminLoginPage() {
                 <button
                   type="button"
                   onClick={() => setShowPass(!showPass)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-700/30 hover:text-slate-700/60 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700/60 transition-colors"
                 >
                   {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -144,7 +144,7 @@ export default function AdminLoginPage() {
 
           {/* Footer note */}
           <div className="mt-6 pt-5 border-t border-slate-900/5 text-center">
-            <p className="text-slate-700/20 text-xs font-mono">
+            <p className="text-slate-400 text-xs font-mono">
               SONACONNECT ADMIN · v1.0
             </p>
           </div>
@@ -157,7 +157,7 @@ export default function AdminLoginPage() {
           transition={{ delay: 0.3 }}
           className="text-center mt-6"
         >
-          <a href="/" className="text-slate-700/20 hover:text-slate-700/50 text-xs transition-colors font-mono">
+          <a href="/" className="text-slate-400 hover:text-slate-700/50 text-xs transition-colors font-mono">
             ← Return to main site
           </a>
         </motion.div>

@@ -67,7 +67,7 @@ export default function LandingPage() {
             <div className="inline-flex items-center gap-2 px-4 py-2 glass rounded-full border border-primary-500/30 mb-8">
               <Sparkles size={14} className="text-primary-400" />
               <span className="text-sm text-slate-700/70">Intelligent Campus Activity Platform</span>
-              <ChevronRight size={14} className="text-slate-700/40" />
+              <ChevronRight size={14} className="text-slate-500" />
             </div>
 
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] mb-6">
@@ -168,7 +168,7 @@ export default function LandingPage() {
               >
                 <div className="text-3xl mb-2">{club.emoji}</div>
                 <div className="text-slate-900 text-sm font-semibold leading-tight">{club.name}</div>
-                <div className="text-slate-700/40 text-xs mt-1">{club.category}</div>
+                <div className="text-slate-500 text-xs mt-1">{club.category}</div>
               </motion.div>
             ))}
           </div>

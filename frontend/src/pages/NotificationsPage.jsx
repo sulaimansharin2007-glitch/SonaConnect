@@ -102,13 +102,13 @@ export default function NotificationsPage() {
                 <div className="flex-1 min-w-0">
                   <h4 className="text-slate-900 font-semibold text-sm">{n.title}</h4>
                   <p className="text-slate-700/50 text-xs mt-0.5 line-clamp-2">{n.message}</p>
-                  <p className="text-slate-700/30 text-[10px] mt-1.5">
+                  <p className="text-slate-400 text-[10px] mt-1.5">
                     {formatDistanceToNow(new Date(n.createdAt), { addSuffix: true })}
                   </p>
                 </div>
                 <button
                   onClick={() => handleMarkRead(n._id)}
-                  className="p-2 rounded-lg text-slate-700/30 hover:text-primary-400 hover:bg-primary-500/10 flex-shrink-0"
+                  className="p-2 rounded-lg text-slate-400 hover:text-primary-400 hover:bg-primary-500/10 flex-shrink-0"
                   title="Dismiss"
                 >
                   <Check size={14} />
