@@ -135,8 +135,8 @@ Return ONLY a valid JSON object:
 {
   "title": "Event name",
   "description": "2-3 sentence description",
-  "startDate": "YYYY-MM-DD",
-  "endDate": "YYYY-MM-DD",
+  "eventDate": "YYYY-MM-DD",
+  "deadline": "YYYY-MM-DD or empty string",
   "time": "HH:MM AM/PM or empty",
   "venue": "Location",
   "prizes": "Prize info or empty",
@@ -146,11 +146,10 @@ Return ONLY a valid JSON object:
 }
 
 DATE RULES (very important):
-- Look carefully for month names (Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec).
-- Single date "September 15" → startDate:"2026-09-15", endDate:""
-- Date range "Sep 15-16" or "15 & 16 Sep" → startDate:"2026-09-15", endDate:"2026-09-16"
+- "eventDate" is the day the event happens. "deadline" is the last date to apply/register.
+- Format as YYYY-MM-DD.
 - If year not shown, use 2026.
-- If you cannot find a date, return "". NEVER return "2026-01-01" unless January 1 is literally written.`;
+- If you cannot find a date, return "". NEVER guess Jan 1st.`;
           
           console.log('🤖 Sending to Gemini Vision AI...');
 
@@ -190,10 +189,11 @@ DATE RULES (very important):
           
           const parsedData = JSON.parse(jsonString);
 
-          // Safety net: wipe Jan 1 hallucination
-          const isJan1 = (d) => d && /^\d{4}-01-01$/.test(d);
+          // Safety net: wipe Jan 1 hallucination (01-01)
+          const isJan1 = (d) => d && String(d).includes('-01-01');
+          if (isJan1(parsedData.eventDate)) parsedData.eventDate = '';
+          if (isJan1(parsedData.deadline)) parsedData.deadline = '';
           if (isJan1(parsedData.startDate)) parsedData.startDate = '';
-          if (isJan1(parsedData.endDate)) parsedData.endDate = '';
           if (isJan1(parsedData.date)) parsedData.date = '';
 
           // --- Safe date parser ---
@@ -225,8 +225,8 @@ DATE RULES (very important):
           const newEvent = await Event.create({
             title: parsedData.title || "Untitled Event",
             description: parsedData.description || "No description provided.",
-            date: parseEventDate(parsedData.startDate || parsedData.date),
-            endDate: parsedData.endDate ? parseEventDate(parsedData.endDate) : null,
+            date: parseEventDate(parsedData.eventDate || parsedData.startDate || parsedData.date),
+            endDate: parsedData.deadline ? parseEventDate(parsedData.deadline) : null,
             time: parsedData.time || "TBD",
             venue: parsedData.venue || "TBD",
             category: "other",
