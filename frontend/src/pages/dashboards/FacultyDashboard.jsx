@@ -143,9 +143,7 @@ export default function FacultyDashboard() {
         ...prev,
         title: data.title || prev.title,
         description: data.description || prev.description,
-        // Reject AI hallucinated Jan 1 dates
-        date: (/^\d{4}-01-01$/.test(data.startDate) ? '' : data.startDate) ||
-              (/^\d{4}-01-01$/.test(data.date) ? '' : data.date) || prev.date,
+        date: data.startDate || prev.date,
         endDate: data.endDate || prev.endDate,
         time: data.time || prev.time,
         venue: data.venue || prev.venue,
@@ -380,7 +378,7 @@ export default function FacultyDashboard() {
                       <option value="">None</option>{clubs.map((c) => <option key={c._id} value={c._id}>{c.name}</option>)}
                     </select></div>
                   <div><label className="text-sm text-slate-800/60 mb-1 block">Start Date <span className="text-primary-500 text-xs">(event date)</span></label><input type="date" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} className="input" /></div>
-                  <div><label className="text-sm text-slate-800/60 mb-1 block">End Date <span className="text-slate-400 text-xs">(if multi-day)</span></label><input type="date" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} className="input" /></div>
+                  <div><label className="text-sm text-slate-800/60 mb-1 block">Last Date to Apply</label><input type="date" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} className="input" /></div>
                   <div><label className="text-sm text-slate-800/60 mb-1 block">Time</label><input value={form.time} onChange={(e) => setForm({ ...form, time: e.target.value })} placeholder="10:00 AM" className="input" /></div>
                   <div><label className="text-sm text-slate-800/60 mb-1 block">Venue</label><input value={form.venue} onChange={(e) => setForm({ ...form, venue: e.target.value })} className="input" /></div>
                   <div><label className="text-sm text-slate-800/60 mb-1 block">Organizer</label><input value={form.organizer} onChange={(e) => setForm({ ...form, organizer: e.target.value })} className="input" /></div>

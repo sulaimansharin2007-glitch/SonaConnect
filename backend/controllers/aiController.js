@@ -49,13 +49,13 @@ const extractPosterData = async (req, res) => {
       base64Data = base64Image.replace(/^data:image\/[\w+]+;base64,/, '');
     }
 
-    const prompt = `You are extracting event details from this poster image. Read ALL text on the poster carefully.
+const prompt = `You are extracting event details from this poster image. Read ALL text on the poster carefully.
 Return ONLY a valid JSON object:
 {
   "title": "Event name",
   "description": "2-3 sentence description",
-  "startDate": "YYYY-MM-DD",
-  "endDate": "YYYY-MM-DD or empty string if single day",
+  "eventDate": "YYYY-MM-DD",
+  "deadline": "YYYY-MM-DD or empty string",
   "time": "time or empty",
   "venue": "location or empty",
   "prizes": "prize info or empty",
@@ -64,11 +64,10 @@ Return ONLY a valid JSON object:
   "registrationLink": "URL if visible or empty"
 }
 DATE RULES:
-- Read the poster carefully for any month names or dates.
-- Single date e.g. "September 15" → startDate:"2026-09-15", endDate:""
-- Date range e.g. "Sep 15-16" → startDate:"2026-09-15", endDate:"2026-09-16"
+- "eventDate" is the day the event happens. "deadline" is the last date to apply/register.
+- Format as YYYY-MM-DD.
 - If no year shown, use 2026.
-- If no date found, return "" for both. NEVER use "2026-01-01" as a default.`;
+- If no date found, return "" for both. NEVER guess Jan 1st.`;
 
     // Call Gemini REST API directly (AQ. keys work with fetch, not the old SDK)
     const geminiRes = await fetch(
@@ -113,12 +112,16 @@ DATE RULES:
       throw new Error('AI returned invalid data. Please try again.');
     }
 
-    // Safety net: wipe any Jan 1 hallucination
-    const isJan1 = (d) => d && /^\d{4}-01-01$/.test(d);
-    if (isJan1(parsedData.startDate)) parsedData.startDate = '';
-    if (isJan1(parsedData.endDate)) parsedData.endDate = '';
-    if (isJan1(parsedData.date)) parsedData.date = '';
-
+    // Safety net: wipe any Jan 1 hallucination (01-01)
+    const isJan1 = (d) => d && String(d).includes('-01-01');
+    if (isJan1(parsedData.eventDate)) parsedData.eventDate = '';
+    if (isJan1(parsedData.deadline)) parsedData.deadline = '';
+    
+    // Map back to what frontend expects for now, or just send directly
+    // Frontend expects: startDate/date, endDate/deadline
+    parsedData.startDate = parsedData.eventDate;
+    parsedData.endDate = parsedData.deadline; // frontend will use this if needed
+    
     res.json(parsedData);
   } catch (error) {
     console.error('AI Extraction Error:', error.message);
