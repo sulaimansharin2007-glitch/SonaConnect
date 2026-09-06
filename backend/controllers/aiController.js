@@ -30,6 +30,11 @@ const extractPosterData = async (req, res) => {
       return res.status(400).json({ message: 'No image provided' });
     }
 
+    const geminiKey = process.env.GEMINI_API_KEY;
+    if (!geminiKey) {
+      return res.status(400).json({ message: 'GEMINI_API_KEY is not configured on the server.' });
+    }
+
     // Parse image data
     let mimeType = 'image/jpeg';
     let base64Data;
@@ -50,40 +55,47 @@ Return ONLY a valid JSON object:
   "title": "Event name",
   "description": "2-3 sentence description",
   "startDate": "YYYY-MM-DD",
-  "endDate": "YYYY-MM-DD",
-  "time": "HH:MM AM/PM or empty",
-  "venue": "Location",
-  "prizes": "Prize info or empty",
-  "eligibility": "Who can join or empty",
+  "endDate": "YYYY-MM-DD or empty string if single day",
+  "time": "time or empty",
+  "venue": "location or empty",
+  "prizes": "prize info or empty",
+  "eligibility": "who can join or empty",
   "participationType": "solo or team or empty",
-  "registrationLink": "URL if visible on poster or empty"
+  "registrationLink": "URL if visible or empty"
 }
+DATE RULES:
+- Read the poster carefully for any month names or dates.
+- Single date e.g. "September 15" → startDate:"2026-09-15", endDate:""
+- Date range e.g. "Sep 15-16" → startDate:"2026-09-15", endDate:"2026-09-16"
+- If no year shown, use 2026.
+- If no date found, return "" for both. NEVER use "2026-01-01" as a default.`;
 
-DATE RULES (very important):
-- Look carefully for month names (Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec).
-- Single date "September 15" → startDate:"2026-09-15", endDate:""
-- Date range "Sep 15-16" or "15 & 16 Sep" → startDate:"2026-09-15", endDate:"2026-09-16"
-- If year not shown, use 2026.
-- If you cannot find a date, return "". NEVER return "2026-01-01" unless January 1 is literally written.`;
+    // Call Gemini REST API directly (AQ. keys work with fetch, not the old SDK)
+    const geminiRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${geminiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
+            parts: [
+              { text: prompt },
+              { inline_data: { mime_type: mimeType, data: base64Data } }
+            ]
+          }],
+          generationConfig: { temperature: 0.1 }
+        })
+      }
+    );
 
-    // Use Gemini Flash for vision (free tier, excellent at OCR and image reading)
-    const geminiKey = process.env.GEMINI_API_KEY;
-    if (!geminiKey) {
-      return res.status(400).json({ message: 'Vision AI (GEMINI_API_KEY) is not configured on the server.' });
+    const geminiData = await geminiRes.json();
+    if (!geminiData.candidates) {
+      throw new Error(geminiData.error?.message || 'Gemini returned no response');
     }
 
-    const { GoogleGenerativeAI } = require('@google/generative-ai');
-    const genAI = new GoogleGenerativeAI(geminiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-3.6-flash' });
+    let jsonString = geminiData.candidates[0].content.parts[0].text;
 
-    const result = await model.generateContent([
-      prompt,
-      { inlineData: { mimeType, data: base64Data } }
-    ]);
-
-    let jsonString = result.response.text();
-
-    // Strip markdown code fences if present
+    // Strip markdown fences if present
     const markdownMatch = jsonString.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
     if (markdownMatch && markdownMatch[1]) {
       jsonString = markdownMatch[1];
@@ -101,7 +113,7 @@ DATE RULES (very important):
       throw new Error('AI returned invalid data. Please try again.');
     }
 
-    // Safety net: clear any Jan 1 hallucination just in case
+    // Safety net: wipe any Jan 1 hallucination
     const isJan1 = (d) => d && /^\d{4}-01-01$/.test(d);
     if (isJan1(parsedData.startDate)) parsedData.startDate = '';
     if (isJan1(parsedData.endDate)) parsedData.endDate = '';

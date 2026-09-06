@@ -154,16 +154,29 @@ DATE RULES (very important):
           
           console.log('🤖 Sending to Gemini Vision AI...');
 
-          const { GoogleGenerativeAI } = require('@google/generative-ai');
-          const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-          const geminiModel = genAI.getGenerativeModel({ model: 'gemini-3.6-flash' });
+          const geminiRes = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
+            {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                contents: [{
+                  parts: [
+                    { text: prompt },
+                    { inline_data: { mime_type: mimeType, data: base64Data } }
+                  ]
+                }],
+                generationConfig: { temperature: 0.1 }
+              })
+            }
+          );
 
-          const geminiResult = await geminiModel.generateContent([
-            prompt,
-            { inlineData: { mimeType, data: base64Data } }
-          ]);
+          const geminiData = await geminiRes.json();
+          if (!geminiData.candidates) {
+            throw new Error(geminiData.error?.message || 'Gemini returned no response');
+          }
 
-          let jsonString = geminiResult.response.text();
+          let jsonString = geminiData.candidates[0].content.parts[0].text;
           const markdownMatch = jsonString.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
           if (markdownMatch && markdownMatch[1]) {
             jsonString = markdownMatch[1];
