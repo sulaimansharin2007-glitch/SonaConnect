@@ -130,44 +130,40 @@ const handleWebhook = async (req, res) => {
           } catch (uploadErr) {
             console.warn('⚠️ ImgBB upload failed, continuing without poster:', uploadErr.response?.data || uploadErr.message);
           }
-          const prompt = `
-            You are an AI assistant that extracts event details from posters.
-            Analyze this event poster and extract the following information. 
-            Return ONLY a valid JSON object matching this exact structure:
-            {
-              "title": "Event Title Here",
-              "description": "A brief 2-3 sentence description based on the poster",
-              "date": "YYYY-MM-DD", 
-              "time": "HH:MM AM/PM",
-              "venue": "Event Venue",
-              "prizes": "Prize details if any",
-              "eligibility": "Who can attend (e.g. All Students, 3rd Years)",
-              "participationType": "solo or team"
-            }
-            If any information is not found in the poster, leave it as an empty string "". 
-            For the date, try to format it as YYYY-MM-DD.
-          `;
-          
-          console.log('🤖 Sending to Groq Vision AI...');
-          const dataUrl = `data:${mimeType};base64,${base64Data}`;
-          
-          const groqClient = groq || new Groq({ apiKey: process.env.GROQ_API_KEY });
+          const prompt = `You are extracting event details from this poster image. Read ALL text carefully.
+Return ONLY a valid JSON object:
+{
+  "title": "Event name",
+  "description": "2-3 sentence description",
+  "startDate": "YYYY-MM-DD",
+  "endDate": "YYYY-MM-DD",
+  "time": "HH:MM AM/PM or empty",
+  "venue": "Location",
+  "prizes": "Prize info or empty",
+  "eligibility": "Who can join or empty",
+  "participationType": "solo or team or empty",
+  "registrationLink": "URL if visible or empty"
+}
 
-          const chatCompletion = await groqClient.chat.completions.create({
-            messages: [
-              {
-                role: 'user',
-                content: [
-                  { type: 'text', text: prompt },
-                  { type: 'image_url', image_url: { url: dataUrl } }
-                ]
-              }
-            ],
-            model: 'qwen/qwen3.6-27b',
-            response_format: { type: 'json_object' }
-          });
+DATE RULES (very important):
+- Look carefully for month names (Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec).
+- Single date "September 15" → startDate:"2026-09-15", endDate:""
+- Date range "Sep 15-16" or "15 & 16 Sep" → startDate:"2026-09-15", endDate:"2026-09-16"
+- If year not shown, use 2026.
+- If you cannot find a date, return "". NEVER return "2026-01-01" unless January 1 is literally written.`;
           
-          let jsonString = chatCompletion.choices[0]?.message?.content || '{}';
+          console.log('🤖 Sending to Gemini Vision AI...');
+
+          const { GoogleGenerativeAI } = require('@google/generative-ai');
+          const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+          const geminiModel = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+
+          const geminiResult = await geminiModel.generateContent([
+            prompt,
+            { inlineData: { mimeType, data: base64Data } }
+          ]);
+
+          let jsonString = geminiResult.response.text();
           const markdownMatch = jsonString.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
           if (markdownMatch && markdownMatch[1]) {
             jsonString = markdownMatch[1];
@@ -180,6 +176,12 @@ const handleWebhook = async (req, res) => {
           }
           
           const parsedData = JSON.parse(jsonString);
+
+          // Safety net: wipe Jan 1 hallucination
+          const isJan1 = (d) => d && /^\d{4}-01-01$/.test(d);
+          if (isJan1(parsedData.startDate)) parsedData.startDate = '';
+          if (isJan1(parsedData.endDate)) parsedData.endDate = '';
+          if (isJan1(parsedData.date)) parsedData.date = '';
 
           // --- Safe date parser ---
           // Handles: "2026-09-03 - 2026-09-05", "03/09/2026", "September 3, 2026", plain "YYYY-MM-DD"
@@ -210,8 +212,8 @@ const handleWebhook = async (req, res) => {
           const newEvent = await Event.create({
             title: parsedData.title || "Untitled Event",
             description: parsedData.description || "No description provided.",
-            date: parseEventDate(parsedData.date),
-
+            date: parseEventDate(parsedData.startDate || parsedData.date),
+            endDate: parsedData.endDate ? parseEventDate(parsedData.endDate) : null,
             time: parsedData.time || "TBD",
             venue: parsedData.venue || "TBD",
             category: "other",
@@ -221,6 +223,7 @@ const handleWebhook = async (req, res) => {
             prizes: parsedData.prizes || "",
             eligibility: parsedData.eligibility || "All Students",
             participationType: cleanParticipationType,
+            registrationLink: parsedData.registrationLink || "",
             status: "upcoming",
             isApproved: true
           });
