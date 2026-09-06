@@ -196,24 +196,26 @@ DATE RULES (very important):
           if (isJan1(parsedData.startDate)) parsedData.startDate = '';
           if (isJan1(parsedData.date)) parsedData.date = '';
 
-          // --- Safe date parser ---
-          // Handles: "2026-09-03 - 2026-09-05", "03/09/2026", "September 3, 2026", plain "YYYY-MM-DD"
+          // Safe date parser — returns null if no valid non-Jan1 date found
           const parseEventDate = (raw) => {
-            if (!raw) return new Date().toISOString().split('T')[0];
+            if (!raw) return null;
             const str = String(raw).trim();
-            // If it's a range like "2026-09-03 - 2026-09-05", take the start date
+            if (!str) return null;
+            // If range "2026-09-03 - 2026-09-05", take start date
             const rangePart = str.split(/\s*[-–to]+\s*/)[0].trim();
-            // Try DD/MM/YYYY or MM/DD/YYYY slash formats → convert to YYYY-MM-DD
+            let result = null;
+            // Try DD/MM/YYYY slash format → YYYY-MM-DD
             const slashMatch = rangePart.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
             if (slashMatch) {
-              // Assume DD/MM/YYYY (Indian format)
-              return `${slashMatch[3]}-${slashMatch[2].padStart(2,'0')}-${slashMatch[1].padStart(2,'0')}`;
+              result = `${slashMatch[3]}-${slashMatch[2].padStart(2,'0')}-${slashMatch[1].padStart(2,'0')}`;
+            } else {
+              // Try natural language or plain YYYY-MM-DD
+              const d = new Date(rangePart);
+              if (!isNaN(d.getTime())) result = d.toISOString().split('T')[0];
             }
-            // Try natural language date
-            const d = new Date(rangePart);
-            if (!isNaN(d.getTime())) return d.toISOString().split('T')[0];
-            // Fallback: today
-            return new Date().toISOString().split('T')[0];
+            // Final Jan 1 guard — no matter what format came in
+            if (result && result.endsWith('-01-01')) return null;
+            return result;
           };
 
           let rawType = (parsedData.participationType || "solo").toLowerCase().trim();
