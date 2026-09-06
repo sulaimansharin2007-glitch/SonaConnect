@@ -153,7 +153,7 @@ export default function EventCard({ event, index = 0 }) {
           </div>
 
           {/* Status */}
-          {event.status === 'completed' && (
+          {event.status === 'completed' && event.date && (
             <div className="absolute top-3 right-3">
               <span className="badge bg-slate-900/10 text-slate-800/50 border border-slate-900/20">Completed</span>
             </div>

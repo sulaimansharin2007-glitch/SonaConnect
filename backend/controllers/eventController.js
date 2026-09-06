@@ -7,7 +7,7 @@ const getEvents = async (req, res) => {
   try {
     // Auto-update events that are past their date to 'completed' status
     await Event.updateMany(
-      { date: { $lt: new Date() }, status: 'upcoming' },
+      { date: { $lt: new Date(), $ne: null }, status: 'upcoming' },
       { $set: { status: 'completed' } }
     );
 
