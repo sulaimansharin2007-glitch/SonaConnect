@@ -128,16 +128,19 @@ export default function EventCard({ event, index = 0 }) {
                 alt={event.title}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              {/* Hover overlay */}
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
-                <span className="flex items-center gap-1.5 text-slate-900 text-sm font-semibold bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm">
-                  <ZoomIn size={14} /> View Poster
+              {/* Always-visible View Poster button */}
+              <div className="absolute bottom-2 right-2">
+                <span className="flex items-center gap-1.5 text-white text-xs font-semibold bg-black/60 px-2.5 py-1 rounded-full backdrop-blur-sm">
+                  <ZoomIn size={12} /> View Poster
                 </span>
               </div>
             </div>
           ) : (
-            <div className="text-6xl opacity-20 select-none">
-              {event.category === 'hackathon' ? '💻' : event.category === 'workshop' ? '🔧' : event.category === 'cultural' ? '🎭' : event.category === 'sports' ? '🏆' : '📅'}
+            <div className="flex flex-col items-center gap-2 opacity-30 select-none">
+              <div className="text-5xl">
+                {event.category === 'hackathon' ? '💻' : event.category === 'workshop' ? '🔧' : event.category === 'cultural' ? '🎭' : event.category === 'sports' ? '🏆' : '📅'}
+              </div>
+              <span className="text-xs text-slate-800 font-medium">No Poster</span>
             </div>
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-dark-200/90 via-transparent to-transparent pointer-events-none" />
@@ -206,34 +209,37 @@ export default function EventCard({ event, index = 0 }) {
               <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
             </Link>
 
-            {/* Download poster button — only shown when posterUrl exists */}
-            {event.posterUrl && (
-              <motion.button
-                whileTap={{ scale: 0.9 }}
-                whileHover={{ scale: 1.05 }}
-                onClick={async (e) => {
-                  e.preventDefault();
-                  try {
-                    const response = await fetch(event.posterUrl);
-                    const blob = await response.blob();
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = `${event.title.replace(/\s+/g, '_')}_poster.jpg`;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                  } catch {
-                    window.open(event.posterUrl, '_blank');
-                  }
-                }}
-                title="Download Poster"
-                className="w-10 h-10 flex items-center justify-center glass border border-slate-900/15 rounded-xl text-slate-800/60 hover:text-slate-900 hover:border-primary-500/50 transition-all"
-              >
-                <Download size={16} />
-              </motion.button>
-            )}
+            {/* Download poster button — always shown, grayed out when no poster */}
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              onClick={async (e) => {
+                e.preventDefault();
+                if (!event.posterUrl) return;
+                try {
+                  const response = await fetch(event.posterUrl);
+                  const blob = await response.blob();
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = `${event.title.replace(/\s+/g, '_')}_poster.jpg`;
+                  document.body.appendChild(a);
+                  a.click();
+                  document.body.removeChild(a);
+                  URL.revokeObjectURL(url);
+                } catch {
+                  window.open(event.posterUrl, '_blank');
+                }
+              }}
+              title={event.posterUrl ? 'Download Poster' : 'No poster available'}
+              className={`w-10 h-10 flex items-center justify-center glass border rounded-xl transition-all ${
+                event.posterUrl
+                  ? 'border-primary-500/50 text-primary-400 hover:bg-primary-500/10 cursor-pointer'
+                  : 'border-slate-200 text-slate-300 cursor-not-allowed opacity-40'
+              }`}
+            >
+              <Download size={16} />
+            </motion.button>
           </div>
         </div>
       </motion.div>
