@@ -207,17 +207,6 @@ export default function EventDetailPage() {
                     {event.inchargeStaff && <div className="text-slate-800/50 text-xs mt-0.5">Incharge: {event.inchargeStaff}</div>}
                   </div>
                 </div>
-                {event.deadline && (
-                  <div className="flex items-start gap-3">
-                    <Clock size={18} className={`mt-0.5 flex-shrink-0 ${deadlinePassed ? 'text-danger' : 'text-orange-400'}`} />
-                    <div>
-                      <div className={`text-sm font-semibold ${deadlinePassed ? 'text-danger' : 'text-slate-900'}`}>
-                        {deadlinePassed ? 'Deadline Passed' : (event.deadline ? format(new Date(event.deadline), 'dd MMM yyyy') : 'No Deadline')}
-                      </div>
-                      <div className="text-slate-800/50 text-xs mt-0.5">Registration Deadline</div>
-                    </div>
-                  </div>
-                )}
               </div>
 
               <div className="divider-glow" />

@@ -135,8 +135,7 @@ Return ONLY a valid JSON object:
 {
   "title": "Event name",
   "description": "2-3 sentence description",
-  "eventDate": "YYYY-MM-DD",
-  "deadline": "YYYY-MM-DD or empty string",
+  "dates": ["YYYY-MM-DD"],
   "time": "HH:MM AM/PM or empty",
   "venue": "Location",
   "prizes": "Prize info or empty",
@@ -146,10 +145,12 @@ Return ONLY a valid JSON object:
 }
 
 DATE RULES (very important):
-- "eventDate" is the day the event happens. "deadline" is the last date to apply/register.
-- Format as YYYY-MM-DD.
+- In the "dates" array, list ALL dates you find on the poster (event date, registration deadline, last date, etc.).
+- If you find exactly 1 date, put just that 1 date in the array.
+- If you find 2 or more dates, list ALL of them in order.
+- Format each date as YYYY-MM-DD.
 - If year not shown, use 2026.
-- If you cannot find a date, return "". NEVER guess Jan 1st.`;
+- If you cannot find ANY date, return an empty array []. NEVER guess Jan 1st.`;
           
           console.log('🤖 Sending to Gemini Vision AI...');
 
@@ -189,13 +190,6 @@ DATE RULES (very important):
           
           const parsedData = JSON.parse(jsonString);
 
-          // Safety net: wipe Jan 1 hallucination (01-01)
-          const isJan1 = (d) => d && String(d).includes('-01-01');
-          if (isJan1(parsedData.eventDate)) parsedData.eventDate = '';
-          if (isJan1(parsedData.deadline)) parsedData.deadline = '';
-          if (isJan1(parsedData.startDate)) parsedData.startDate = '';
-          if (isJan1(parsedData.date)) parsedData.date = '';
-
           // Safe date parser — returns null if no valid non-Jan1 date found
           const parseEventDate = (raw) => {
             if (!raw) return null;
@@ -218,6 +212,21 @@ DATE RULES (very important):
             return result;
           };
 
+          // Date logic: 1 date found → use as event date. 2+ dates found → leave both empty
+          const isJan1 = (d) => d && String(d).includes('-01-01');
+          const rawDates = Array.isArray(parsedData.dates)
+            ? parsedData.dates.filter(d => d && !isJan1(d))
+            : [];
+
+          let eventDate = null;
+          if (rawDates.length === 1) {
+            // Only 1 date — use it as the event date
+            eventDate = parseEventDate(rawDates[0]);
+          } else {
+            // 0 or 2+ dates — leave empty, let faculty fill manually
+            eventDate = null;
+          }
+
           let rawType = (parsedData.participationType || "solo").toLowerCase().trim();
           let cleanParticipationType = 'solo';
           if (rawType.includes('team')) {
@@ -227,8 +236,8 @@ DATE RULES (very important):
           const newEvent = await Event.create({
             title: parsedData.title || "Untitled Event",
             description: parsedData.description || "No description provided.",
-            date: parseEventDate(parsedData.eventDate || parsedData.startDate || parsedData.date),
-            endDate: parsedData.deadline ? parseEventDate(parsedData.deadline) : null,
+            date: eventDate,
+            endDate: null,
             time: parsedData.time || "TBD",
             venue: parsedData.venue || "TBD",
             category: "other",
@@ -243,7 +252,8 @@ DATE RULES (very important):
             isApproved: true
           });
           
-          await sendWhatsAppMessage(senderPhone, `🎉 Success! Event "${newEvent.title}" has been published automatically.`);
+          const dateMsg = eventDate ? `📅 Date: ${eventDate}` : `📅 Date: To be filled (${rawDates.length > 1 ? 'multiple dates found on poster' : 'no date found'})`;
+          await sendWhatsAppMessage(senderPhone, `🎉 Success! Event "${newEvent.title}" has been published.\n${dateMsg}\n\nPlease visit the dashboard to edit details.`);
           
         } catch (err) {
           console.error("WhatsApp AI Error:", err);
