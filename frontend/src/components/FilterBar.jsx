@@ -9,7 +9,6 @@ const categories = [
   { value: 'cultural', label: 'Cultural' },
   { value: 'sports', label: 'Sports' },
   { value: 'speakers_forum', label: 'Speakers Forum' },
-  { value: 'competition', label: 'Competitions' },
 ];
 
 export default function FilterBar({ search, setSearch, category, setCategory, statusFilter, setStatusFilter, showStatus = false }) {
