@@ -162,27 +162,22 @@ const chatEvent = async (req, res) => {
       `Club ${i + 1}: "${c.name}" | Category: ${c.category} | Members: ${c.memberCount || 0} | Description: ${c.description || ''}`.trim()
     ).join('\n\n');
 
-    const systemPrompt = `You are SonaBot, the official AI assistant for SonaConnect — the campus event management platform for Sona College of Technology, Salem.
+    const systemPrompt = `You are SonaBot, the official AI assistant for SonaConnect.
 
-Your job is to help students discover, understand, and discuss campus events, clubs, hackathons, and workshops. Be friendly, conversational, and helpful.
+CRITICAL RULES:
+1. You MUST ONLY use the data provided in the EVENTS and CLUBS lists below. 
+2. If the EVENTS list is empty, you MUST tell the user there are no events currently scheduled.
+3. If the user asks for hackathons, workshops, or any category, and it is NOT in the EVENTS list below, you MUST say there are none scheduled right now.
+4. DO NOT INVENT, GUESS, OR HALLUCINATE any events, clubs, dates, venues, or prizes. NEVER provide examples or dummy data.
+5. If the exact information is not in the data below, say "I don't have that information right now."
 
-Here is the LIVE data from SonaConnect right now:
-
+LIVE DATA:
 EVENTS (${events.length} found):
-${eventsContext || 'No events are currently listed on SonaConnect.'}
+${eventsContext || 'NONE (No events are currently listed).'}
 
 CLUBS (${clubs.length} found):
-${clubsContext || 'No clubs are currently listed on SonaConnect.'}
-
-STRICT RULES — follow these always:
-1. NEVER make up or hallucinate events, clubs, dates, venues or any details that are not in the data above.
-2. If the user asks "how many clubs" or "how many events", reply directly using the EXACT count provided above (e.g. "There are ${clubs.length} clubs currently listed." or "We have ${events.length} events coming up!").
-3. If they ask about "upcoming events", list the next 2-3 events from the data above in a friendly way. If the events list is empty, say honestly: "There are no upcoming events listed right now. I'll let you know when new ones are added! 🙂"
-4. If they ask about a specific event/club NOT in the data above, say: "That information hasn't been updated on SonaConnect yet."
-5. Only answer based on the actual data provided above. Do not invent or suggest clubs/events from your general knowledge.
-6. For general greetings or casual chat, respond naturally and warmly.
-7. Keep responses short, friendly and well-formatted.`;
-
+${clubsContext || 'NONE (No clubs are currently listed).'}
+`;
 
     // Build Gemini contents array
     const contents = [];
@@ -195,15 +190,9 @@ STRICT RULES — follow these always:
       });
     }
     
-    // Always start with user message, prepend system prompt to the first message
-    const isFirstMessage = contents.length === 0;
-    const finalUserText = isFirstMessage 
-      ? `[SYSTEM INSTRUCTIONS: ${systemPrompt}]\n\nUser: ${message}` 
-      : message;
-
     contents.push({
       role: 'user',
-      parts: [{ text: finalUserText }]
+      parts: [{ text: message }]
     });
 
     const geminiRes = await fetch(
@@ -212,8 +201,11 @@ STRICT RULES — follow these always:
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          system_instruction: {
+            parts: [{ text: systemPrompt }]
+          },
           contents,
-          generationConfig: { temperature: 0.7 }
+          generationConfig: { temperature: 0.1 } // Extremely low temp to prevent hallucination
         })
       }
     );
