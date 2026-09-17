@@ -133,9 +133,9 @@ DATE RULES:
 // @route   POST /api/ai/chat
 const chatEvent = async (req, res) => {
   try {
-    const groqClient = groq || (process.env.GROQ_API_KEY ? new Groq({ apiKey: process.env.GROQ_API_KEY }) : null);
-    if (!groqClient) {
-      return res.status(400).json({ message: 'AI service is not configured on the server.' });
+    const geminiKey = process.env.GEMINI_API_KEY;
+    if (!geminiKey) {
+      return res.status(400).json({ message: 'AI service (GEMINI_API_KEY) is not configured.' });
     }
 
     const { message, history } = req.body;
@@ -184,23 +184,52 @@ STRICT RULES — follow these always:
 7. Keep responses short, friendly and well-formatted.`;
 
 
-    // Build conversation history for context
-    const messages = [{ role: 'system', content: systemPrompt }];
-    
+    // Build Gemini contents array
+    const contents = [];
     if (history && Array.isArray(history)) {
       history.slice(-6).forEach(msg => {
-        messages.push({ role: msg.role === 'bot' ? 'assistant' : 'user', content: msg.text });
+        contents.push({
+          role: msg.role === 'bot' ? 'model' : 'user',
+          parts: [{ text: msg.text }]
+        });
       });
     }
-    messages.push({ role: 'user', content: message });
+    
+    // Always start with user message, prepend system prompt to the first message
+    const isFirstMessage = contents.length === 0;
+    const finalUserText = isFirstMessage 
+      ? `[SYSTEM INSTRUCTIONS: ${systemPrompt}]\n\nUser: ${message}` 
+      : message;
 
-    const chatCompletion = await groqClient.chat.completions.create({
-      messages: messages,
-      model: 'qwen/qwen3.6-27b', // Reliable model available on current tier
-      temperature: 0.7,
+    contents.push({
+      role: 'user',
+      parts: [{ text: finalUserText }]
     });
 
-    let reply = chatCompletion.choices[0]?.message?.content || 'Sorry, I got confused for a second there.';
+    const geminiRes = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${geminiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents,
+          generationConfig: { temperature: 0.7 }
+        })
+      }
+    );
+
+    const geminiData = await geminiRes.json();
+    
+    if (geminiData.error) {
+      console.error('Gemini API Error:', geminiData.error);
+      throw new Error(geminiData.error.message || 'AI service error');
+    }
+
+    if (!geminiData.candidates || geminiData.candidates.length === 0) {
+      throw new Error('No response from AI');
+    }
+
+    let reply = geminiData.candidates[0].content.parts[0].text || 'Sorry, I got confused for a second there.';
 
     // Strip out any <think> blocks if the model includes reasoning tokens
     reply = reply.replace(/<think>[\s\S]*?<\/think>\s*/gi, '');
