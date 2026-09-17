@@ -69,7 +69,7 @@ const uploadToImgBB = async (base64OrUrl) => {
     form.append('key', imgbbKey);
     form.append('image', base64Data);
     const res = await axios.post('https://api.imgbb.com/1/upload', form, { headers: form.getHeaders() });
-    return res.data?.data?.display_url || res.data?.data?.url || base64OrUrl;
+    return res.data?.data?.url || res.data?.data?.display_url || base64OrUrl;
   } catch (err) {
     console.warn('ImgBB upload failed:', err.message);
     return base64OrUrl;

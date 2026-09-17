@@ -233,7 +233,7 @@ export default function EventDetailPage() {
 
               {event.registrationLink && (
                 <a
-                  href={event.registrationLink}
+                  href={event.registrationLink.startsWith('http') ? event.registrationLink : `https://${event.registrationLink}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-secondary w-full flex items-center justify-center gap-2"

@@ -122,7 +122,7 @@ const handleWebhook = async (req, res) => {
               const imgbbRes = await axios.post('https://api.imgbb.com/1/upload', form, {
                 headers: form.getHeaders()
               });
-              posterUrl = imgbbRes.data?.data?.display_url || imgbbRes.data?.data?.url || '';
+              posterUrl = imgbbRes.data?.data?.url || imgbbRes.data?.data?.display_url || '';
               console.log('🖼️ Poster uploaded to ImgBB:', posterUrl);
             } else {
               console.warn('⚠️ IMGBB_API_KEY not set — poster not uploaded');
