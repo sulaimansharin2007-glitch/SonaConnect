@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import Navbar from '../../components/Navbar';
 import { useAuth } from '../../context/AuthContext';
 import { getAllEvents, getClubs, approveEvent, deleteEvent, getEventStats, createEvent, updateEvent, updateClub, getAllUsers, deleteUser, extractPosterData } from '../../api';
+import { compressImageForAI } from '../../utils/imageCompressor';
 
 const categories = ['workshop', 'seminar', 'speakers_forum', 'hackathon', 'other'];
 const categoryLabels = { workshop: 'Workshop', seminar: 'Seminar', speakers_forum: 'Speakers Forum', hackathon: 'Hackathon', other: 'Other' };
@@ -150,9 +151,10 @@ export default function SuperAdminDashboard() {
   const handleAIExtract = async () => {
     if (!form.posterUrl) return toast.error('Please upload a poster first');
     setExtractingAI(true);
-    const toastId = toast.loading('Extracting details using AI...');
+    const toastId = toast.loading('Compressing & extracting details using AI...');
     try {
-      const { data } = await extractPosterData(form.posterUrl);
+      const compressed = await compressImageForAI(form.posterUrl);
+      const { data } = await extractPosterData(compressed);
       setForm((prev) => ({
         ...prev,
         title: data.title || prev.title,
